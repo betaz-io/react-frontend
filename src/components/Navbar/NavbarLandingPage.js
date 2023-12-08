@@ -32,16 +32,17 @@ const tabs = [
     label: "Tokenomics",
     key: "section-tokenomic",
   },
-  // {
-  //   label: "Public Sale",
-  //   key: "section-deposit",
-  // },
+  {
+    label: "BETAZ faucet",
+    // label: "Public Sale",
+    key: "section-deposit",
+  },
   {
     label: "Roadmap",
     key: "section-roadmap",
   },
   {
-    label: "Team Member",
+    label: "Team member",
     key: "section-team-member",
   },
   // {
