@@ -1,0 +1,116 @@
+.history-modal-content-container {
+  /* height: calc(100vh - 120px); */
+  height: max-content;
+  max-width: calc(100vw - 120px) !important;
+  background-color: #122126 !important;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+.linear-text {
+  background: linear-gradient(180deg, #1bbff4 0%, #1beca7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.history-modal-content-title {
+  text-align: center;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.history-modal-tabs {
+  background: #0d171b;
+  display: flex;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+.history-modal-tab {
+  display: flex;
+  flex: 1;
+  cursor: pointer;
+  flex-direction: column;
+  padding: 12px;
+}
+.history-modal-label {
+  text-align: center;
+  color: #f7f7f8;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+}
+.history-modal-tab-active {
+  background: linear-gradient(180deg, #1bbff4 0%, #1beca7 100%);
+  border-radius: 8px;
+}
+.history-modal-label-active {
+  color: #0d171b;
+}
+
+.history-table-footer-container {
+  display: flex;
+  justify-content: center !important;
+}
+
+.history-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.history-table-header-container {
+  /* border: 1px solid #1beca6; */
+  border-radius: 8px !important;
+}
+.history-table-header-column {
+  background: #122126;
+  color: #f7f7f8;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: none !important;
+}
+.history-table-row-container {
+  background: #0d171b;
+  margin-bottom: 10px;
+}
+th {
+  padding: 0 !important;
+}
+td {
+  padding: 0 !important;
+}
+/* table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+td {
+  border: 1px solid #1beca6;
+  border-style: solid solid solid solid;
+  padding: 10px;
+}
+th {
+  border-top: 1px solid #1beca6;
+  border-top-left-radius: 10px;
+  border-left: 1px solid #1beca6;
+  color: #f7f7f8;
+}
+
+tr:first-child td:first-child {
+  border-top-left-radius: 10px;
+}
+tr:first-child td:last-child {
+  border-top-right-radius: 10px;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+tr:first-child td {
+  border-top-style: solid;
+}
+tr td:first-child {
+  border-left-style: solid;
+} */

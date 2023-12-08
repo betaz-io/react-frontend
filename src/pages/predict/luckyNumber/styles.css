@@ -1,0 +1,33 @@
+.lucky-number-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lucky-number-circle-image {
+  width: 40%;
+  min-width: 340px;
+  max-width: 512px;
+  aspect-ratio: 1;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.lucky-number-title {
+  /* font-size: 24px; */
+  font-style: normal;
+  font-weight: 700;
+  color: #f7f7f8;
+}
+.lucky-number-text {
+  background: linear-gradient(180deg, #1bbff4 0%, #1beca7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* font-size: 48px; */
+  font-style: normal;
+  font-weight: 700;
+}
