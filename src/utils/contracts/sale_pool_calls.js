@@ -19,6 +19,58 @@ export const setSalePoolContract = (api, data) => {
   );
 };
 
+async function faucet(caller, amount) {
+  if (!contract || !caller?.address) {
+    return null;
+  }
+
+  if (parseFloat(amount) <= 0) {
+    toast.error(`invalid inputs`);
+    return;
+  }
+
+  let unsubscribe;
+  let gasLimit;
+
+  const { signer } = await web3FromSource(caller?.meta?.source);
+  let value = 0;
+
+  gasLimit = await getEstimatedGas(
+    caller?.address,
+    contract,
+    value,
+    "salePoolTrait::buyWithSalePool",
+    convertToBalance(amount)
+  );
+
+  await contract.tx["salePoolTrait::buyWithSalePool"](
+    { gasLimit, value },
+    convertToBalance(amount)
+  )
+    .signAndSend(
+      caller?.address,
+      { signer },
+      async ({ status, dispatchError }) => {
+        if (dispatchError) {
+          if (dispatchError.isModule) {
+            console.log(dispatchError);
+            toast.error(`There is some error with your request`);
+          } else {
+            console.log("dispatchError", dispatchError.toString());
+          }
+        }
+
+        if (status) {
+          const statusText = Object.keys(status.toHuman())[0];
+          if (statusText === "0") toast.success(`Send ${amount} Bet AZ token ....`);
+        }
+      }
+    )
+    .then((unsub) => (unsubscribe = unsub))
+    .catch((e) => console.log("e", e));
+  return unsubscribe;
+}
+
 async function buy(caller, amount, fee) {
   if (!contract || !caller?.address) {
     return null;
@@ -134,6 +186,7 @@ const contract_calls = {
   buy,
   getSalePoolRemainingAmount,
   getTokenRatio,
+  faucet
 };
 
 export default contract_calls;
