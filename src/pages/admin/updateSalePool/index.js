@@ -209,12 +209,23 @@ const UpdateSalePool = () => {
       setTotalAmount(
         parseFloat(pool_infor?.totalAmount?.replaceAll(",", "") / 10 ** 12)
       );
+    } else {
+      setStatus(false);
+      setPrice(0);
+      setTotalPurchaseAmount(0);
+      setTotalAmount(0);
+      toast.error("Pool not exists");
     }
   };
 
   useEffect(() => {
     if (selected !== "") {
       getPoolInfor();
+    } else {
+      setStatus(false);
+      setPrice(0);
+      setTotalPurchaseAmount(0);
+      setTotalAmount(0);
     }
   }, [selected]);
 
