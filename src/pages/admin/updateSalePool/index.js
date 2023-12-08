@@ -99,9 +99,7 @@ const UpdateSalePool = () => {
         return;
       }
 
-      if (
-        poolStatus == status
-      ) {
+      if (poolStatus == status) {
         toast.error("Invalid buy status!");
         setIsLoading(false);
         return;
@@ -186,6 +184,39 @@ const UpdateSalePool = () => {
     const { value } = e.target;
     SetSelected(value);
   });
+
+  const getPoolInfor = async () => {
+    let pool_infor = (
+      await execContractQuery(
+        defaultCaller,
+        sale_pool_contract.CONTRACT_ABI,
+        sale_pool_contract.CONTRACT_ADDRESS,
+        0,
+        "salePoolTrait::getPoolSaleInfo",
+        selected
+      )
+    )?.toHuman().Ok;
+
+    if (pool_infor) {
+      setStatus(pool_infor?.buyStatus);
+      // setEndTime(Number(pool_infor?.endTimeBuy?.replaceAll(",", "")));
+      setPrice(parseFloat(pool_infor?.price?.replaceAll(",", "")));
+      setTotalPurchaseAmount(
+        parseFloat(
+          pool_infor?.totalPurchasedAmount?.replaceAll(",", "") / 10 ** 12
+        )
+      );
+      setTotalAmount(
+        parseFloat(pool_infor?.totalAmount?.replaceAll(",", "") / 10 ** 12)
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (selected !== "") {
+      getPoolInfor();
+    }
+  }, [selected]);
 
   return (
     <SectionContainer

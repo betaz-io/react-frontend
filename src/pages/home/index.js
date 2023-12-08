@@ -51,6 +51,7 @@ import sale_pool_contract from "utils/contracts/sale_pool";
 import "./styles.css";
 import SliderTeam from "./sliderTeam/SliderTeam";
 import { formatNumDynDecimal } from "utils";
+import { delay } from "utils";
 
 const teamList = [
   {
@@ -200,7 +201,6 @@ const HomePage = () => {
         const result = await sale_pool.faucet(currentAccount, 200);
         if (result) {
           toast.success(`fauset BetAZ success`);
-          dispatch(fetchUserBalance({ currentAccount }));
           getMaxbuy();
         }
       } catch (err) {
@@ -208,6 +208,8 @@ const HomePage = () => {
       }
       setIsLoading(false);
     }
+    await delay(2000);
+    dispatch(fetchUserBalance({ currentAccount }));
   };
 
   const onChangeAddress = useCallback((e) => {
