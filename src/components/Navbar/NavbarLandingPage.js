@@ -45,6 +45,10 @@ const tabs = [
     label: "Team member",
     key: "section-team-member",
   },
+  {
+    label: "Docs",
+    key: "section-docs",
+  },
   // {
   //   label: "Contact Us",
   //   key: "section-contact-us",
@@ -55,6 +59,7 @@ export const NavbarLandingPage = () => {
   const navigate = useNavigate();
   const isTablet = useCheckMobileScreen(1440);
   const isMobile = useCheckMobileScreen(576);
+
   return (
     <SectionContainer>
       <Flex
@@ -79,9 +84,11 @@ export const NavbarLandingPage = () => {
                   sx={{ px: "16px", py: "8px" }}
                   cursor="pointer"
                   onClick={() => {
-                    document
-                      .getElementById(e.key)
-                      .scrollIntoView({ behavior: "smooth" });
+                    e.label.toLocaleLowerCase() === "docs"
+                      ? window.open("https://betaz.gitbook.io/", "_blank")
+                      : document
+                          .getElementById(e.key)
+                          .scrollIntoView({ behavior: "smooth" });
                   }}
                 >
                   <Text>{e.label}</Text>
