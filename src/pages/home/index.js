@@ -595,16 +595,6 @@ const HomePage = () => {
                     onChange={onChangeAddress}
                     type="text"
                   />
-                  <Flex
-                    w="120px"
-                    alignItems="center"
-                    gap={1}
-                    pl="4px"
-                    borderLeft="2px solid rgba(255, 255, 255, 0.4)"
-                  >
-                    <TokenIcon size="18px" />
-                    BetAZ
-                  </Flex>
                 </Flex>
               </Box>
               <Flex direction="column" alignItems="center" mt="24px">

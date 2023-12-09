@@ -204,15 +204,27 @@ export const fetchBalance = createAsyncThunk(
         0,
         "betA0CoreTrait::getCorePoolAmout"
       ),
-      getAzeroBalanceOfAddress({
-        address: staking_pool_contract?.CONTRACT_ADDRESS,
-      }),
-      getAzeroBalanceOfAddress({
-        address: treasury_pool_contract?.CONTRACT_ADDRESS,
-      }),
-      getAzeroBalanceOfAddress({
-        address: pandora_pool_contract?.CONTRACT_ADDRESS,
-      }),
+      execContractQuerybyMetadata(
+        defaultCaller,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
+        0,
+        "betA0CoreTrait::getStakingPoolAmount"
+      ),
+      execContractQuerybyMetadata(
+        defaultCaller,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
+        0,
+        "betA0CoreTrait::getTreasuryPoolAmount"
+      ),
+      execContractQuerybyMetadata(
+        defaultCaller,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
+        0,
+        "betA0CoreTrait::getPandoraPoolAmount"
+      ),
       execContractQuerybyMetadata(
         defaultCaller,
         betaz_core_contract.CONTRACT_ABI,
@@ -223,9 +235,9 @@ export const fetchBalance = createAsyncThunk(
     ]);
 
     const core = formatQueryResultToNumber(corePoolBalance);
-    const staking = formatNumDynDecimal(stakingPoolBalance);
-    const treasury = formatNumDynDecimal(treasuryPoolBalance);
-    const pandora = formatNumDynDecimal(pandoraPoolBalance);
+    const staking = formatQueryResultToNumber(stakingPoolBalance);
+    const treasury = formatQueryResultToNumber(treasuryPoolBalance);
+    const pandora = formatQueryResultToNumber(pandoraPoolBalance);
     const reward = formatQueryResultToNumber(rewardPoolBalance);
 
     return { core, staking, treasury, pandora, reward };
