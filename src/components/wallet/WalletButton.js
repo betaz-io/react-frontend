@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from "react-redux";
 import DetailAccountBox from "components/detailAccount/detailAccount";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { useModal } from "contexts/useModal";
+import { resolveDomain } from "utils";
+import { truncateStr } from "utils";
 
 const WalletNotConnected = ({ openModal }) => {
   const isMobile = useCheckMobileScreen(768);
@@ -45,6 +47,14 @@ const WalletNotConnected = ({ openModal }) => {
 const WalletConnected = ({ onClickSwitch, isOpen, onOpen, onClose }) => {
   const { currentAccount } = useWallet();
   const isMobile = useCheckMobileScreen(992);
+
+  const [azeroID, setAzeroID] = useState(null);
+
+  useEffect(() => {
+    resolveDomain(currentAccount?.address).then((domains) => {
+      setAzeroID(domains);
+    });
+  }, [currentAccount?.address]);
   return (
     <Menu>
       <MenuButton>
@@ -83,7 +93,7 @@ const WalletConnected = ({ onClickSwitch, isOpen, onOpen, onClose }) => {
                 marginLeft: "10px",
               }}
             >
-              {addressShortener(currentAccount?.address)}
+              {truncateStr(azeroID, 7) || addressShortener(currentAccount?.address)}
             </Text>
           )}
         </Box>

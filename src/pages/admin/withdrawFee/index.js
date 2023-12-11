@@ -13,6 +13,7 @@ import { useWallet } from "contexts/useWallet";
 import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import { delay } from "utils";
 import { Keyring } from "@polkadot/keyring";
+import { getDomainToAddress } from "utils";
 
 const options = [
   { value: "core", label: "Core pool", color: "#0d171b" },
@@ -38,7 +39,14 @@ const WithdrawFee = () => {
       return;
     }
 
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
@@ -47,8 +55,9 @@ const WithdrawFee = () => {
       return;
     }
 
+    console.log({a: poolBalance?.core})
     if (
-      parseFloat(value) > parseFloat(poolBalance?.core?.replaceAll(",", ""))
+      parseFloat(value) > parseFloat(poolBalance?.core)
     ) {
       toast.error("Not enough balance!");
       return;
@@ -88,7 +97,7 @@ const WithdrawFee = () => {
           betaz_core_contract.CONTRACT_ADDRESS,
           0,
           "betA0CoreTrait::withdrawFee",
-          address,
+          receiver,
           convertToBalance(value)
         );
       } else if (selected === "staking") {
@@ -98,7 +107,7 @@ const WithdrawFee = () => {
           staking_pool_contract.CONTRACT_ADDRESS,
           0,
           "stakingPoolTrait::withdrawFee",
-          address,
+          receiver,
           convertToBalance(value)
         );
       } else if (selected === "treasury") {
@@ -108,7 +117,7 @@ const WithdrawFee = () => {
         const alice = keyring.createFromUri(treasuryPoolPhase);
 
         const transfer = api.tx.balances.transfer(
-          address,
+          receiver,
           convertToBalance(value)
         );
 

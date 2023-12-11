@@ -52,6 +52,7 @@ import "./styles.css";
 import SliderTeam from "./sliderTeam/SliderTeam";
 import { formatNumDynDecimal } from "utils";
 import { delay } from "utils";
+import { getDomainToAddress } from "utils";
 
 const teamList = [
   {
@@ -183,7 +184,14 @@ const HomePage = () => {
 
   const faucet = async () => {
     const difference = endTimeNumber - +new Date();
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
@@ -195,10 +203,11 @@ const HomePage = () => {
       toast.error("Can not fauset!");
       return;
     }
+
     setIsLoading(true);
     if (currentAccount?.address) {
       try {
-        const result = await sale_pool.faucet(currentAccount, 200);
+        const result = await sale_pool.faucet(currentAccount, receiver, 200);
         if (result) {
           toast.success(`fauset BetAZ success`);
           getMaxbuy();

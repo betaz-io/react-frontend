@@ -1,8 +1,5 @@
 import MinToken from "./mintToken";
 import UpdateCorePool from "./updateCorePool";
-import Locked from "./locked";
-import UpdateStatusRewardDistribution from "./updateStatusRewardDistribution";
-import SetClaimedStatus from "./setClaimedStatus";
 import UpdateRewardPool from "./updateRewardPool";
 import UpdateSalePool from "./updateSalePool";
 import TransferPool from "./transferPool/TranferPool";
@@ -28,10 +25,8 @@ export const tabItems = (key) => {
     case 6:
       return <WithdrawFee />;
     case 7:
-      return <SetClaimedStatus />;
-    case 8:
       return <WhitelistManager />;
-    case 9:
+    case 8:
       return <ClaimRewardManager />;
     default:
       return <MinToken />;

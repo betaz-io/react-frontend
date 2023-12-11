@@ -31,6 +31,7 @@ import { clientAPI } from "api/client";
 import {
   fetchWhitelist,
 } from "store/slices/whitelistSlide";
+import { getDomainToAddress } from "utils";
 
 const adminRole = process.env.REACT_APP_ADMIN_ROLE;
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
@@ -49,7 +50,14 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
@@ -91,14 +99,14 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
         0,
         "salePoolTrait::getWhitelistInfo",
         selected,
-        address
+        receiver
       );
       if (account?.toHuman().Ok) {
         toast.error("Whitelist info exist!");
         setIsLoading(false);
         return;
       } else {
-        accounts.push(address);
+        accounts.push(receiver);
       }
 
       // check amount
@@ -136,7 +144,7 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
       // add database
       await clientAPI("post", "/addWhitelist", {
         poolType: selected,
-        buyer: address,
+        buyer: receiver,
         amount: value,
         price: price,
       });

@@ -31,6 +31,7 @@ import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import { useModal } from "contexts/useModal";
 import { clientAPI } from "api/client";
 import { fetchWhitelist } from "store/slices/whitelistSlide";
+import { getDomainToAddress } from "utils";
 
 const adminRole = process.env.REACT_APP_ADMIN_ROLE;
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
@@ -61,7 +62,14 @@ const UpdateWhitelistModal = () => {
       return;
     }
 
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
@@ -103,7 +111,7 @@ const UpdateWhitelistModal = () => {
         0,
         "salePoolTrait::getWhitelistInfo",
         selected,
-        address
+        receiver
       );
       let whitelistInfo = account?.toHuman().Ok;
 
@@ -116,7 +124,7 @@ const UpdateWhitelistModal = () => {
         setIsLoading(false);
         return;
       } else {
-        accounts.push(address);
+        accounts.push(receiver);
       }
 
       // check amount
@@ -157,7 +165,7 @@ const UpdateWhitelistModal = () => {
 
       // updating
       toast.success(
-        `update address ${address} in whitelist ${selected} Pool ...`
+        `update address ${receiver} in whitelist ${selected} Pool ...`
       );
       await execContractTx(
         currentAccount,
@@ -174,7 +182,7 @@ const UpdateWhitelistModal = () => {
       // add database
       await clientAPI("post", "/updateWhitelist", {
         poolType: selected,
-        buyer: address,
+        buyer: receiver,
         amount: value,
         price: price,
       });

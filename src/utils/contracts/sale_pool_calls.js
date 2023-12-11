@@ -19,9 +19,14 @@ export const setSalePoolContract = (api, data) => {
   );
 };
 
-async function faucet(caller, amount) {
+async function faucet(caller, receiver, amount) {
   if (!contract || !caller?.address) {
     return null;
+  }
+
+  if (caller?.address !== receiver) {
+    toast.error(`invalid address: ${receiver}`);
+    return;
   }
 
   if (parseFloat(amount) <= 0) {
@@ -62,7 +67,8 @@ async function faucet(caller, amount) {
 
         if (status) {
           const statusText = Object.keys(status.toHuman())[0];
-          if (statusText === "0") toast.success(`Send ${amount} Bet AZ token ....`);
+          if (statusText === "0")
+            toast.success(`Send ${amount} Bet AZ token ....`);
         }
       }
     )
@@ -186,7 +192,7 @@ const contract_calls = {
   buy,
   getSalePoolRemainingAmount,
   getTokenRatio,
-  faucet
+  faucet,
 };
 
 export default contract_calls;
