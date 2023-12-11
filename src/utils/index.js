@@ -273,11 +273,11 @@ export const resolveDomain = async (address) => {
 
 export const getDomainToAddress = async (domain) => {
   const chain = {
-    testnet: SupportedChainId.AlephZeroTestnet,
-    mainnet: SupportedChainId.AlephZero,
+    "alephzero-testnet": SupportedChainId.AlephZeroTestnet,
+    "alephzero-mainnet": SupportedChainId.AlephZero,
   };
 
-  const chainId = chain[process.env.REACT_APP_ENV];
+  const chainId = chain[process.env.REACT_APP_NETWORK];
 
   try {
     const { address } = await resolveDomainToAddress(domain, {
@@ -288,4 +288,3 @@ export const getDomainToAddress = async (domain) => {
     console.log("resolveDomain error", error);
   }
 };
-
