@@ -157,10 +157,10 @@ export const fetchUserBalance = createAsyncThunk(
       ),
       execContractQuerybyMetadata(
         defaultCaller,
-        staking_pool_contract.CONTRACT_ABI,
-        staking_pool_contract.CONTRACT_ADDRESS,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
         0,
-        "stakingPoolTrait::getRewardPool"
+        "betA0CoreTrait::getStakingPoolAmount"
       ),
     ]);
 
