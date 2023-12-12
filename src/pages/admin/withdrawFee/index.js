@@ -47,9 +47,7 @@ const WithdrawFee = () => {
       return;
     }
 
-    if (
-      parseFloat(value) > parseFloat(poolBalance?.core?.replaceAll(",", ""))
-    ) {
+    if (parseFloat(value) > parseFloat(poolBalance?.core)) {
       toast.error("Not enough balance!");
       return;
     }
