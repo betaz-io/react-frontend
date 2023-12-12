@@ -241,3 +241,9 @@ export const truncateStr = (str, n = 6) => {
 export const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+export const formatPoolBalance = (result, decimal = 12, dec = 4) => {
+  const ret = result?.toHuman()?.Ok?.replaceAll(",", "");
+  let x = ret / 10 ** decimal;
+  return (x.toFixed(dec) * 10 ** dec) / 10 ** dec;
+};
