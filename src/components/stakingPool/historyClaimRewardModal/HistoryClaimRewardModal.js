@@ -31,6 +31,7 @@ import {
   fetchRewardStaking,
   incrementCurrentPage,
   decrementCurrentPage,
+  setCurrentPage,
 } from "store/slices/rewardStakingSlide";
 import StakeStakingPool from "components/stakingPool/StakeStakingPool";
 import UnstakeStakingPool from "components/stakingPool/UnstakeStakingPool";
@@ -39,23 +40,27 @@ import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 const ClaimRewardStakingModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { currentAccount } = useSelector((s) => s.substrate);
-  const { rewardData, currentPage } = useSelector(
+  const { rewardData, currentPage, totalPages } = useSelector(
     (s) => s.rewardStaking
   );
-
 
   useEffect(() => {
     dispatch(fetchRewardStaking(currentAccount));
   }, [currentAccount, isOpen]);
 
   const nextPage = useCallback(() => {
-    if (currentPage < 5) dispatch(incrementCurrentPage());
-    else toast("Only 5 pages can be displayed");
+    if (currentPage < totalPages) dispatch(incrementCurrentPage());
+    else toast("Only " + totalPages + " pages can be displayed");
     dispatch(fetchRewardStaking(currentAccount));
   });
 
   const previousPage = useCallback(() => {
     if (currentPage > 1) dispatch(decrementCurrentPage());
+    dispatch(fetchRewardStaking(currentAccount));
+  });
+
+  const goToPage = useCallback((page) => {
+    dispatch(setCurrentPage(page));
     dispatch(fetchRewardStaking(currentAccount));
   });
 
@@ -271,15 +276,23 @@ const ClaimRewardStakingModal = ({ isOpen, onClose }) => {
             >
               <IoIosArrowBack />
             </IconButton>
-            <IconButton variant="outline" color="#FFFFFF" disabled="disabled">
-              <span
-                style={{
-                  color: "#FFFFFF",
-                }}
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <IconButton
+                variant="outline"
+                color="#FFFF"
+                disabled="disabled"
+                borderColor="#1BECA6"
+                onClick={() => goToPage(index + 1)}
               >
-                {currentPage}
-              </span>
-            </IconButton>
+                <span
+                  style={{
+                    color: "#1BECA6",
+                  }}
+                >
+                  {index + 1}
+                </span>
+              </IconButton>
+            ))}
             <IconButton
               // ml="8px"
               variant="outline"

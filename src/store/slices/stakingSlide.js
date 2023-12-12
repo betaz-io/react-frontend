@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { clientAPITotalPages } from "api/client";
 import { clientAPI } from "api/client";
 
 // import { formatNumDynDecimal, formatQueryResultToNumber } from "utils";
@@ -9,6 +10,7 @@ import { clientAPI } from "api/client";
 
 const initialState = {
   dataPending: [],
+  totalPages: 0,
   currentPage: 1,
   currentTab: 0,
   dataCancelRequestUnstake: [],
@@ -30,6 +32,10 @@ export const stakingSlice = createSlice({
 
     decrementCurrentPage: (state) => {
       state.currentPage--;
+    },
+
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
     },
 
     setDataCancelRequestUnstake: (state, action) => {
@@ -58,7 +64,8 @@ export const stakingSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPendingUnstake.fulfilled, (state, action) => {
-      state.dataPending = action.payload;
+      state.dataPending = action.payload.data;
+      state.totalPages = action.payload.total;
     });
   },
 });
@@ -73,6 +80,7 @@ export const {
   incrementCurrentPage,
   decrementCurrentPage,
   setCurrentTab,
+  setCurrentPage
 } = stakingSlice.actions;
 
 export default stakingSlice.reducer;
@@ -82,11 +90,20 @@ export const fetchPendingUnstake = createAsyncThunk(
   async (currentAccount, { getState }) => {
     const { currentPage, currentTab } = getState().staking;
 
-    let data = await clientAPI("post", "/getPendingUnstake", {
-      caller: currentAccount?.address,
-      limit: 10,
-      offset: 10 * (currentPage - 1),
-    });
+    let [data, total] = await Promise.all([
+      clientAPI("post", "/getPendingUnstake", {
+        caller: currentAccount?.address,
+        limit: 10,
+        offset: 10 * (currentPage - 1),
+        status: currentTab,
+      }),
+      clientAPITotalPages("post", "/getPendingUnstake", {
+        caller: currentAccount?.address,
+        limit: 10,
+        offset: 10 * (currentPage - 1),
+        status: currentTab,
+      }),
+    ]);
     const addActionTime = (item) => {
       const action = {};
       action.index = item?.index;
@@ -98,33 +115,11 @@ export const fetchPendingUnstake = createAsyncThunk(
     data.forEach(addActionTime);
     let newData = data.map(({ index, ...rest }) => rest);
 
-    if (currentTab === 0) {
-      if (currentAccount === "") {
-        let data = [];
-        return data;
-      } else {
-        return newData;
-      }
-    } else if (currentTab === 1) {
-      if (currentAccount === "") {
-        let data = [];
-        return data;
-      } else {
-        newData = newData.filter((e) => {
-          return +new Date() < e.time;
-        });
-        return newData;
-      }
-    } else if (currentTab === 2) {
-      if (currentAccount === "") {
-        let data = [];
-        return data;
-      } else {
-        newData = newData.filter((e) => {
-          return +new Date() >= e.time;
-        });
-        return newData;
-      }
+    if (currentAccount === "") {
+      let data = [];
+      return { data, total: 0 };
+    } else {
+      return { data: newData, total: Math.ceil(total / 10) };
     }
   }
 );

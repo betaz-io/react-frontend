@@ -426,20 +426,23 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
             >
               <IoIosArrowBack />
             </IconButton>
-            <IconButton
-              variant="outline"
-              color="#FFFF"
-              disabled="disabled"
-              borderColor="#1BECA6"
-            >
-              <span
-                style={{
-                  color: "#1BECA6",
-                }}
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <IconButton
+                variant="outline"
+                color="#FFFF"
+                disabled="disabled"
+                borderColor="#1BECA6"
+                onClick={() => goToPage(index + 1)}
               >
-                {uiPage}
-              </span>
-            </IconButton>
+                <span
+                  style={{
+                    color: "#1BECA6",
+                  }}
+                >
+                  {index + 1}
+                </span>
+              </IconButton>
+            ))}
 
             <IconButton
               // ml="8px"

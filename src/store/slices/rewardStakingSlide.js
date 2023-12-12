@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { clientAPITotalPages } from "api/client";
 import { clientAPI } from "api/client";
 
 const initialState = {
   rewardData: [],
   currentPage: 1,
+  totalPages: 0,
   status: "",
 };
 
@@ -19,6 +21,10 @@ export const rewardStakingSlice = createSlice({
       state.currentPage--;
     },
 
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+
     setStatus: (state, action) => {
       state.status = action.payload;
     },
@@ -29,7 +35,8 @@ export const rewardStakingSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRewardStaking.fulfilled, (state, action) => {
-      state.rewardData = action.payload;
+      state.rewardData = action.payload.data;
+      state.totalPages = action.payload.total;
     });
   },
 });
@@ -39,6 +46,7 @@ export const {
   clearStatus,
   incrementCurrentPage,
   decrementCurrentPage,
+  setCurrentPage,
 } = rewardStakingSlice.actions;
 
 export default rewardStakingSlice.reducer;
@@ -48,12 +56,19 @@ export const fetchRewardStaking = createAsyncThunk(
   async (currentAccount, { getState }) => {
     const { currentPage } = getState().rewardStaking;
 
-    let data = await clientAPI("post", "/getRewardByCaller", {
-      caller: currentAccount?.address,
-      limit: 10,
-      offset: 10 * (currentPage - 1),
-    });
+    let [data, total] = await Promise.all([
+      clientAPI("post", "/getRewardByCaller", {
+        caller: currentAccount?.address,
+        limit: 10,
+        offset: 10 * (currentPage - 1),
+      }),
+      clientAPITotalPages("post", "/getRewardByCaller", {
+        caller: currentAccount?.address,
+        limit: 10,
+        offset: 10 * (currentPage - 1),
+      }),
+    ]);
 
-    return data;
+    return {data, total: Math.ceil(total / 10)};
   }
 );
