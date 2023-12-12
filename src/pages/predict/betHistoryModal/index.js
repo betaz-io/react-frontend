@@ -38,6 +38,7 @@ import { clientAPI } from "api/client";
 import { useSelector } from "react-redux";
 import useInterval from "hooks/useInterval";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
+import { clientAPITotalPages } from "api/client";
 
 const tabData = [
   {
@@ -58,6 +59,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
   const [currentTab, setCurrentTab] = useState(0);
   const [uiPage, setUIPage] = useState(1);
   const [data, setdata] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
 
   const getData = async () => {
     if (currentTab === 0) {
@@ -65,38 +67,62 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         setdata([]);
         return;
       }
-      let data = await clientAPI("post", "/getEventsByPlayer", {
-        player: currentAccount?.address,
-        limit: 10,
-        offset: 10 * (currentPage - 1),
-      });
+      let [data, total] = await Promise.all([
+        clientAPI("post", "/getEventsByPlayer", {
+          player: currentAccount?.address,
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+        }),
+        clientAPITotalPages("post", "/getEventsByPlayer", {
+          player: currentAccount?.address,
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+        }),
+      ]);
       // console.log({mybets: data});
       setdata(data);
+      setTotalPages(Math.ceil(total / 10));
     } else if (currentTab === 1) {
-      let data = await clientAPI("post", "/getEvents", {
-        limit: 10,
-        offset: 10 * (currentPage - 1),
-      });
+      let [data, total] = await Promise.all([
+        clientAPI("post", "/getEvents", {
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+        }),
+        clientAPITotalPages("post", "/getEvents", {
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+        }),
+      ]);
       // console.log({ all: data });
       setdata(data);
+      setTotalPages(Math.ceil(total / 10));
     } else if (currentTab === 2) {
-      let data = await clientAPI("post", "/getRareWins", {
-        limit: 10,
-        offset: 10 * (currentPage - 1),
-      });
+      let [data, total] = await Promise.all([
+        clientAPI("post", "/getRareWins", {
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+        }),
+        clientAPITotalPages("post", "/getRareWins", {
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+        }),
+      ]);
       // console.log({rarewins: data});
+      setTotalPages(Math.ceil(total / 10));
       setdata(data);
     }
   };
   useInterval(() => getData(), 5000);
 
   useEffect(() => {
+    currentPage = 1;
+    setUIPage(currentPage);
     getData();
   }, [currentTab]);
 
   const nextPage = useCallback(() => {
-    if (currentPage < 5) currentPage++;
-    else toast("Only 5 pages can be displayed");
+    if (currentPage < totalPages) currentPage++;
+    else toast(`Only ${totalPages} pages can be displayed`);
     setUIPage(currentPage);
     getData();
   });
@@ -107,6 +133,13 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
     getData();
   });
 
+  const goToPage = useCallback((page) => {
+    currentPage = page;
+    setUIPage(page);
+    getData();
+  });
+
+  console.log({ totalPages, currentPage });
   const historyTableData = {
     headers: [
       {
@@ -144,12 +177,12 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         icon: <AiFillStar size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Won amount",
+        label: "Reward in $BetAZ",
         key: "won-amount",
         icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Reward amount",
+        label: "Reward in $AZERO",
         key: "reward-amount",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
@@ -407,6 +440,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
                 {uiPage}
               </span>
             </IconButton>
+
             <IconButton
               // ml="8px"
               variant="outline"
