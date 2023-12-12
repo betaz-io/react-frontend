@@ -13,6 +13,7 @@ import staking_pool_contract from "utils/contracts/staking_pool";
 import treasury_pool_contract from "utils/contracts/treasury_pool";
 import pandora_pool_contract from "utils/contracts/pandora_pool";
 import { BN } from "@polkadot/util";
+import { formatPoolBalance } from "utils";
 
 const localCurrentAccount = window?.localStorage?.getItem(
   "localCurrentAccount"
@@ -156,16 +157,16 @@ export const fetchUserBalance = createAsyncThunk(
       ),
       execContractQuerybyMetadata(
         defaultCaller,
-        staking_pool_contract.CONTRACT_ABI,
-        staking_pool_contract.CONTRACT_ADDRESS,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
         0,
-        "stakingPoolTrait::getRewardPool"
+        "betA0CoreTrait::getStakingPoolAmount"
       ),
     ]);
 
-    const betaz = formatQueryResultToNumber(tokenBalance);
+    const betaz = formatPoolBalance(tokenBalance);
     const azero = formatNumDynDecimal(azeroBalance);
-    const stake = formatQueryResultToNumber(stakeAmount);
+    const stake = formatPoolBalance(stakeAmount);
     let reward = 0;
     let total_stake = totalStake?.toHuman()?.Ok?.replaceAll(",", "") / 10 ** 12;
     if (total_stake > 0) {
@@ -234,11 +235,11 @@ export const fetchBalance = createAsyncThunk(
       ),
     ]);
 
-    const core = formatQueryResultToNumber(corePoolBalance);
-    const staking = formatQueryResultToNumber(stakingPoolBalance);
-    const treasury = formatQueryResultToNumber(treasuryPoolBalance);
-    const pandora = formatQueryResultToNumber(pandoraPoolBalance);
-    const reward = formatQueryResultToNumber(rewardPoolBalance);
+    const core = formatPoolBalance(corePoolBalance);
+    const staking = formatPoolBalance(stakingPoolBalance);
+    const treasury = formatPoolBalance(treasuryPoolBalance);
+    const pandora = formatPoolBalance(pandoraPoolBalance);
+    const reward = formatPoolBalance(rewardPoolBalance);
 
     return { core, staking, treasury, pandora, reward };
   }
