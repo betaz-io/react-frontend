@@ -171,9 +171,11 @@ const NavbarLandingPageMobileMenu = () => {
                       sx={{ px: "16px", py: "8px" }}
                       cursor="pointer"
                       onClick={() => {
-                        document
-                          .getElementById(e.key)
-                          .scrollIntoView({ behavior: "smooth" });
+                        e.label.toLocaleLowerCase() === "docs"
+                          ? window.open("https://betaz.gitbook.io/", "_blank")
+                          : document
+                              .getElementById(e.key)
+                              .scrollIntoView({ behavior: "smooth" });
                       }}
                     >
                       <Text>{e.label}</Text>
