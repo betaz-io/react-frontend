@@ -925,7 +925,7 @@ const HomePage = () => {
               </Box>
               <Button
                 px="24px"
-                minW="300px"
+                minW={{ base: "100%", sm: "300px" }}
                 height="44px"
                 isDisabled={isLoading}
                 onClick={() => handleSendEmail(input)}

@@ -184,8 +184,8 @@ const NavbarLandingPageMobileMenu = () => {
               <Box pt="24px">
                 <Button
                   w="100%"
-                  onClick={() => toast.success("Comming soon!")}
-                  // onClick={() => window.open("/app", "_blank")}
+                  // onClick={() => toast.success("Comming soon!")}
+                  onClick={() => window.open("/app", "_blank")}
                 >
                   Launch App
                 </Button>
