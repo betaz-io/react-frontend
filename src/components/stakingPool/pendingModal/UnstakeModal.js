@@ -58,6 +58,7 @@ import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import StakeStakingPool from "components/stakingPool/StakeStakingPool";
 import UnstakeStakingPool from "components/stakingPool/UnstakeStakingPool";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
+import ReactPaginate from "react-paginate";
 // import StakingPool from "../StakingPool";
 
 const tabData = [
@@ -100,6 +101,11 @@ const UnstakeModal = ({ isOpen, onClose }) => {
     if (currentPage > 1) dispatch(decrementCurrentPage());
     dispatch(fetchPendingUnstake(currentAccount));
   });
+
+  const handlePageChange = (selectedPage) => {
+    dispatch(setCurrentPage(selectedPage.selected + 1));
+    dispatch(fetchPendingUnstake(currentAccount));
+  };
 
   const goToPage = useCallback((page) => {
     dispatch(setCurrentPage(page));
@@ -478,38 +484,18 @@ const UnstakeModal = ({ isOpen, onClose }) => {
         </ModalBody>
         <ModalFooter className="history-table-footer-container">
           <Box display="flex" gap="8px">
-            <IconButton
-              variant="outline"
-              color="#FFFFFF"
-              onClick={() => previousPage()}
-            >
-              <IoIosArrowBack />
-            </IconButton>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <IconButton
-                variant="outline"
-                color="#FFFF"
-                disabled="disabled"
-                borderColor="#1BECA6"
-                onClick={() => goToPage(index + 1)}
-              >
-                <span
-                  style={{
-                    color: "#1BECA6",
-                  }}
-                >
-                  {index + 1}
-                </span>
-              </IconButton>
-            ))}
-            <IconButton
-              // ml="8px"
-              variant="outline"
-              color="#FFFFFF"
-              onClick={() => nextPage()}
-            >
-              <IoIosArrowForward />
-            </IconButton>
+            <ReactPaginate
+              pageCount={totalPages}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={1}
+              onPageChange={handlePageChange}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+              breakClassName={"ellipsis"}
+              breakLabel={"..."}
+              previousLabel={"<"}
+              nextLabel={">"}
+            />
           </Box>
         </ModalFooter>
       </ModalContent>

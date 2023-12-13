@@ -113,3 +113,30 @@ tr:first-child td {
 tr td:first-child {
   border-left-style: solid;
 } */
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.pagination a {
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid white;
+  text-decoration: none;
+  min-width: 40px !important;
+  color: white;
+  border-radius: 12px;
+}
+
+.pagination li.active a{
+  /* background-color: #1BECA6; */
+  color: #1BECA6;
+  border-color: #1BECA6;
+}
+
+.pagination .ellipsis {
+  cursor: not-allowed;
+}

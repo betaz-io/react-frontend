@@ -39,6 +39,8 @@ import { useSelector } from "react-redux";
 import useInterval from "hooks/useInterval";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { clientAPITotalPages } from "api/client";
+import ReactPaginate from "react-paginate";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const tabData = [
   {
@@ -139,7 +141,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
     getData();
   });
 
-  console.log({ totalPages, currentPage });
+  // console.log({ totalPages, currentPage });
   const historyTableData = {
     headers: [
       {
@@ -195,6 +197,13 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
       },
     ],
     data: data,
+  };
+
+  // const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageChange = (selectedPage) => {
+    currentPage = selectedPage.selected + 1;
+    getData();
   };
 
   const isMobile = useCheckMobileScreen(480);
@@ -419,39 +428,18 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         </ModalBody>
         <ModalFooter className="history-table-footer-container">
           <Box display="flex" gap="8px">
-            <IconButton
-              variant="outline"
-              color="#FFFFFF"
-              onClick={() => previousPage()}
-            >
-              <IoIosArrowBack />
-            </IconButton>
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <IconButton
-                variant="outline"
-                color="#FFFF"
-                disabled="disabled"
-                borderColor="#1BECA6"
-                onClick={() => goToPage(index + 1)}
-              >
-                <span
-                  style={{
-                    color: "#1BECA6",
-                  }}
-                >
-                  {index + 1}
-                </span>
-              </IconButton>
-            ))}
-
-            <IconButton
-              // ml="8px"
-              variant="outline"
-              color="#FFFFFF"
-              onClick={() => nextPage()}
-            >
-              <IoIosArrowForward />
-            </IconButton>
+            <ReactPaginate
+              pageCount={totalPages}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={1}
+              onPageChange={handlePageChange}
+              containerClassName={"pagination"}
+              activeClassName={"active"}
+              breakClassName={"ellipsis"}
+              breakLabel={"..."}
+              previousLabel={"<"}
+              nextLabel={">"}
+            />
           </Box>
         </ModalFooter>
       </ModalContent>
