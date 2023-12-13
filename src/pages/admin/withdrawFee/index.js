@@ -9,14 +9,20 @@ import { convertToBalance, isValidAddressPolkadotAddress } from "utils";
 import { execContractTx, execContractQuery } from "utils/contracts";
 import betaz_core_contract from "utils/contracts/betaz_core";
 import staking_pool_contract from "utils/contracts/staking_pool";
+import pandora_pool_contract from "utils/contracts/pandora_pool";
+import treasury_pool_contract from "utils/contracts/treasury_pool";
 import { useWallet } from "contexts/useWallet";
 import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import { delay } from "utils";
 import { Keyring } from "@polkadot/keyring";
+import { getAzeroBalanceOfAddress } from "utils/contracts";
+import { formatQueryResultToNumber } from "utils";
+import { convertBalanceToNumber } from "utils";
 
 const options = [
   { value: "core", label: "Core pool", color: "#0d171b" },
   { value: "staking", label: "Staking pool", color: "#0d171b" },
+  { value: "pandora", label: "pandora pool", color: "#0d171b" },
   { value: "treasury", label: "Treasury pool", color: "#0d171b" },
 ];
 
@@ -47,11 +53,6 @@ const WithdrawFee = () => {
       return;
     }
 
-    if (parseFloat(value) > parseFloat(poolBalance?.core)) {
-      toast.error("Not enough balance!");
-      return;
-    }
-
     let hasRole = await execContractQuery(
       currentAccount?.address,
       betaz_core_contract.CONTRACT_ABI,
@@ -74,12 +75,30 @@ const WithdrawFee = () => {
       );
     }
 
+    if (selected === "pandora") {
+      hasRole = await execContractQuery(
+        currentAccount?.address,
+        pandora_pool_contract.CONTRACT_ABI,
+        pandora_pool_contract.CONTRACT_ADDRESS,
+        0,
+        "accessControl::hasRole",
+        adminRole,
+        currentAccount?.address
+      );
+    }
+
     if (!hasRole?.toHuman().Ok) {
       toast.error("You not admin!");
       return;
     } else {
       setIsLoading(true);
       if (selected === "core") {
+        if (parseFloat(value) > parseFloat(poolBalance?.core)) {
+          toast.error("Not enough balance!");
+          setIsLoading(false);
+          return;
+        }
+
         await execContractTx(
           currentAccount,
           betaz_core_contract.CONTRACT_ABI,
@@ -90,6 +109,21 @@ const WithdrawFee = () => {
           convertToBalance(value)
         );
       } else if (selected === "staking") {
+        let staking_pool_amount = await execContractQuery(
+          currentAccount?.address,
+          staking_pool_contract.CONTRACT_ABI,
+          staking_pool_contract.CONTRACT_ADDRESS,
+          0,
+          "stakingPoolTrait::getRewardPool"
+        );
+
+        if (
+          parseFloat(value) > convertBalanceToNumber(staking_pool_amount)
+        ) {
+          toast.error("Not enough balance!");
+          setIsLoading(false);
+          return;
+        }
         await execContractTx(
           currentAccount,
           staking_pool_contract.CONTRACT_ABI,
@@ -99,7 +133,42 @@ const WithdrawFee = () => {
           address,
           convertToBalance(value)
         );
+      } else if (selected === "pandora") {
+        let pandora_pool_amount = await execContractQuery(
+          currentAccount?.address,
+          pandora_pool_contract.CONTRACT_ABI,
+          pandora_pool_contract.CONTRACT_ADDRESS,
+          0,
+          "pandoraPoolTraits::getTotalWinAmount"
+        );
+
+        if (
+          parseFloat(value) > convertBalanceToNumber(pandora_pool_amount)
+        ) {
+          toast.error("Not enough balance!");
+          setIsLoading(false);
+          return;
+        }
+        await execContractTx(
+          currentAccount,
+          pandora_pool_contract.CONTRACT_ABI,
+          pandora_pool_contract.CONTRACT_ADDRESS,
+          0,
+          "pandoraPoolTraits::withdrawFee",
+          address,
+          convertToBalance(value)
+        );
       } else if (selected === "treasury") {
+        let treasury_pool_amount = await getAzeroBalanceOfAddress({
+          address: treasury_pool_contract.CONTRACT_ADDRESS,
+        });
+
+        if (parseFloat(value) > parseFloat(treasury_pool_amount)) {
+          toast.error("Not enough balance!");
+          setIsLoading(false);
+          return;
+        }
+
         const toastTransfer = toast.loading("Transfer ....");
         const keyring = new Keyring({ type: "sr25519" });
 
