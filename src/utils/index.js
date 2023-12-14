@@ -2,6 +2,12 @@ import numeral from "numeral";
 import { decodeAddress, encodeAddress } from "@polkadot/keyring";
 import { hexToU8a, formatBalance, isHex, BN } from "@polkadot/util";
 
+import {
+  SupportedChainId,
+  resolveAddressToDomain,
+  resolveDomainToAddress,
+} from "@azns/resolver-core";
+
 export const convertToBalance = (value, decimal = 12) => {
   let amount = parseFloat(value);
   return formatNumToBN(amount, decimal);
@@ -246,4 +252,40 @@ export const formatPoolBalance = (result, decimal = 12, dec = 4) => {
   const ret = result?.toHuman()?.Ok?.replaceAll(",", "");
   let x = ret / 10 ** decimal;
   return (x.toFixed(dec) * 10 ** dec) / 10 ** dec;
+};
+
+// AZERO ID
+export const resolveDomain = async (address) => {
+  const chain = {
+    "alephzero-testnet": SupportedChainId.AlephZeroTestnet,
+    "alephzero-mainnet": SupportedChainId.AlephZero,
+  };
+
+  const chainId = chain[process.env.REACT_APP_NETWORK];
+  try {
+    const { primaryDomain } = await resolveAddressToDomain(address, {
+      chainId: chainId,
+    });
+    return primaryDomain;
+  } catch (error) {
+    console.log("resolveDomain error", error);
+  }
+};
+
+export const getDomainToAddress = async (domain) => {
+  const chain = {
+    "alephzero-testnet": SupportedChainId.AlephZeroTestnet,
+    "alephzero-mainnet": SupportedChainId.AlephZero,
+  };
+
+  const chainId = chain[process.env.REACT_APP_NETWORK];
+
+  try {
+    const { address } = await resolveDomainToAddress(domain, {
+      chainId: chainId,
+    });
+    return address;
+  } catch (error) {
+    console.log("resolveDomain error", error);
+  }
 };

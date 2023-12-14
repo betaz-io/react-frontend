@@ -11,6 +11,7 @@ import betaz_token_contract from "utils/contracts/betaz_token";
 import { useWallet } from "contexts/useWallet";
 import { fetchUserBalance } from "store/slices/substrateSlice";
 import { delay } from "utils";
+import { getDomainToAddress } from "utils";
 
 const adminRole = process.env.REACT_APP_ADMIN_ROLE;
 
@@ -23,10 +24,18 @@ const MinToken = () => {
   const [value, setValue] = useState(0);
   const [address, setAddress] = useState("");
   const handleMint = async () => {
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
+
     if (value === 0 || value === "") {
       toast.error("Invalid value");
       return;
@@ -52,7 +61,7 @@ const MinToken = () => {
         betaz_token_contract.CONTRACT_ADDRESS,
         0,
         "betAZTrait::mint",
-        address,
+        receiver,
         convertToBalance(value)
       );
       setIsLoading(false);
@@ -65,7 +74,7 @@ const MinToken = () => {
     const { value } = e.target;
     const reg = /^\d*\.?\d*$/;
     let val = 0;
-    if ((!isNaN(value) && reg.test(value)) || value === "" ) {
+    if ((!isNaN(value) && reg.test(value)) || value === "") {
       val = parseFloat(value);
       if (val < 0) val = 1;
       else {

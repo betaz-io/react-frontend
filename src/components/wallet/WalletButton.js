@@ -17,7 +17,7 @@ import {
 import { useWallet } from "contexts/useWallet";
 import { useEffect, useState } from "react";
 import WalletConnectModal from "./WalletConnectModal";
-import { addressShortener } from "utils";
+import { addressShortener, resolveDomain, truncateStr } from "utils";
 import { useNetwork } from "components/Network/useNetWork";
 import { BiWallet } from "react-icons/bi";
 import { AddressCopier } from "components/addressCopier";
@@ -45,6 +45,14 @@ const WalletNotConnected = ({ openModal }) => {
 const WalletConnected = ({ onClickSwitch, isOpen, onOpen, onClose }) => {
   const { currentAccount } = useWallet();
   const isMobile = useCheckMobileScreen(992);
+
+  const [azeroID, setAzeroID] = useState(null);
+
+  useEffect(() => {
+    resolveDomain(currentAccount?.address).then((domains) => {
+      setAzeroID(domains);
+    });
+  }, [currentAccount]);
   return (
     <Menu>
       <MenuButton>
@@ -83,7 +91,8 @@ const WalletConnected = ({ onClickSwitch, isOpen, onOpen, onClose }) => {
                 marginLeft: "10px",
               }}
             >
-              {addressShortener(currentAccount?.address)}
+              {truncateStr(azeroID, 7) ||
+                addressShortener(currentAccount?.address)}
             </Text>
           )}
         </Box>
