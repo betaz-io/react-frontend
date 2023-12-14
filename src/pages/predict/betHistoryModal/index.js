@@ -179,12 +179,12 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         icon: <AiFillStar size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Reward in $BetAZ",
+        label: "Reward in $AZERO",
         key: "won-amount",
         icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Reward in $AZERO",
+        label: "Reward in $BetAZ",
         key: "reward-amount",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
