@@ -180,8 +180,26 @@ const Predict = () => {
           console.log(finalized);
           setLuckyNumber(parseInt(finalized.random_number));
           if (finalized.is_win)
-            toast("You won " + finalized.win_amount + " AZERO");
-          else toast("Try again next time");
+            toast(
+              <span>
+                Win: Congratulations! You won
+                <span style={{ color: "#1beca7" }}>
+                  {" " + finalized.win_amount + " "}
+                </span>
+                $AZERO!
+              </span>,
+              {
+                style: {
+                  fontSize: "20px",
+                },
+              }
+            );
+          else
+            toast("Lose: Better luck next time!", {
+              style: {
+                fontSize: "20px",
+              },
+            });
           loadBalance();
         }
       } catch (error) {
@@ -268,8 +286,26 @@ const Predict = () => {
         console.log(finalized);
         setLuckyNumber(parseInt(finalized.random_number));
         if (finalized.is_win)
-          toast("You won " + finalized.win_amount + " AZERO");
-        else toast("Try again next time");
+          toast(
+            <span>
+              Win: Congratulations! You won
+              <span style={{ color: "#1beca7" }}>
+                {" " + finalized.win_amount + " "}
+              </span>
+              $AZERO!
+            </span>,
+            {
+              style: {
+                fontSize: "20px",
+              },
+            }
+          );
+        else
+          toast("Lose: Better luck next time!", {
+            style: {
+              fontSize: "20px",
+            },
+          });
         loadBalance();
       }
     } catch (error) {
