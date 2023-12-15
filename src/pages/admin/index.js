@@ -31,9 +31,6 @@ const tabData = [
     label: "Withdraw fee",
   },
   {
-    label: "Set Clamied Status Address",
-  },
-  {
     label: "Whitelist Manager",
   },
   {

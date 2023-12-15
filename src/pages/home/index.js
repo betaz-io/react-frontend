@@ -32,7 +32,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUserBalance, fetchBuyStatus } from "store/slices/substrateSlice";
 import { formatTokenBalance, isValidAddressPolkadotAddress } from "utils";
 import { clientAPI } from "api/client";
-import { convertTimeStampToNumber } from "utils";
+import { convertTimeStampToNumber, getDomainToAddress } from "utils";
 import CommonButton from "components/button/commonButton";
 import useInterval from "hooks/useInterval";
 import BETAZCountDown from "components/countdown/CountDown";
@@ -183,7 +183,15 @@ const HomePage = () => {
 
   const faucet = async () => {
     const difference = endTimeNumber - +new Date();
-    if (!isValidAddressPolkadotAddress(address)) {
+
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver) || receiver !== currentAccount.address) {
       toast.error("Invalid address");
       return;
     }
@@ -198,7 +206,7 @@ const HomePage = () => {
     setIsLoading(true);
     if (currentAccount?.address) {
       try {
-        const result = await sale_pool.faucet(currentAccount, 200);
+        const result = await sale_pool.faucet(currentAccount, 100);
         if (result) {
           toast.success(`fauset BetAZ success`);
           getMaxbuy();
