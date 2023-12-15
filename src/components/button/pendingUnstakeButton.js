@@ -52,8 +52,8 @@ export default function PendingUnstakeButton({ data }) {
         { u128: data?.index }
       );
       if (result) {
-        toast.dismiss(toastUnstake);
         await delay(3000);
+        toast.dismiss(toastUnstake);
 
         // delete resquest unstake
         await clientAPI("post", "/updatePendingUnstake", {
@@ -106,8 +106,8 @@ export default function PendingUnstakeButton({ data }) {
         { u128: data?.index }
       );
       if (result) {
-        toast.dismiss(toastUnstake);
         await delay(3000);
+        toast.dismiss(toastUnstake);
 
         // delete resquest unstake
         await clientAPI("post", "/updatePendingUnstake", {
