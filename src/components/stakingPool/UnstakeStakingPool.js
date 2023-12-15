@@ -101,7 +101,6 @@ const StakingPool = () => {
       );
       if (result) {
         toast.dismiss(toastUnstake);
-        toast.success(`Staking success`);
 
         // get Time resquest unstake
         await delay(2000);

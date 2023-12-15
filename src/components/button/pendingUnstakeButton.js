@@ -28,7 +28,6 @@ export default function PendingUnstakeButton({ data }) {
 
     try {
       // check reward locked
-      const toastCheckLock = toast.loading("Step 1: Check reward locked ...");
       const checkLock = await execContractQuery(
         defaultCaller,
         staking_pool_contract.CONTRACT_ABI,
@@ -36,14 +35,14 @@ export default function PendingUnstakeButton({ data }) {
         0,
         "stakingPoolTrait::getIsLocked"
       );
-      toast.dismiss(toastCheckLock);
+
       if (checkLock?.toHuman().Ok) {
         toast.error("Reward locked!");
         setIsLoading(false);
         return;
       }
 
-      const toastUnstake = toast.loading("Step 2: Unstake ...");
+      const toastUnstake = toast.loading("Unstake ...");
       const result = await execContractTx(
         currentAccount,
         staking_pool_contract.CONTRACT_ABI,
@@ -54,7 +53,6 @@ export default function PendingUnstakeButton({ data }) {
       );
       if (result) {
         toast.dismiss(toastUnstake);
-        toast.success(`Staking success`);
 
         // delete resquest unstake
         await delay(2000);
@@ -84,7 +82,6 @@ export default function PendingUnstakeButton({ data }) {
 
     try {
       // check reward locked
-      const toastCheckLock = toast.loading("Step 1: Check reward locked ...");
       const checkLock = await execContractQuery(
         defaultCaller,
         staking_pool_contract.CONTRACT_ABI,
@@ -92,14 +89,14 @@ export default function PendingUnstakeButton({ data }) {
         0,
         "stakingPoolTrait::getIsLocked"
       );
-      toast.dismiss(toastCheckLock);
+
       if (checkLock?.toHuman().Ok) {
         toast.error("Reward locked!");
         setIsLoading(false);
         return;
       }
 
-      const toastUnstake = toast.loading("Step 2: Cancel request unstake ...");
+      const toastUnstake = toast.loading("Cancel request unstake ...");
       const result = await execContractTx(
         currentAccount,
         staking_pool_contract.CONTRACT_ABI,
@@ -110,7 +107,6 @@ export default function PendingUnstakeButton({ data }) {
       );
       if (result) {
         toast.dismiss(toastUnstake);
-        toast.success(`Staking success`);
 
         // delete resquest unstake
         await delay(2000);
