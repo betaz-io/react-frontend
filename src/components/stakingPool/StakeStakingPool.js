@@ -122,6 +122,7 @@ const StakingPool = () => {
           convertToBalance(stakeAmount)
         );
         if (result) {
+          await delay(3000)
           toast.dismiss(toastStake);
         } else toast.dismiss(toastStake);
       }
@@ -130,10 +131,10 @@ const StakingPool = () => {
       setIsLoading(false);
       console.log(error);
     }
-    setIsLoading(false);
-    await delay(2000);
+    // await delay(2000);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
+    setIsLoading(false);
   };
 
   return (
