@@ -123,7 +123,6 @@ const StakingPool = () => {
         );
         if (result) {
           toast.dismiss(toastStake);
-          toast.success(`Staking success`);
         } else toast.dismiss(toastStake);
       }
     } catch (error) {
