@@ -75,7 +75,6 @@ const StakingPool = () => {
 
     try {
       // check reward locked
-      const toastCheckLock = toast.loading("Step 1: Check reward locked ...");
       const checkLock = await execContractQuery(
         defaultCaller,
         staking_pool_contract.CONTRACT_ABI,
@@ -83,14 +82,14 @@ const StakingPool = () => {
         0,
         "stakingPoolTrait::getIsLocked"
       );
-      toast.dismiss(toastCheckLock);
+
       if (checkLock?.toHuman().Ok) {
         toast.error("Reward locked!");
         setIsLoading(false);
         return;
       }
 
-      const toastUnstake = toast.loading("Step 2: Request unstake ...");
+      const toastUnstake = toast.loading("Request unstake ...");
       let unstakeAmount = parseFloat(unstakeValue);
       const result = await execContractTx(
         currentAccount,
