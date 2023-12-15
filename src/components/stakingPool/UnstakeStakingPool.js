@@ -100,10 +100,10 @@ const StakingPool = () => {
         convertToBalance(unstakeAmount)
       );
       if (result) {
+        await delay(3000);
         toast.dismiss(toastUnstake);
 
         // get Time resquest unstake
-        await delay(2000);
         await clientAPI("post", "/updatePendingUnstake", {
           caller: currentAccount?.address,
         });
@@ -115,11 +115,10 @@ const StakingPool = () => {
       console.log(error);
     }
 
-    setIsLoading(false);
-
-    await delay(2000);
+    // await delay(2000);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
+    setIsLoading(false);
   };
 
   return (

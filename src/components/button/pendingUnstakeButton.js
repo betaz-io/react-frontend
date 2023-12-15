@@ -53,9 +53,9 @@ export default function PendingUnstakeButton({ data }) {
       );
       if (result) {
         toast.dismiss(toastUnstake);
+        await delay(3000);
 
         // delete resquest unstake
-        await delay(2000);
         await clientAPI("post", "/updatePendingUnstake", {
           caller: currentAccount?.address,
         });
@@ -66,11 +66,11 @@ export default function PendingUnstakeButton({ data }) {
       setIsLoading(false);
       console.log(error);
     }
-    setIsLoading(false);
 
-    await delay(2000);
+    // await delay(2000);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
+    setIsLoading(false);
   };
 
   const cancelUnstake = async () => {
@@ -107,9 +107,9 @@ export default function PendingUnstakeButton({ data }) {
       );
       if (result) {
         toast.dismiss(toastUnstake);
+        await delay(3000);
 
         // delete resquest unstake
-        await delay(2000);
         await clientAPI("post", "/updatePendingUnstake", {
           caller: currentAccount?.address,
         });
@@ -119,11 +119,11 @@ export default function PendingUnstakeButton({ data }) {
       setIsLoading(false);
       console.log(error);
     }
-    setIsLoading(false);
 
-    await delay(2000);
+    // await delay(2000);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
+    setIsLoading(false);
   };
 
   const isMobile = useCheckMobileScreen(480);
