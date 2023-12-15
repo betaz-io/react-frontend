@@ -68,7 +68,6 @@ const StakingPool = () => {
 
     try {
       // check reward locked
-      const toastCheckLock = toast.loading("Step 1: Check reward locked ...");
       const checkLock = await execContractQuery(
         defaultCaller,
         staking_pool_contract.CONTRACT_ABI,
@@ -76,16 +75,13 @@ const StakingPool = () => {
         0,
         "stakingPoolTrait::getIsLocked"
       );
-      toast.dismiss(toastCheckLock);
+
       if (checkLock?.toHuman().Ok) {
         toast.error("Reward locked!");
         setIsLoading(false);
         return;
       }
 
-      const toastCheckReward = toast.loading(
-        "Step 2: Check reward distribution ..."
-      );
       const checkReward = await execContractQuery(
         defaultCaller,
         staking_pool_contract.CONTRACT_ABI,
@@ -93,7 +89,6 @@ const StakingPool = () => {
         0,
         "stakingPoolTrait::getRewardStarted"
       );
-      toast.dismiss(toastCheckReward);
 
       if (checkReward?.toHuman().Ok) {
         toast.error("Reward started!");
@@ -102,7 +97,7 @@ const StakingPool = () => {
       }
 
       // approve token
-      const toastApprove = toast.loading("Step 3: Approved ...");
+      const toastApprove = toast.loading("Approved ...");
       let allowance = await execContractTx(
         currentAccount,
         betaz_token_contract.CONTRACT_ABI,
@@ -112,10 +107,11 @@ const StakingPool = () => {
         staking_pool_contract.CONTRACT_ADDRESS,
         convertToBalance(stakeValue)
       );
+      await delay(3000);
       toast.dismiss(toastApprove);
 
       if (allowance && currentAccount?.address) {
-        const toastStake = toast.loading("Step 4: Staking ...");
+        const toastStake = toast.loading("Staking ...");
         let stakeAmount = parseFloat(stakeValue);
         const result = await execContractTx(
           currentAccount,
