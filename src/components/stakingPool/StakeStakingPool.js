@@ -97,7 +97,7 @@ const StakingPool = () => {
       }
 
       // approve token
-      const toastApprove = toast.loading("Approved ...");
+      const toastApprove = toast.loading("Approving ...");
       let allowance = await execContractTx(
         currentAccount,
         betaz_token_contract.CONTRACT_ABI,
