@@ -197,6 +197,8 @@ const ClaimRewardManager = () => {
       toast.dismiss(toasthandle);
       setIsLoading(false);
     }
+
+    dispatch(fetchBalance());
   };
 
   useEffect(() => {

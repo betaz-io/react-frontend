@@ -36,6 +36,9 @@ const tabData = [
   {
     label: "Staking pool management",
   },
+  {
+    label: "Pandora pool management",
+  },
 ];
 
 const AdminPage = () => {

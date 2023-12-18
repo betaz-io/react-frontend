@@ -321,7 +321,7 @@ const AddSalePool = () => {
       </Box>
       <Flex direction="column" alignItems="center" mt="24px">
         <CommonButton
-          text="Update Sale Pool"
+          text="Add Sale Pool"
           isLoading={isLoading}
           onClick={() => handleUpdate()}
         />
