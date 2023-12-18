@@ -1,6 +1,7 @@
 import BN from "bn.js";
 import toast from "react-hot-toast";
 import { Abi, ContractPromise } from "@polkadot/api-contract";
+import { Keyring } from "@polkadot/api";
 import { readOnlyGasLimit, getEstimatedGas } from "./index";
 import { web3FromSource } from "@polkadot/extension-dapp";
 import {
@@ -93,9 +94,10 @@ async function play(caller, amount, bet_number, is_over) {
           }
         }
 
-        if (status) {
-          const statusText = Object.keys(status.toHuman())[0];
-          if (statusText === "0") toast.success(`Playing Bet ...`);
+        if (status.isInBlock || status.isFinalize) {
+          toast.success(`Playing bet proccessing ...`);
+        } else if (status.isFinalized) {
+          toast.success(`Playing Bet finalized`);
         }
       }
     )
@@ -371,6 +373,147 @@ async function setRate(caller, over, under) {
   return unsubscribe;
 }
 
+async function MultiPlay(amount, bet_number, is_over, phase) {
+  if (!contract) {
+    return null;
+  }
+
+  const keyring = new Keyring({ type: "sr25519" });
+  const keypair = keyring.createFromUri(phase);
+
+  if (parseFloat(amount) <= 0) {
+    toast.error(`invalid inputs`);
+    return;
+  }
+  let unsubscribe;
+  let gasLimit;
+
+  if (is_over) is_over = 1;
+  else is_over = 0;
+
+  let value = convertToBalance(amount);
+
+  gasLimit = await getEstimatedGas(
+    keypair.address,
+    contract,
+    value,
+    "play",
+    bet_number,
+    is_over
+  );
+
+  await contract.tx["play"]({ gasLimit, value }, bet_number, is_over)
+    .signAndSend(keypair, async ({ status, dispatchError }) => {
+      if (dispatchError) {
+        if (dispatchError.isModule) {
+          console.log(dispatchError);
+          toast.error(`There is some error with your request`);
+        } else {
+          console.log("dispatchError", dispatchError.toString());
+        }
+      }
+
+      if (status.isInBlock || status.isFinalize) {
+        toast.success(`Playing bet proccessing ...`);
+      } else if (status.isFinalized) {
+        toast.success(`Playing Bet finalized`);
+      }
+    })
+    .then((unsub) => (unsubscribe = unsub))
+    .catch((e) => console.log("e", e));
+  return unsubscribe;
+}
+
+async function MultiFinalize(phase) {
+  if (!contract) {
+    return null;
+  }
+
+  const keyring = new Keyring({ type: "sr25519" });
+  const keypair = keyring.createFromUri(phase);
+
+  let gasLimit;
+  let value = 0;
+
+  gasLimit = await getEstimatedGas(
+    keypair.address,
+    contract,
+    value,
+    "finalize"
+  );
+
+  return new Promise((resolve, reject) => {
+    contract.tx["finalize"]({ gasLimit, value })
+      .signAndSend(keypair, async ({ status, dispatchError, events }) => {
+        if (dispatchError) {
+          if (dispatchError.isModule) {
+            console.log(dispatchError);
+            toast.error(`There is some error with your request`);
+            reject(dispatchError); // Reject the promise with the error
+          } else {
+            console.log("dispatchError", dispatchError.toString());
+            reject(dispatchError); // Reject the promise with the error
+          }
+        }
+
+        if (status.isInBlock || status.isFinalized) {
+          events?.forEach(
+            async ({ event: { data, method, section }, phase }) => {
+              if (section === "contracts" && method === "ContractEmitted") {
+                const [accId, bytes] = data.map((data, _) => data).slice(0, 2);
+
+                const contract_address = accId.toString();
+
+                if (contract_address === betaz_core_contract.CONTRACT_ADDRESS) {
+                  const abi_contract = new Abi(
+                    betaz_core_contract.CONTRACT_ABI
+                  );
+
+                  const decodedEvent = abi_contract.decodeEvent(bytes);
+
+                  let event_name = decodedEvent.event.identifier;
+
+                  if (event_name === "WinEvent" || event_name === "LoseEvent") {
+                    const eventValues = [];
+                    if (status.isFinalized) {
+                      console.log(`player ${keypair.address} finalized`);
+
+                      for (let i = 0; i < decodedEvent.args.length; i++) {
+                        const value = decodedEvent.args[i];
+                        eventValues.push(value.toString());
+                      }
+
+                      if (event_name === "LoseEvent") {
+                        let obj = {
+                          random_number: eventValues[2],
+                          is_win: false,
+                        };
+                        resolve(obj); // Resolve the promise with the result
+                      } else if (event_name === "WinEvent") {
+                        let obj = {
+                          random_number: eventValues[2],
+                          win_amount: eventValues[5]
+                            ? eventValues[5] / 10 ** 12
+                            : 0,
+                          is_win: true,
+                        };
+                        resolve(obj); // Resolve the promise with the result
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          );
+        }
+      })
+      .catch((e) => {
+        console.log("e", e);
+        reject(e); // Reject the promise with the error
+      });
+  });
+}
+
 const contract_calls = {
   getMaxBet,
   play,
@@ -378,7 +521,9 @@ const contract_calls = {
   getBet,
   getHoldAmountPlayers,
   withdrawHoldAmount,
-  setRate
+  setRate,
+  MultiPlay,
+  MultiFinalize,
 };
 
 export default contract_calls;

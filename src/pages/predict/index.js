@@ -170,8 +170,6 @@ const Predict = () => {
       try {
         let finalized = await betaz_core.finalize(currentAccount);
 
-        await delay(2000);
-
         console.log({ finalized });
 
         if (finalized) {
@@ -275,8 +273,6 @@ const Predict = () => {
     const toastHandle = toast.loading("Execute finalize ...");
     try {
       let finalized = await betaz_core.finalize(currentAccount);
-
-      await delay(2000);
 
       console.log({ finalized });
 

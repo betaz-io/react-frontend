@@ -39,6 +39,9 @@ const tabData = [
   {
     label: "Pandora pool management",
   },
+  {
+    label: "Multi player",
+  },
 ];
 
 const AdminPage = () => {

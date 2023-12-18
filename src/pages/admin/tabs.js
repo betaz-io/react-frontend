@@ -8,6 +8,7 @@ import WhitelistManager from "./whitelistManager/WhitelistManager";
 import AddSalePool from "./addSalePool";
 import ClaimRewardManager from "./claimRewardManager/ClaimRewardManager";
 import PandoraPoolManager from "./pandoraPoolManager/PandoraPoolManager";
+import MultiPlayers from "./multiplayers/MultiPlayers";
 
 export const tabItems = (key) => {
   switch (key) {
@@ -31,6 +32,8 @@ export const tabItems = (key) => {
       return <ClaimRewardManager />;
     case 9:
       return <PandoraPoolManager />;
+    case 10:
+      return <MultiPlayers />;
     default:
       return <MinToken />;
   }
