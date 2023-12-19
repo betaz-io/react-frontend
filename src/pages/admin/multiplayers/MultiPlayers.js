@@ -9,6 +9,8 @@ import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import { delay } from "utils";
 import CommonButton from "components/button/commonButton";
 import { getAzeroBalanceOfAddress } from "utils/contracts";
+import { execContractTx } from "utils/contracts";
+import betaz_core_contract from "utils/contracts/betaz_core";
 
 // const IPRequired = ["113.190.44.205"];
 
@@ -21,6 +23,8 @@ const MultiPlayers = () => {
 
   const [value, setValue] = useState(0);
   const { currentAccount } = useSelector((s) => s.substrate);
+  const [overRate, setOverRate] = useState("");
+  const [underRate, setUnderRate] = useState("");
 
   const loadBalance = async () => {
     dispatch(fetchUserBalance({ currentAccount }));
@@ -212,6 +216,16 @@ const MultiPlayers = () => {
     }
   });
 
+  const onChangeOverRate = useCallback((e) => {
+    const { value } = e.target;
+    setOverRate(value);
+  });
+
+  const onChangeUnderRate = useCallback((e) => {
+    const { value } = e.target;
+    setUnderRate(value);
+  });
+
   const test = async () => {
     if (value === "") {
       toast.error("invalid value!");
@@ -224,6 +238,42 @@ const MultiPlayers = () => {
       await onRoll();
       console.log(`Play ${i + 1} end`);
       setIsLoading(false);
+    }
+  };
+
+  const updateRate = async () => {
+    if (overRate === "" || underRate === "") {
+      toast.error("invalid value!");
+      return;
+    }
+
+    const arrayOver = overRate?.trim().split(",").map(Number);
+    const arrayUnder = underRate?.trim().split(",").map(Number);
+
+    if (arrayOver?.length !== 100 || arrayUnder?.length !== 100) {
+      toast.error("invalid item, length is required 100 item!");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      let result = await execContractTx(
+        currentAccount,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
+        0,
+        "betA0CoreTrait::setRates",
+        arrayOver,
+        arrayUnder
+      );
+
+      if (result) {
+        await delay(3000);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      console.log({ err });
     }
   };
 
@@ -252,6 +302,36 @@ const MultiPlayers = () => {
           onClick={() => test()}
         />
       </Flex>
+      <Box className="deposit-box-amount-box" mt="48px">
+        <Text>Set Rate</Text>
+        <Flex className="deposit-box-amount-input">
+          <Input
+            focusBorderColor="transparent"
+            sx={{ border: "0px" }}
+            value={overRate}
+            onChange={onChangeOverRate}
+            placeholder="Over Rate EX: 1, 2, 3, 4"
+            // type="number"
+          />
+        </Flex>
+        <Flex className="deposit-box-amount-input">
+          <Input
+            focusBorderColor="transparent"
+            sx={{ border: "0px" }}
+            value={underRate}
+            onChange={onChangeUnderRate}
+            placeholder="Under Rate EX: 4, 3, 2, 1"
+            // type="number"
+          />
+        </Flex>
+        <Flex direction="column" alignItems="center" mt="24px">
+          <CommonButton
+            text="Update rate"
+            isLoading={isLoading}
+            onClick={() => updateRate()}
+          />
+        </Flex>
+      </Box>
     </SectionContainer>
   );
 };
