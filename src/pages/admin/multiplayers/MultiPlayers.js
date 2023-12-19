@@ -30,7 +30,7 @@ const MultiPlayers = () => {
   const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
   const onRoll = async () => {
-    let maxBet = await betaz_core.getMaxBet(defaultCaller)
+    let maxBet = await betaz_core.getMaxBet(defaultCaller);
     let your_balance = await getAzeroBalanceOfAddress({
       address: defaultCaller,
     });
@@ -48,8 +48,10 @@ const MultiPlayers = () => {
     let position;
     if (rollOver) {
       position = Math.floor(randomNumber(4, 98));
+      // position = 98;
     } else {
       position = Math.floor(randomNumber(1, 95));
+      // position = 1;
     }
 
     console.log({ betAmount, position, rollOver });
