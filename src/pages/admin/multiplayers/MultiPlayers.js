@@ -310,7 +310,7 @@ const MultiPlayers = () => {
             sx={{ border: "0px" }}
             value={overRate}
             onChange={onChangeOverRate}
-            placeholder="Over Rate EX: 1, 2, 3, 4"
+            placeholder="Over Rate EX: [1, 2, 3, 4] => 1, 2, 3, 4"
             // type="number"
           />
         </Flex>
@@ -320,7 +320,7 @@ const MultiPlayers = () => {
             sx={{ border: "0px" }}
             value={underRate}
             onChange={onChangeUnderRate}
-            placeholder="Under Rate EX: 4, 3, 2, 1"
+            placeholder="Under Rate EX: [4, 3, 2, 1] => 4, 3, 2, 1"
             // type="number"
           />
         </Flex>

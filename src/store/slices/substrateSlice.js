@@ -30,32 +30,34 @@ const initialState = {
     core: 0,
     staking: 0,
     treasury: 0,
+    pandora: 0,
+    reward: 0,
   },
   betRates: {
     overRates: [
-      0, 0, 0, 0, 103, 1035, 104, 106, 107, 108, 109, 110, 112, 113, 114, 116,
-      117, 119, 120, 122, 123, 125, 126, 128, 130, 132, 133, 135, 137, 139, 141,
-      143, 146, 148, 150, 152, 155, 157, 160, 163, 165, 168, 171, 174, 178, 181,
-      184, 188, 192, 196, 200, 204, 208, 213, 217, 222, 228, 233, 239, 245, 251,
-      258, 265, 272, 280, 288, 297, 306, 316, 327, 338, 350, 363, 377, 394, 409,
-      427, 446, 468, 491, 517, 546, 578, 614, 655, 702, 756, 819, 894, 984, 994,
-      1131, 1307, 1541, 1870, 2362, 3183, 4825, 9850, 0,
+      // 0, 0, 0, 0, 103, 1035, 104, 106, 107, 108, 109, 110, 112, 113, 114, 116,
+      // 117, 119, 120, 122, 123, 125, 126, 128, 130, 132, 133, 135, 137, 139, 141,
+      // 143, 146, 148, 150, 152, 155, 157, 160, 163, 165, 168, 171, 174, 178, 181,
+      // 184, 188, 192, 196, 200, 204, 208, 213, 217, 222, 228, 233, 239, 245, 251,
+      // 258, 265, 272, 280, 288, 297, 306, 316, 327, 338, 350, 363, 377, 394, 409,
+      // 427, 446, 468, 491, 517, 546, 578, 614, 655, 702, 756, 819, 894, 984, 994,
+      // 1131, 1307, 1541, 1870, 2362, 3183, 4825, 9850, 0,
     ],
     underRates: [
-      0, 9850, 4825, 3183, 2362, 1870, 1541, 1307, 1131, 994, 984, 894, 819,
-      756, 702, 655, 614, 578, 546, 517, 491, 468, 446, 427, 409, 394, 377, 363,
-      350, 338, 327, 316, 306, 297, 288, 280, 272, 265, 258, 251, 245, 239, 233,
-      228, 222, 217, 213, 208, 204, 200, 196, 192, 188, 184, 181, 178, 174, 171,
-      168, 165, 163, 160, 157, 155, 152, 150, 148, 146, 143, 141, 139, 137, 135,
-      133, 132, 130, 128, 126, 125, 123, 122, 120, 119, 117, 116, 114, 113, 112,
-      110, 109, 108, 107, 106, 104, 1035, 103, 0, 0, 0, 0,
+      // 0, 9850, 4825, 3183, 2362, 1870, 1541, 1307, 1131, 994, 984, 894, 819,
+      // 756, 702, 655, 614, 578, 546, 517, 491, 468, 446, 427, 409, 394, 377, 363,
+      // 350, 338, 327, 316, 306, 297, 288, 280, 272, 265, 258, 251, 245, 239, 233,
+      // 228, 222, 217, 213, 208, 204, 200, 196, 192, 188, 184, 181, 178, 174, 171,
+      // 168, 165, 163, 160, 157, 155, 152, 150, 148, 146, 143, 141, 139, 137, 135,
+      // 133, 132, 130, 128, 126, 125, 123, 122, 120, 119, 117, 116, 114, 113, 112,
+      // 110, 109, 108, 107, 106, 104, 1035, 103, 0, 0, 0, 0,
     ],
   },
   betRollNumbers: {
-    numberOverRollMin: 4,
-    numberOverRollMax: 98,
-    numberUnerRollMin: 1,
-    numberUnerRollMax: 95,
+    numberOverRollMin: 0,
+    numberOverRollMax: 100,
+    numberUnerRollMin: 0,
+    numberUnerRollMax: 100,
   },
   buyStatus: {
     endTime: 0,
@@ -95,16 +97,25 @@ export const substrateSlice = createSlice({
       };
     });
     builder.addCase(fetchBalance.fulfilled, (state, action) => {
-      state.poolBalance = action.payload;
+      state.poolBalance.core = action.payload.core;
+      state.poolBalance.staking = action.payload.staking;
+      state.poolBalance.treasury = action.payload.treasury;
+      state.poolBalance.pandora = action.payload.pandora;
+      state.poolBalance.reward = action.payload.reward;
     });
     builder.addCase(fetchRollNumbers.fulfilled, (state, action) => {
-      state.betRollNumbers = action.payload;
+      state.betRollNumbers.numberOverRollMax = action.payload.numberOverRollMax;
+      state.betRollNumbers.numberOverRollMin = action.payload.numberOverRollMin;
+      state.betRollNumbers.numberUnerRollMax = action.payload.numberUnerRollMax;
+      state.betRollNumbers.numberUnerRollMin = action.payload.numberUnerRollMin;
     });
     builder.addCase(fetchRates.fulfilled, (state, action) => {
-      state.betRates = action.payload;
+      state.betRates.overRates = action.payload.overRates;
+      state.betRates.underRates = action.payload.underRates;
     });
     builder.addCase(fetchBuyStatus.fulfilled, (state, action) => {
-      state.buyStatus = action.payload;
+      state.buyStatus.endTime = action.payload.endTime;
+      state.buyStatus.status = action.payload.status;
     });
   },
 });
@@ -263,8 +274,12 @@ export const fetchRates = createAsyncThunk("substrate/fetchRates", async () => {
     ),
   ]);
 
-  let overRates = over.map((element) => element.toNumber());
-  let underRates = under.map((element) => element.toNumber());
+  let overRates = over.map((element) =>
+    parseFloat(element?.replaceAll(",", ""))
+  );
+  let underRates = under.map((element) =>
+    parseFloat(element?.replaceAll(",", ""))
+  );
 
   return {
     overRates,

@@ -77,6 +77,8 @@ const Predict = () => {
   const [betValue, setBetValue] = useState(1);
   const [isDisabled, setIsDisabled] = useState(false);
 
+  console.log({ betRates });
+
   const onChangePosition = (value) => {
     setPosition(value);
     setSliderValue(value);
