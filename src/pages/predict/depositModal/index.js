@@ -155,9 +155,11 @@ const DepositModal = ({ visible, onClose }) => {
       }
       if (!holdAmount) {
         toast.error("You not hold amount!");
+        setIsLoading(false);
         return;
       } else if (poolBalance?.core == 0) {
-        toast.error("Not enough balance!");
+        toast.error("Pool not enough balance!");
+        setIsLoading(false);
         return;
       } else {
         let amount = parseFloat(holdAmountVal);
