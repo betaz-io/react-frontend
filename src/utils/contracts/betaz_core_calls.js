@@ -102,7 +102,10 @@ async function play(caller, amount, bet_number, is_over) {
       }
     )
     .then((unsub) => (unsubscribe = unsub))
-    .catch((e) => console.log("e", e));
+    .catch((e) => {
+      console.log("e", e);
+      toast.error(e.toString());
+    });
   return unsubscribe;
 }
 
@@ -420,7 +423,10 @@ async function MultiPlay(amount, bet_number, is_over, phase) {
       }
     })
     .then((unsub) => (unsubscribe = unsub))
-    .catch((e) => console.log("e", e));
+    .catch((e) => {
+      console.log("e", e);
+      toast.error(e.toString());
+    });
   return unsubscribe;
 }
 
