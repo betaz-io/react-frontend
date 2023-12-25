@@ -1,9 +1,9 @@
 const contract = {
   testnet: {
-    CONTRACT_ADDRESS: "5HkiyFqFTgNuz6NyHbrJfcrAZCssRMcT5jmEsxr4hA7gNdrv",
+    CONTRACT_ADDRESS: "5GXT1VadVHjW7vV1JxTjC1nxWBP3rgqiPy8RfeVvB2CcY2av",
     CONTRACT_ABI: {
       source: {
-        hash: "0xd03dc36125b5f2831b5fe9d0673183dd713abc58807f50a5997f65290f480e8c",
+        hash: "0x651ddb63dfb80392bf03a046f89075d246657ba85240bce3f9976a499c07d587",
         language: "ink! 4.3.0",
         compiler: "rustc 1.75.0-nightly",
         build_info: {
@@ -287,6 +287,30 @@ const contract = {
             docs: [],
             label: "MintTokenEvent",
           },
+          {
+            args: [
+              {
+                docs: [],
+                indexed: false,
+                label: "contract_address",
+                type: {
+                  displayName: ["AccountId"],
+                  type: 0,
+                },
+              },
+              {
+                docs: [],
+                indexed: false,
+                label: "amount",
+                type: {
+                  displayName: ["Balance"],
+                  type: 7,
+                },
+              },
+            ],
+            docs: [],
+            label: "BurnTokenEvent",
+          },
         ],
         lang_error: {
           displayName: ["ink", "LangError"],
@@ -322,56 +346,249 @@ const contract = {
             selector: "0xf2f6dba3",
           },
           {
-            args: [
-              {
-                label: "pool_type",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "GetTotalAccountByPoolTypeInput1",
-                  ],
-                  type: 20,
-                },
-              },
-            ],
+            args: [],
             default: false,
-            docs: [" Get total account in pool type"],
-            label: "SalePoolTrait::get_total_account_by_pool_type",
-            mutates: false,
+            docs: [" Function changes state"],
+            label: "SalePoolTrait::change_state",
+            mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 21,
+              type: 10,
             },
-            selector: "0x2a278862",
+            selector: "0xf778b5ed",
           },
           {
             args: [
               {
                 label: "pool_type",
                 type: {
-                  displayName: ["salepooltrait_external", "WhitelistBuyInput1"],
+                  displayName: [
+                    "salepooltrait_external",
+                    "GetWhitelistInfoInput1",
+                  ],
                   type: 20,
+                },
+              },
+              {
+                label: "account",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "GetWhitelistInfoInput2",
+                  ],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get whitelist Info"],
+            label: "SalePoolTrait::get_whitelist_info",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 21,
+            },
+            selector: "0xa8e356b8",
+          },
+          {
+            args: [
+              {
+                label: "pool_type",
+                type: {
+                  displayName: ["salepooltrait_external", "AddWhitelistInput1"],
+                  type: 20,
+                },
+              },
+              {
+                label: "account",
+                type: {
+                  displayName: ["salepooltrait_external", "AddWhitelistInput2"],
+                  type: 0,
                 },
               },
               {
                 label: "amount",
                 type: {
-                  displayName: ["salepooltrait_external", "WhitelistBuyInput2"],
+                  displayName: ["salepooltrait_external", "AddWhitelistInput3"],
+                  type: 7,
+                },
+              },
+              {
+                label: "price",
+                type: {
+                  displayName: ["salepooltrait_external", "AddWhitelistInput4"],
                   type: 7,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "SalePoolTrait::whitelist_buy",
+            label: "SalePoolTrait::add_whitelist",
             mutates: true,
-            payable: true,
+            payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 10,
             },
-            selector: "0x86301e41",
+            selector: "0xec2a4567",
+          },
+          {
+            args: [
+              {
+                label: "betaz_token_address",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "SetBetazTokenAddressInput1",
+                  ],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "SalePoolTrait::set_betaz_token_address",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 10,
+            },
+            selector: "0xd4d39707",
+          },
+          {
+            args: [
+              {
+                label: "pool_type",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "GetPoolSaleTotalRemainingAmountInput1",
+                  ],
+                  type: 20,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get pool sale info total remaining amount"],
+            label: "SalePoolTrait::get_pool_sale_total_remaining_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 24,
+            },
+            selector: "0x84bb77f5",
+          },
+          {
+            args: [
+              {
+                label: "pool_type",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "GetAccountByPoolTypeInput1",
+                  ],
+                  type: 20,
+                },
+              },
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "GetAccountByPoolTypeInput2",
+                  ],
+                  type: 7,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get account in pool type"],
+            label: "SalePoolTrait::get_account_by_pool_type",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 26,
+            },
+            selector: "0x924067e7",
+          },
+          {
+            args: [
+              {
+                label: "pool_type",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "UpdateSalePoolInfoPoolTypeInput1",
+                  ],
+                  type: 20,
+                },
+              },
+              {
+                label: "buy_status",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "UpdateSalePoolInfoPoolTypeInput2",
+                  ],
+                  type: 3,
+                },
+              },
+              {
+                label: "end_time_buy",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "UpdateSalePoolInfoPoolTypeInput3",
+                  ],
+                  type: 6,
+                },
+              },
+              {
+                label: "total_amount",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "UpdateSalePoolInfoPoolTypeInput4",
+                  ],
+                  type: 7,
+                },
+              },
+              {
+                label: "total_purchased_amount",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "UpdateSalePoolInfoPoolTypeInput5",
+                  ],
+                  type: 7,
+                },
+              },
+              {
+                label: "price",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "UpdateSalePoolInfoPoolTypeInput6",
+                  ],
+                  type: 7,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update pool info"],
+            label: "SalePoolTrait::update_sale_pool_info_pool_type",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 10,
+            },
+            selector: "0xca5443a1",
           },
           {
             args: [
@@ -454,64 +671,6 @@ const contract = {
                 type: {
                   displayName: [
                     "salepooltrait_external",
-                    "GetPoolSaleInfoInput1",
-                  ],
-                  type: 20,
-                },
-              },
-            ],
-            default: false,
-            docs: [" Get pool sale info"],
-            label: "SalePoolTrait::get_pool_sale_info",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 22,
-            },
-            selector: "0xc3564970",
-          },
-          {
-            args: [
-              {
-                label: "pool_type",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "GetWhitelistInfoInput1",
-                  ],
-                  type: 20,
-                },
-              },
-              {
-                label: "account",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "GetWhitelistInfoInput2",
-                  ],
-                  type: 0,
-                },
-              },
-            ],
-            default: false,
-            docs: [" Get whitelist Info"],
-            label: "SalePoolTrait::get_whitelist_info",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 25,
-            },
-            selector: "0xa8e356b8",
-          },
-          {
-            args: [
-              {
-                label: "pool_type",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
                     "AddMultiWhitelistsInput1",
                   ],
                   type: 20,
@@ -560,70 +719,17 @@ const contract = {
             selector: "0xa78d8747",
           },
           {
-            args: [
-              {
-                label: "pool_type",
-                type: {
-                  displayName: ["salepooltrait_external", "AddWhitelistInput1"],
-                  type: 20,
-                },
-              },
-              {
-                label: "account",
-                type: {
-                  displayName: ["salepooltrait_external", "AddWhitelistInput2"],
-                  type: 0,
-                },
-              },
-              {
-                label: "amount",
-                type: {
-                  displayName: ["salepooltrait_external", "AddWhitelistInput3"],
-                  type: 7,
-                },
-              },
-              {
-                label: "price",
-                type: {
-                  displayName: ["salepooltrait_external", "AddWhitelistInput4"],
-                  type: 7,
-                },
-              },
-            ],
+            args: [],
             default: false,
-            docs: [],
-            label: "SalePoolTrait::add_whitelist",
-            mutates: true,
+            docs: [" Get bet az token contract"],
+            label: "SalePoolTrait::get_betaz_token_address",
+            mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 10,
+              type: 30,
             },
-            selector: "0xec2a4567",
-          },
-          {
-            args: [
-              {
-                label: "betaz_token_address",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "SetBetazTokenAddressInput1",
-                  ],
-                  type: 0,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "SalePoolTrait::set_betaz_token_address",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 10,
-            },
-            selector: "0xd4d39707",
+            selector: "0xd7a42be6",
           },
           {
             args: [
@@ -680,19 +786,6 @@ const contract = {
             selector: "0x455f94b0",
           },
           {
-            args: [],
-            default: false,
-            docs: [" Get bet az token contract"],
-            label: "SalePoolTrait::get_betaz_token_address",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 30,
-            },
-            selector: "0xd7a42be6",
-          },
-          {
             args: [
               {
                 label: "amount",
@@ -723,169 +816,74 @@ const contract = {
                 type: {
                   displayName: [
                     "salepooltrait_external",
-                    "GetPoolSaleTotalRemainingAmountInput1",
+                    "GetTotalAccountByPoolTypeInput1",
                   ],
                   type: 20,
                 },
               },
             ],
             default: false,
-            docs: [" Get pool sale info total remaining amount"],
-            label: "SalePoolTrait::get_pool_sale_total_remaining_amount",
+            docs: [" Get total account in pool type"],
+            label: "SalePoolTrait::get_total_account_by_pool_type",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 31,
             },
-            selector: "0x84bb77f5",
+            selector: "0x2a278862",
           },
           {
             args: [
               {
                 label: "pool_type",
                 type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "UpdateSalePoolInfoPoolTypeInput1",
-                  ],
+                  displayName: ["salepooltrait_external", "WhitelistBuyInput1"],
                   type: 20,
                 },
               },
               {
-                label: "buy_status",
+                label: "amount",
                 type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "UpdateSalePoolInfoPoolTypeInput2",
-                  ],
-                  type: 3,
-                },
-              },
-              {
-                label: "end_time_buy",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "UpdateSalePoolInfoPoolTypeInput3",
-                  ],
-                  type: 6,
-                },
-              },
-              {
-                label: "total_amount",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "UpdateSalePoolInfoPoolTypeInput4",
-                  ],
-                  type: 7,
-                },
-              },
-              {
-                label: "total_purchased_amount",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "UpdateSalePoolInfoPoolTypeInput5",
-                  ],
-                  type: 7,
-                },
-              },
-              {
-                label: "price",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "UpdateSalePoolInfoPoolTypeInput6",
-                  ],
+                  displayName: ["salepooltrait_external", "WhitelistBuyInput2"],
                   type: 7,
                 },
               },
             ],
-            default: false,
-            docs: [" update pool info"],
-            label: "SalePoolTrait::update_sale_pool_info_pool_type",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 10,
-            },
-            selector: "0xca5443a1",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get balance contract"],
-            label: "SalePoolTrait::balance_of",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 21,
-            },
-            selector: "0xc40524a2",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" Function changes state"],
-            label: "SalePoolTrait::change_state",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 10,
-            },
-            selector: "0xf778b5ed",
-          },
-          {
-            args: [
-              {
-                label: "pool_type",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "GetAccountByPoolTypeInput1",
-                  ],
-                  type: 20,
-                },
-              },
-              {
-                label: "index",
-                type: {
-                  displayName: [
-                    "salepooltrait_external",
-                    "GetAccountByPoolTypeInput2",
-                  ],
-                  type: 7,
-                },
-              },
-            ],
-            default: false,
-            docs: [" Get account in pool type"],
-            label: "SalePoolTrait::get_account_by_pool_type",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 33,
-            },
-            selector: "0x924067e7",
-          },
-          {
-            args: [],
             default: false,
             docs: [],
-            label: "Ownable::owner",
+            label: "SalePoolTrait::whitelist_buy",
+            mutates: true,
+            payable: true,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 10,
+            },
+            selector: "0x86301e41",
+          },
+          {
+            args: [
+              {
+                label: "pool_type",
+                type: {
+                  displayName: [
+                    "salepooltrait_external",
+                    "GetPoolSaleInfoInput1",
+                  ],
+                  type: 20,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get pool sale info"],
+            label: "SalePoolTrait::get_pool_sale_info",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 33,
+              type: 32,
             },
-            selector: "0x4fa43c8c",
+            selector: "0xc3564970",
           },
           {
             args: [],
@@ -906,7 +904,7 @@ const contract = {
                 label: "new_owner",
                 type: {
                   displayName: ["ownable_external", "TransferOwnershipInput1"],
-                  type: 34,
+                  type: 27,
                 },
               },
             ],
@@ -920,6 +918,19 @@ const contract = {
               type: 35,
             },
             selector: "0x11f43efd",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "Ownable::owner",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 26,
+            },
+            selector: "0x4fa43c8c",
           },
           {
             args: [],
@@ -960,28 +971,28 @@ const contract = {
               {
                 label: "role",
                 type: {
-                  displayName: ["accesscontrol_external", "HasRoleInput1"],
+                  displayName: ["accesscontrol_external", "GrantRoleInput1"],
                   type: 4,
                 },
               },
               {
-                label: "address",
+                label: "account",
                 type: {
-                  displayName: ["accesscontrol_external", "HasRoleInput2"],
-                  type: 34,
+                  displayName: ["accesscontrol_external", "GrantRoleInput2"],
+                  type: 27,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "AccessControl::has_role",
-            mutates: false,
+            label: "AccessControl::grant_role",
+            mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 42,
             },
-            selector: "0xc1d9ac18",
+            selector: "0x4ac062fd",
           },
           {
             args: [
@@ -996,7 +1007,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "RevokeRoleInput2"],
-                  type: 34,
+                  type: 27,
                 },
               },
             ],
@@ -1010,6 +1021,34 @@ const contract = {
               type: 42,
             },
             selector: "0x6e4f0991",
+          },
+          {
+            args: [
+              {
+                label: "role",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                  type: 4,
+                },
+              },
+              {
+                label: "account",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
+                  type: 27,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "AccessControl::renounce_role",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 42,
+            },
+            selector: "0xeaf1248a",
           },
           {
             args: [
@@ -1037,80 +1076,28 @@ const contract = {
               {
                 label: "role",
                 type: {
-                  displayName: ["accesscontrol_external", "GrantRoleInput1"],
+                  displayName: ["accesscontrol_external", "HasRoleInput1"],
                   type: 4,
                 },
               },
               {
-                label: "account",
+                label: "address",
                 type: {
-                  displayName: ["accesscontrol_external", "GrantRoleInput2"],
-                  type: 34,
+                  displayName: ["accesscontrol_external", "HasRoleInput2"],
+                  type: 27,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "AccessControl::grant_role",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 42,
-            },
-            selector: "0x4ac062fd",
-          },
-          {
-            args: [
-              {
-                label: "role",
-                type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
-                  type: 4,
-                },
-              },
-              {
-                label: "account",
-                type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
-                  type: 34,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "AccessControl::renounce_role",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 42,
-            },
-            selector: "0xeaf1248a",
-          },
-          {
-            args: [
-              {
-                label: "role",
-                type: {
-                  displayName: [
-                    "accesscontrolenumerable_external",
-                    "GetRoleMemberCountInput1",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "AccessControlEnumerable::get_role_member_count",
+            label: "AccessControl::has_role",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 44,
+              type: 37,
             },
-            selector: "0xf1b1a9d7",
+            selector: "0xc1d9ac18",
           },
           {
             args: [
@@ -1142,9 +1129,33 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 33,
+              type: 26,
             },
             selector: "0x163469e0",
+          },
+          {
+            args: [
+              {
+                label: "role",
+                type: {
+                  displayName: [
+                    "accesscontrolenumerable_external",
+                    "GetRoleMemberCountInput1",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "AccessControlEnumerable::get_role_member_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 44,
+            },
+            selector: "0xf1b1a9d7",
           },
         ],
       },
@@ -2025,13 +2036,41 @@ const contract = {
                     name: "InvalidTotalPurchasedAmount",
                   },
                   {
+                    index: 66,
+                    name: "TicketAmountLimitReached",
+                  },
+                  {
+                    index: 67,
+                    name: "NotTimeToFinalized",
+                  },
+                  {
+                    index: 68,
+                    name: "CallerDoNotHaveVoting",
+                  },
+                  {
+                    index: 69,
+                    name: "SetPoolRationFailed",
+                  },
+                  {
+                    index: 70,
+                    name: "FailToDecreaseClaimableReward",
+                  },
+                  {
+                    index: 71,
+                    name: "RewardNotAdded",
+                  },
+                  {
+                    index: 72,
+                    name: "ChainlinkRequestIdIsExists",
+                  },
+                  {
                     fields: [
                       {
                         type: 14,
                         typeName: "OwnableError",
                       },
                     ],
-                    index: 66,
+                    index: 73,
                     name: "OwnableError",
                   },
                   {
@@ -2041,7 +2080,7 @@ const contract = {
                         typeName: "AccessControlError",
                       },
                     ],
-                    index: 67,
+                    index: 74,
                     name: "AccessControlError",
                   },
                   {
@@ -2051,7 +2090,7 @@ const contract = {
                         typeName: "PSP22Error",
                       },
                     ],
-                    index: 68,
+                    index: 75,
                     name: "PSP22Error",
                   },
                   {
@@ -2061,7 +2100,7 @@ const contract = {
                         typeName: "PSP34Error",
                       },
                     ],
-                    index: 69,
+                    index: 76,
                     name: "PSP34Error",
                   },
                   {
@@ -2071,11 +2110,11 @@ const contract = {
                         typeName: "PausableError",
                       },
                     ],
-                    index: 70,
+                    index: 77,
                     name: "PausableError",
                   },
                   {
-                    index: 71,
+                    index: 78,
                     name: "CheckedOperations",
                   },
                 ],
@@ -2377,7 +2416,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 7,
+                        type: 22,
                       },
                     ],
                     index: 0,
@@ -2398,7 +2437,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 7,
+                type: 22,
               },
               {
                 name: "E",
@@ -2415,22 +2454,17 @@ const contract = {
               variant: {
                 variants: [
                   {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
                     fields: [
                       {
                         type: 23,
                       },
                     ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 9,
-                      },
-                    ],
                     index: 1,
-                    name: "Err",
+                    name: "Some",
                   },
                 ],
               },
@@ -2440,155 +2474,12 @@ const contract = {
                 name: "T",
                 type: 23,
               },
-              {
-                name: "E",
-                type: 9,
-              },
             ],
-            path: ["Result"],
+            path: ["Option"],
           },
         },
         {
           id: 23,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 24,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 24,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 24,
-          type: {
-            def: {
-              composite: {
-                fields: [
-                  {
-                    name: "buy_status",
-                    type: 3,
-                    typeName: "bool",
-                  },
-                  {
-                    name: "end_time_buy",
-                    type: 6,
-                    typeName: "Timestamp",
-                  },
-                  {
-                    name: "total_amount",
-                    type: 7,
-                    typeName: "Balance",
-                  },
-                  {
-                    name: "total_purchased_amount",
-                    type: 7,
-                    typeName: "Balance",
-                  },
-                  {
-                    name: "price",
-                    type: 7,
-                    typeName: "Balance",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "sale", "data", "PoolSaleInfo"],
-          },
-        },
-        {
-          id: 25,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 26,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 9,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 26,
-              },
-              {
-                name: "E",
-                type: 9,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 26,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 27,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 27,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 27,
           type: {
             def: {
               composite: {
@@ -2612,6 +2503,148 @@ const contract = {
               },
             },
             path: ["bet_a0", "impls", "sale", "data", "WhitelistInfo"],
+          },
+        },
+        {
+          id: 24,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 25,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 9,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 25,
+              },
+              {
+                name: "E",
+                type: 9,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 25,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 7,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 7,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 26,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 27,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 9,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 27,
+              },
+              {
+                name: "E",
+                type: 9,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 27,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 0,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 0,
+              },
+            ],
+            path: ["Option"],
           },
         },
         {
@@ -2683,7 +2716,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 32,
+                        type: 7,
                       },
                     ],
                     index: 0,
@@ -2704,7 +2737,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 32,
+                type: 7,
               },
               {
                 name: "E",
@@ -2721,40 +2754,9 @@ const contract = {
               variant: {
                 variants: [
                   {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
                     fields: [
                       {
-                        type: 7,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 7,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 33,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 34,
+                        type: 33,
                       },
                     ],
                     index: 0,
@@ -2775,7 +2777,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 34,
+                type: 33,
               },
               {
                 name: "E",
@@ -2786,7 +2788,7 @@ const contract = {
           },
         },
         {
-          id: 34,
+          id: 33,
           type: {
             def: {
               variant: {
@@ -2798,7 +2800,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 0,
+                        type: 34,
                       },
                     ],
                     index: 1,
@@ -2810,10 +2812,47 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 0,
+                type: 34,
               },
             ],
             path: ["Option"],
+          },
+        },
+        {
+          id: 34,
+          type: {
+            def: {
+              composite: {
+                fields: [
+                  {
+                    name: "buy_status",
+                    type: 3,
+                    typeName: "bool",
+                  },
+                  {
+                    name: "end_time_buy",
+                    type: 6,
+                    typeName: "Timestamp",
+                  },
+                  {
+                    name: "total_amount",
+                    type: 7,
+                    typeName: "Balance",
+                  },
+                  {
+                    name: "total_purchased_amount",
+                    type: 7,
+                    typeName: "Balance",
+                  },
+                  {
+                    name: "price",
+                    type: 7,
+                    typeName: "Balance",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "sale", "data", "PoolSaleInfo"],
           },
         },
         {
