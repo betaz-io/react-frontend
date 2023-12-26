@@ -52,6 +52,7 @@ const initialState = {
       // 133, 132, 130, 128, 126, 125, 123, 122, 120, 119, 117, 116, 114, 113, 112,
       // 110, 109, 108, 107, 106, 104, 1035, 103, 0, 0, 0, 0,
     ],
+    percentageRates: 100,
   },
   betRollNumbers: {
     numberOverRollMin: 0,
@@ -112,6 +113,7 @@ export const substrateSlice = createSlice({
     builder.addCase(fetchRates.fulfilled, (state, action) => {
       state.betRates.overRates = action.payload.overRates;
       state.betRates.underRates = action.payload.underRates;
+      state.betRates.percentageRates = action.payload.percentageRates;
     });
     builder.addCase(fetchBuyStatus.fulfilled, (state, action) => {
       state.buyStatus.endTime = action.payload.endTime;
@@ -257,7 +259,7 @@ export const fetchBalance = createAsyncThunk(
 );
 
 export const fetchRates = createAsyncThunk("substrate/fetchRates", async () => {
-  const [over, under] = await Promise.all([
+  const [over, under, percentage] = await Promise.all([
     execContractQuerybyMetadataConvertResult(
       defaultCaller,
       betaz_core_contract.CONTRACT_ABI,
@@ -272,6 +274,13 @@ export const fetchRates = createAsyncThunk("substrate/fetchRates", async () => {
       0,
       "betA0CoreTrait::getUnderRates"
     ),
+    execContractQuerybyMetadataConvertResult(
+      defaultCaller,
+      betaz_core_contract.CONTRACT_ABI,
+      betaz_core_contract.CONTRACT_ADDRESS,
+      0,
+      "betA0CoreTrait::getPercentageRates"
+    ),
   ]);
 
   let overRates = over.map((element) =>
@@ -281,9 +290,12 @@ export const fetchRates = createAsyncThunk("substrate/fetchRates", async () => {
     parseFloat(element?.replaceAll(",", ""))
   );
 
+  let percentageRates = parseFloat(percentage?.replaceAll(",", ""));
+
   return {
     overRates,
     underRates,
+    percentageRates,
   };
 });
 

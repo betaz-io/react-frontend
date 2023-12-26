@@ -623,9 +623,9 @@ const Predict = () => {
                     <Text className="linear-text small-content">
                       {rollOver
                         ? parseInt(betRates?.overRates[parseInt(position)]) /
-                          100
+                          betRates?.percentageRates
                         : parseInt(betRates?.underRates[parseInt(position)]) /
-                          100}
+                          betRates?.percentageRates}
                       X
                     </Text>
                   </Box>
