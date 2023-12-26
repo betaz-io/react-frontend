@@ -224,11 +224,13 @@ const Predict = () => {
 
     if (gameOn) {
       toast.error("Please wait till last roll completed");
+      setIsDisabled(false);
       return;
     }
 
     if (betAmount >= Number(currentAccount?.balance.azero)) {
       toast.error("You dont have enough balance to roll");
+      setIsDisabled(false);
       return;
     }
 
