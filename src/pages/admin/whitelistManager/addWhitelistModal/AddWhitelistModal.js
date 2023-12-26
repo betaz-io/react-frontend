@@ -31,6 +31,7 @@ import { clientAPI } from "api/client";
 import {
   fetchWhitelist,
 } from "store/slices/whitelistSlide";
+import { getDomainToAddress } from "utils";
 
 const adminRole = process.env.REACT_APP_ADMIN_ROLE;
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
@@ -49,17 +50,24 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
 
-    if (value === 0 || value === "") {
+    if (value < 0 || value === "") {
       toast.error("Invalid amount!");
       return;
     }
 
-    if (price === 0 || price === "") {
+    if (price < 0 || price === "") {
       toast.error("Invalid price!");
       return;
     }
@@ -91,14 +99,14 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
         0,
         "salePoolTrait::getWhitelistInfo",
         selected,
-        address
+        receiver
       );
       if (account?.toHuman().Ok) {
         toast.error("Whitelist info exist!");
         setIsLoading(false);
         return;
       } else {
-        accounts.push(address);
+        accounts.push(receiver);
       }
 
       // check amount
@@ -120,7 +128,7 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
       }
 
       // adding
-      toast.success(`add address ${address} to whitelist ${selected} Pool ...`);
+      toast.success(`add address ${receiver} to whitelist ${selected} Pool ...`);
       await execContractTx(
         currentAccount,
         sale_pool_contract.CONTRACT_ABI,
@@ -136,7 +144,7 @@ const AddWhitelistModal = ({ isOpen, onClose }) => {
       // add database
       await clientAPI("post", "/addWhitelist", {
         poolType: selected,
-        buyer: address,
+        buyer: receiver,
         amount: value,
         price: price,
       });

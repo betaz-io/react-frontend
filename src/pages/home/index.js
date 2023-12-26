@@ -32,7 +32,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUserBalance, fetchBuyStatus } from "store/slices/substrateSlice";
 import { formatTokenBalance, isValidAddressPolkadotAddress } from "utils";
 import { clientAPI } from "api/client";
-import { convertTimeStampToNumber } from "utils";
+import { convertTimeStampToNumber, getDomainToAddress } from "utils";
 import CommonButton from "components/button/commonButton";
 import useInterval from "hooks/useInterval";
 import BETAZCountDown from "components/countdown/CountDown";
@@ -52,37 +52,6 @@ import "./styles.css";
 import SliderTeam from "./sliderTeam/SliderTeam";
 import { formatNumDynDecimal } from "utils";
 import { delay } from "utils";
-
-const teamList = [
-  {
-    name: "Romeo De Luca - CTO",
-    role: "Head of Technology 1",
-    description:
-      "Romeo has played a significant role in driving technological innovation by demonstrating the system's resilience, efficiency, and security within the exchanges' trading framework. Romeo has held key positions in a number of large technology corporations for more than 15  years.",
-    avatar: AvatarImage,
-  },
-  {
-    name: "Romeo De Luca - CTO",
-    role: "Head of Technology 2",
-    description:
-      "Romeo has played a significant role in driving technological innovation by demonstrating the system's resilience, efficiency, and security within the exchanges' trading framework. Romeo has held key positions in a number of large technology corporations for more than 15  years.",
-    avatar: AvatarImage,
-  },
-  {
-    name: "Romeo De Luca - CTO",
-    role: "Head of Technology 3",
-    description:
-      "Romeo has played a significant role in driving technological innovation by demonstrating the system's resilience, efficiency, and security within the exchanges' trading framework. Romeo has held key positions in a number of large technology corporations for more than 15  years.",
-    avatar: AvatarImage,
-  },
-  {
-    name: "Romeo De Luca - CTO",
-    role: "Head of Technology 4",
-    description:
-      "Romeo has played a significant role in driving technological innovation by demonstrating the system's resilience, efficiency, and security within the exchanges' trading framework. Romeo has held key positions in a number of large technology corporations for more than 15  years.",
-    avatar: AvatarImage,
-  },
-];
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -183,7 +152,15 @@ const HomePage = () => {
 
   const faucet = async () => {
     const difference = endTimeNumber - +new Date();
-    if (!isValidAddressPolkadotAddress(address)) {
+
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver) || receiver !== currentAccount.address) {
       toast.error("Invalid address");
       return;
     }
@@ -198,7 +175,7 @@ const HomePage = () => {
     setIsLoading(true);
     if (currentAccount?.address) {
       try {
-        const result = await sale_pool.faucet(currentAccount, 200);
+        const result = await sale_pool.faucet(currentAccount, 100);
         if (result) {
           toast.success(`fauset BetAZ success`);
           getMaxbuy();

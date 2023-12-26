@@ -1,9 +1,9 @@
 const contract = {
   testnet: {
-    CONTRACT_ADDRESS: "5CmcPEczFP7bnKZPWUzwtvQyDhyNJebNeQUUEP996AdZ8RCg",
+    CONTRACT_ADDRESS: "5GCXtLjk9ub6w3wMzVtFb9W8PNyHEBtbJrH8ntGNFxxTy4k1",
     CONTRACT_ABI: {
       source: {
-        hash: "0x8ed4814727da2acdb32b0942ae52703d6b38435b8854f0fbabdbdadc89ea366f",
+        hash: "0x17c67fee38afb2b892db47ab81ed74382809f8381c3fc6bfce010b004088b836",
         language: "ink! 4.3.0",
         compiler: "rustc 1.75.0-nightly",
         build_info: {
@@ -102,11 +102,11 @@ const contract = {
           },
           chainExtension: {
             displayName: ["ChainExtension"],
-            type: 61,
+            type: 62,
           },
           hash: {
             displayName: ["Hash"],
-            type: 55,
+            type: 56,
           },
           maxEventTopics: 4,
           timestamp: {
@@ -132,7 +132,7 @@ const contract = {
                 label: "player",
                 type: {
                   displayName: ["Option"],
-                  type: 38,
+                  type: 28,
                 },
               },
               {
@@ -174,7 +174,7 @@ const contract = {
                 label: "player",
                 type: {
                   displayName: ["Option"],
-                  type: 38,
+                  type: 28,
                 },
               },
               {
@@ -198,7 +198,7 @@ const contract = {
                 label: "buyer",
                 type: {
                   displayName: ["Option"],
-                  type: 38,
+                  type: 28,
                 },
               },
               {
@@ -364,6 +364,27 @@ const contract = {
           {
             args: [
               {
+                label: "amount",
+                type: {
+                  displayName: ["Balance"],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update total win amount"],
+            label: "update_total_win_amount",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0xdd28222f",
+          },
+          {
+            args: [
+              {
                 label: "account",
                 type: {
                   displayName: ["psp34burnable_external", "BurnInput1"],
@@ -392,50 +413,73 @@ const contract = {
           {
             args: [
               {
-                label: "state",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "ChangeStateInput1",
-                  ],
-                  type: 6,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::change_state",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0xf360cf77",
-          },
-          {
-            args: [
-              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "TotalPlayersInSessionInput1",
+                    "GetPlayersInSessionByIndexInput1",
                   ],
                   type: 4,
+                },
+              },
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetPlayersInSessionByIndexInput2",
+                  ],
+                  type: 5,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "PandoraPoolTraits::total_players_in_session",
+            label: "PandoraPoolTraits::get_players_in_session_by_index",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 27,
             },
-            selector: "0x4dce7946",
+            selector: "0xd130f5ed",
+          },
+          {
+            args: [
+              {
+                label: "token_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetNftInfoInput1",
+                  ],
+                  type: 24,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_nft_info",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 29,
+            },
+            selector: "0x63a8ad62",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" Get Hold Player Count"],
+            label: "PandoraPoolTraits::get_hold_bidder_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 32,
+            },
+            selector: "0xaebc15cb",
           },
           {
             args: [
@@ -472,235 +516,51 @@ const contract = {
             selector: "0x68437b43",
           },
           {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetAttributesInput1",
-                  ],
-                  type: 24,
-                },
-              },
-              {
-                label: "attributes",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetAttributesInput2",
-                  ],
-                  type: 28,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_attributes",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 29,
-            },
-            selector: "0x6fd81de8",
-          },
-          {
-            args: [
-              {
-                label: "index",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetAttributeNameInput1",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_attribute_name",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 30,
-            },
-            selector: "0xe4c75a10",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: ["pandorapooltraits_external", "TokenUriInput1"],
-                  type: 9,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::token_uri",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 30,
-            },
-            selector: "0x61f220f9",
-          },
-          {
             args: [],
             default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_last_token_id",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 31,
-            },
-            selector: "0xa1688e52",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "IsLockedNftInput1",
-                  ],
-                  type: 24,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::is_locked_nft",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 32,
-            },
-            selector: "0xd93bc3ea",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get ticket_amount_ratio"],
-            label: "PandoraPoolTraits::get_session_total_ticket_amount",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0xe23d8b94",
-          },
-          {
-            args: [
-              {
-                label: "uri",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SetBaseUriInput1",
-                  ],
-                  type: 7,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::set_base_uri",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x316cfcc6",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get betaz address"],
-            label: "PandoraPoolTraits::get_betaz_token_address",
+            docs: [" get is locked"],
+            label: "PandoraPoolTraits::get_is_locked",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 33,
             },
-            selector: "0x121f4211",
+            selector: "0x225447fa",
           },
           {
-            args: [],
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "AddChainlinkRequestIdInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "chainlink_request_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "AddChainlinkRequestIdInput2",
+                  ],
+                  type: 7,
+                },
+              },
+            ],
             default: false,
-            docs: [" get last session id"],
-            label: "PandoraPoolTraits::get_last_session_id",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 34,
-            },
-            selector: "0xaadab449",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_attribute_count",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 34,
-            },
-            selector: "0x8c49ee28",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::add_new_bet_session",
+            docs: [" add chainlink request id"],
+            label: "PandoraPoolTraits::add_chainlink_request_id",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 13,
             },
-            selector: "0x6e8baa4d",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::burn_betaz_token",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x6e6c7a17",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get max_bet_number"],
-            label: "PandoraPoolTraits::get_max_bet_number",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 34,
-            },
-            selector: "0xa0bd542e",
+            selector: "0x94a4200b",
           },
           {
             args: [
@@ -732,63 +592,70 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 35,
+              type: 34,
             },
             selector: "0xce2766b7",
           },
           {
             args: [
               {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateNftInfoInput1",
-                  ],
-                  type: 24,
-                },
-              },
-              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "UpdateNftInfoInput2",
+                    "SessionTotalTicketAmountInput1",
                   ],
                   type: 4,
-                },
-              },
-              {
-                label: "bet_number",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateNftInfoInput3",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "status",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateNftInfoInput4",
-                  ],
-                  type: 6,
                 },
               },
             ],
             default: false,
-            docs: [],
-            label: "PandoraPoolTraits::update_nft_info",
+            docs: [" get total ticket in session"],
+            label: "PandoraPoolTraits::session_total_ticket_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x15d02921",
+          },
+          {
+            args: [
+              {
+                label: "price",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "SetPublicMintPriceInput1",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" set public_mint_price"],
+            label: "PandoraPoolTraits::set_public_mint_price",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 13,
             },
-            selector: "0x02b4d724",
+            selector: "0xb583898c",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_locked_token_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 32,
+            },
+            selector: "0x8e3df689",
           },
           {
             args: [
@@ -834,33 +701,96 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 27,
             },
             selector: "0x5d742f27",
           },
           {
-            args: [
-              {
-                label: "ticket_amount_ratio",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SetSessionTotalTicketAmountInput1",
-                  ],
-                  type: 5,
-                },
-              },
-            ],
+            args: [],
             default: false,
-            docs: [" set ticket_amount_ratio"],
-            label: "PandoraPoolTraits::set_session_total_ticket_amount",
+            docs: [" get last session id"],
+            label: "PandoraPoolTraits::get_last_session_id",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 37,
+            },
+            selector: "0xaadab449",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::burn_betaz_token",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 13,
             },
-            selector: "0x5a776234",
+            selector: "0x6e6c7a17",
+          },
+          {
+            args: [
+              {
+                label: "uri",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "SetBaseUriInput1",
+                  ],
+                  type: 7,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::set_base_uri",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x316cfcc6",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get max_bet_number"],
+            label: "PandoraPoolTraits::get_max_bet_number",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 37,
+            },
+            selector: "0xa0bd542e",
+          },
+          {
+            args: [
+              {
+                label: "address",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetHoldAmountPlayersInput1",
+                  ],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get hold amount players"],
+            label: "PandoraPoolTraits::get_hold_amount_players",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 34,
+            },
+            selector: "0x045c951e",
           },
           {
             args: [
@@ -900,297 +830,26 @@ const contract = {
           {
             args: [
               {
-                label: "amounts",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "PublicBuyInput1",
-                  ],
-                  type: 9,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::public_buy",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x1f9a66b6",
-          },
-          {
-            args: [
-              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "GetBetSessionInput1",
+                    "GetChainlinkRequestIdBySessionIdInput1",
                   ],
                   type: 4,
                 },
               },
             ],
             default: false,
-            docs: [" get bet session"],
-            label: "PandoraPoolTraits::get_bet_session",
+            docs: [" get chainlink request id by session id"],
+            label: "PandoraPoolTraits::get_chainlink_request_id_by_session_id",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 39,
+              type: 38,
             },
-            selector: "0x7c4dc868",
-          },
-          {
-            args: [
-              {
-                label: "token_ids",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "BurnTicketUsedInput1",
-                  ],
-                  type: 43,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::burn_ticket_used",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x84dd0f1b",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "TotalTicketsWinInput1",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "random_number",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "TotalTicketsWinInput2",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::total_tickets_win",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x8ad46672",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetNftInfoInput1",
-                  ],
-                  type: 24,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_nft_info",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 44,
-            },
-            selector: "0x63a8ad62",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_owner",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 37,
-            },
-            selector: "0x4a992a16",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_locked_token_count",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 31,
-            },
-            selector: "0x8e3df689",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get public_mint_price"],
-            label: "PandoraPoolTraits::get_public_mint_price",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x055405b3",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get total win amount"],
-            label: "PandoraPoolTraits::get_total_win_amount",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x9c52f857",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateBetSessionInput1",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "random_number",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateBetSessionInput2",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "status_type",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateBetSessionInput3",
-                  ],
-                  type: 42,
-                },
-              },
-            ],
-            default: false,
-            docs: [" update bet session"],
-            label: "PandoraPoolTraits::update_bet_session",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x09c6bb92",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: ["pandorapooltraits_external", "LockInput1"],
-                  type: 24,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::lock",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x3b9f811d",
-          },
-          {
-            args: [
-              {
-                label: "price",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SetPublicMintPriceInput1",
-                  ],
-                  type: 5,
-                },
-              },
-            ],
-            default: false,
-            docs: [" set public_mint_price"],
-            label: "PandoraPoolTraits::set_public_mint_price",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0xb583898c",
-          },
-          {
-            args: [
-              {
-                label: "is_locked",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateIsLockedInput1",
-                  ],
-                  type: 6,
-                },
-              },
-            ],
-            default: false,
-            docs: [" update is locked"],
-            label: "PandoraPoolTraits::update_is_locked",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x430c53c5",
+            selector: "0x9e02d145",
           },
           {
             args: [
@@ -1219,101 +878,15 @@ const contract = {
           {
             args: [],
             default: false,
-            docs: [" get is locked"],
-            label: "PandoraPoolTraits::get_is_locked",
+            docs: [" get public_mint_price"],
+            label: "PandoraPoolTraits::get_public_mint_price",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 32,
+              type: 36,
             },
-            selector: "0x225447fa",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: ["pandorapooltraits_external", "FinalizeInput1"],
-                  type: 4,
-                },
-              },
-              {
-                label: "random_number",
-                type: {
-                  displayName: ["pandorapooltraits_external", "FinalizeInput2"],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::finalize",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x5f2b6996",
-          },
-          {
-            args: [
-              {
-                label: "winner",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "WithdrawWinAmountInput1",
-                  ],
-                  type: 0,
-                },
-              },
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "WithdrawWinAmountInput2",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::withdraw_win_amount",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x0ec48697",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SessionTotalTicketAmountInput1",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [" get total ticket in session"],
-            label: "PandoraPoolTraits::session_total_ticket_amount",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x15d02921",
+            selector: "0x055405b3",
           },
           {
             args: [
@@ -1348,6 +921,161 @@ const contract = {
               type: 13,
             },
             selector: "0x1a9f91ea",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get ticket_amount_ratio"],
+            label: "PandoraPoolTraits::get_session_total_ticket_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0xe23d8b94",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get total hold amount"],
+            label: "PandoraPoolTraits::get_total_hold_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x3cf6a1f8",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "TotalTicketsWinInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "random_number",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "TotalTicketsWinInput2",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::total_tickets_win",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x8ad46672",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_attribute_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 37,
+            },
+            selector: "0x8c49ee28",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetIdInSessionByIndexInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetIdInSessionByIndexInput2",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" get Id in session"],
+            label: "PandoraPoolTraits::get_id_in_session_by_index",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 40,
+            },
+            selector: "0xcc5dbd65",
+          },
+          {
+            args: [
+              {
+                label: "is_locked",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateIsLockedInput1",
+                  ],
+                  type: 6,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update is locked"],
+            label: "PandoraPoolTraits::update_is_locked",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x430c53c5",
+          },
+          {
+            args: [
+              {
+                label: "state",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "ChangeStateInput1",
+                  ],
+                  type: 6,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::change_state",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0xf360cf77",
           },
           {
             args: [
@@ -1386,11 +1114,117 @@ const contract = {
           {
             args: [
               {
+                label: "token_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetAttributesInput1",
+                  ],
+                  type: 24,
+                },
+              },
+              {
+                label: "attributes",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetAttributesInput2",
+                  ],
+                  type: 42,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_attributes",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 43,
+            },
+            selector: "0x6fd81de8",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::add_new_bet_session",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x6e8baa4d",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: ["pandorapooltraits_external", "FinalizeInput1"],
+                  type: 4,
+                },
+              },
+              {
+                label: "random_number",
+                type: {
+                  displayName: ["pandorapooltraits_external", "FinalizeInput2"],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::finalize",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x5f2b6996",
+          },
+          {
+            args: [
+              {
+                label: "token_id",
+                type: {
+                  displayName: ["pandorapooltraits_external", "LockInput1"],
+                  type: 24,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::lock",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x3b9f811d",
+          },
+          {
+            args: [
+              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "GetPlayersInSessionByIndexInput1",
+                    "GetIdInSessionByRandomNumberAndIndexInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "random_number",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetIdInSessionByRandomNumberAndIndexInput2",
                   ],
                   type: 4,
                 },
@@ -1400,7 +1234,111 @@ const contract = {
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "GetPlayersInSessionByIndexInput2",
+                    "GetIdInSessionByRandomNumberAndIndexInput3",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" get Id in session by random number"],
+            label:
+              "PandoraPoolTraits::get_id_in_session_by_random_number_and_index",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 40,
+            },
+            selector: "0x1c7b8061",
+          },
+          {
+            args: [
+              {
+                label: "token_ids",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "BurnTicketUsedInput1",
+                  ],
+                  type: 44,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::burn_ticket_used",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x84dd0f1b",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "TotalPlayersInSessionInput1",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::total_players_in_session",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x4dce7946",
+          },
+          {
+            args: [
+              {
+                label: "token_id",
+                type: {
+                  displayName: ["pandorapooltraits_external", "TokenUriInput1"],
+                  type: 9,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::token_uri",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 45,
+            },
+            selector: "0x61f220f9",
+          },
+          {
+            args: [
+              {
+                label: "receiver",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "WithdrawHoldAmountInput1",
+                  ],
+                  type: 0,
+                },
+              },
+              {
+                label: "amount",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "WithdrawHoldAmountInput2",
                   ],
                   type: 5,
                 },
@@ -1408,84 +1346,267 @@ const contract = {
             ],
             default: false,
             docs: [],
-            label: "PandoraPoolTraits::get_players_in_session_by_index",
+            label: "PandoraPoolTraits::withdraw_hold_amount",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x8b9f4bfe",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_player_not_yet_processed",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 36,
             },
-            selector: "0xd130f5ed",
+            selector: "0xc1dde424",
           },
           {
             args: [
               {
-                label: "owner",
+                label: "token_id",
                 type: {
-                  displayName: ["psp34_external", "AllowanceInput1"],
-                  type: 0,
-                },
-              },
-              {
-                label: "operator",
-                type: {
-                  displayName: ["psp34_external", "AllowanceInput2"],
-                  type: 0,
-                },
-              },
-              {
-                label: "id",
-                type: {
-                  displayName: ["psp34_external", "AllowanceInput3"],
-                  type: 47,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "IsLockedNftInput1",
+                  ],
+                  type: 24,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "PSP34::allowance",
+            label: "PandoraPoolTraits::is_locked_nft",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 33,
+            },
+            selector: "0xd93bc3ea",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_last_token_id",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 32,
             },
-            selector: "0x4790f55a",
+            selector: "0xa1688e52",
           },
           {
             args: [
               {
-                label: "operator",
+                label: "session_id",
                 type: {
-                  displayName: ["psp34_external", "ApproveInput1"],
-                  type: 0,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateBetSessionInput1",
+                  ],
+                  type: 4,
                 },
               },
               {
-                label: "id",
+                label: "random_number",
                 type: {
-                  displayName: ["psp34_external", "ApproveInput2"],
-                  type: 47,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateBetSessionInput2",
+                  ],
+                  type: 4,
                 },
               },
               {
-                label: "approved",
+                label: "status_type",
                 type: {
-                  displayName: ["psp34_external", "ApproveInput3"],
-                  type: 6,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateBetSessionInput3",
+                  ],
+                  type: 46,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update bet session"],
+            label: "PandoraPoolTraits::update_bet_session",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x09c6bb92",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get betaz address"],
+            label: "PandoraPoolTraits::get_betaz_token_address",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 47,
+            },
+            selector: "0x121f4211",
+          },
+          {
+            args: [
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetHoldPlayersByIndexInput1",
+                  ],
+                  type: 9,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get hold players by index"],
+            label: "PandoraPoolTraits::get_hold_players_by_index",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 27,
+            },
+            selector: "0x00878623",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetBetSessionInput1",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [" get bet session"],
+            label: "PandoraPoolTraits::get_bet_session",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 48,
+            },
+            selector: "0x7c4dc868",
+          },
+          {
+            args: [
+              {
+                label: "ticket_amount_ratio",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "SetSessionTotalTicketAmountInput1",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" set ticket_amount_ratio"],
+            label: "PandoraPoolTraits::set_session_total_ticket_amount",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x5a776234",
+          },
+          {
+            args: [
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetAttributeNameInput1",
+                  ],
+                  type: 4,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "PSP34::approve",
+            label: "PandoraPoolTraits::get_attribute_name",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 45,
+            },
+            selector: "0xe4c75a10",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_owner",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 27,
+            },
+            selector: "0x4a992a16",
+          },
+          {
+            args: [
+              {
+                label: "amounts",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "PublicBuyInput1",
+                  ],
+                  type: 9,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::public_buy",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 25,
+              type: 13,
             },
-            selector: "0x1932a8b0",
+            selector: "0x1f9a66b6",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get total win amount"],
+            label: "PandoraPoolTraits::get_total_win_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x9c52f857",
           },
           {
             args: [
@@ -1526,14 +1647,14 @@ const contract = {
             args: [],
             default: false,
             docs: [],
-            label: "PSP34::total_supply",
+            label: "PSP34::collection_id",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 27,
+              type: 51,
             },
-            selector: "0x628413fe",
+            selector: "0xffa27a5f",
           },
           {
             args: [
@@ -1552,22 +1673,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 34,
+              type: 37,
             },
             selector: "0xcde7e55f",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PSP34::collection_id",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 48,
-            },
-            selector: "0xffa27a5f",
           },
           {
             args: [
@@ -1586,9 +1694,92 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 27,
             },
             selector: "0x1168624d",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PSP34::total_supply",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x628413fe",
+          },
+          {
+            args: [
+              {
+                label: "owner",
+                type: {
+                  displayName: ["psp34_external", "AllowanceInput1"],
+                  type: 0,
+                },
+              },
+              {
+                label: "operator",
+                type: {
+                  displayName: ["psp34_external", "AllowanceInput2"],
+                  type: 0,
+                },
+              },
+              {
+                label: "id",
+                type: {
+                  displayName: ["psp34_external", "AllowanceInput3"],
+                  type: 41,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PSP34::allowance",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 33,
+            },
+            selector: "0x4790f55a",
+          },
+          {
+            args: [
+              {
+                label: "operator",
+                type: {
+                  displayName: ["psp34_external", "ApproveInput1"],
+                  type: 0,
+                },
+              },
+              {
+                label: "id",
+                type: {
+                  displayName: ["psp34_external", "ApproveInput2"],
+                  type: 41,
+                },
+              },
+              {
+                label: "approved",
+                type: {
+                  displayName: ["psp34_external", "ApproveInput3"],
+                  type: 6,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PSP34::approve",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 25,
+            },
+            selector: "0x1932a8b0",
           },
           {
             args: [
@@ -1614,7 +1805,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 49,
+              type: 38,
             },
             selector: "0xf19d48d1",
           },
@@ -1648,7 +1839,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 51,
+              type: 52,
             },
             selector: "0x3bcfb511",
           },
@@ -1672,43 +1863,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 51,
+              type: 52,
             },
             selector: "0xcd0340d0",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "Ownable::owner",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 37,
-            },
-            selector: "0x4fa43c8c",
-          },
-          {
-            args: [
-              {
-                label: "new_owner",
-                type: {
-                  displayName: ["ownable_external", "TransferOwnershipInput1"],
-                  type: 38,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "Ownable::transfer_ownership",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 53,
-            },
-            selector: "0x11f43efd",
           },
           {
             args: [],
@@ -1719,9 +1876,43 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 53,
+              type: 54,
             },
             selector: "0x5e228753",
+          },
+          {
+            args: [
+              {
+                label: "new_owner",
+                type: {
+                  displayName: ["ownable_external", "TransferOwnershipInput1"],
+                  type: 28,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "Ownable::transfer_ownership",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 54,
+            },
+            selector: "0x11f43efd",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "Ownable::owner",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 27,
+            },
+            selector: "0x4fa43c8c",
           },
           {
             args: [],
@@ -1732,7 +1923,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 32,
+              type: 33,
             },
             selector: "0xd123ce11",
           },
@@ -1742,7 +1933,7 @@ const contract = {
                 label: "new_code_hash",
                 type: {
                   displayName: ["upgradeable_external", "SetCodeHashInput1"],
-                  type: 55,
+                  type: 56,
                 },
               },
             ],
@@ -1753,9 +1944,37 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 56,
+              type: 57,
             },
             selector: "0x1700ae80",
+          },
+          {
+            args: [
+              {
+                label: "role",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                  type: 4,
+                },
+              },
+              {
+                label: "account",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
+                  type: 28,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "AccessControl::renounce_role",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 60,
+            },
+            selector: "0xeaf1248a",
           },
           {
             args: [
@@ -1774,37 +1993,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 34,
+              type: 37,
             },
             selector: "0x83da3bb2",
-          },
-          {
-            args: [
-              {
-                label: "role",
-                type: {
-                  displayName: ["accesscontrol_external", "HasRoleInput1"],
-                  type: 4,
-                },
-              },
-              {
-                label: "address",
-                type: {
-                  displayName: ["accesscontrol_external", "HasRoleInput2"],
-                  type: 38,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "AccessControl::has_role",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 32,
-            },
-            selector: "0xc1d9ac18",
           },
           {
             args: [
@@ -1819,7 +2010,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "GrantRoleInput2"],
-                  type: 38,
+                  type: 28,
                 },
               },
             ],
@@ -1830,7 +2021,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 59,
+              type: 60,
             },
             selector: "0x4ac062fd",
           },
@@ -1847,7 +2038,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "RevokeRoleInput2"],
-                  type: 38,
+                  type: 28,
                 },
               },
             ],
@@ -1858,7 +2049,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 59,
+              type: 60,
             },
             selector: "0x6e4f0991",
           },
@@ -1867,28 +2058,28 @@ const contract = {
               {
                 label: "role",
                 type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                  displayName: ["accesscontrol_external", "HasRoleInput1"],
                   type: 4,
                 },
               },
               {
-                label: "account",
+                label: "address",
                 type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
-                  type: 38,
+                  displayName: ["accesscontrol_external", "HasRoleInput2"],
+                  type: 28,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "AccessControl::renounce_role",
-            mutates: true,
+            label: "AccessControl::has_role",
+            mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 59,
+              type: 33,
             },
-            selector: "0xeaf1248a",
+            selector: "0xc1d9ac18",
           },
         ],
       },
@@ -2568,6 +2759,57 @@ const contract = {
                             },
                           },
                           name: "player_nfts",
+                        },
+                        {
+                          layout: {
+                            root: {
+                              layout: {
+                                leaf: {
+                                  key: "0x7180a2ac",
+                                  ty: 7,
+                                },
+                              },
+                              root_key: "0x7180a2ac",
+                            },
+                          },
+                          name: "chainlink_request_id_session_link",
+                        },
+                        {
+                          layout: {
+                            root: {
+                              layout: {
+                                leaf: {
+                                  key: "0x2443cbd6",
+                                  ty: 5,
+                                },
+                              },
+                              root_key: "0x2443cbd6",
+                            },
+                          },
+                          name: "hold_amount_players",
+                        },
+                        {
+                          layout: {
+                            root: {
+                              layout: {
+                                leaf: {
+                                  key: "0x57ecaff6",
+                                  ty: 0,
+                                },
+                              },
+                              root_key: "0x57ecaff6",
+                            },
+                          },
+                          name: "hold_players",
+                        },
+                        {
+                          layout: {
+                            leaf: {
+                              key: "0x00000000",
+                              ty: 5,
+                            },
+                          },
+                          name: "total_tickets_win",
                         },
                         {
                           layout: {
@@ -3327,13 +3569,17 @@ const contract = {
                     name: "RewardNotAdded",
                   },
                   {
+                    index: 72,
+                    name: "ChainlinkRequestIdIsExists",
+                  },
+                  {
                     fields: [
                       {
                         type: 16,
                         typeName: "OwnableError",
                       },
                     ],
-                    index: 72,
+                    index: 73,
                     name: "OwnableError",
                   },
                   {
@@ -3343,7 +3589,7 @@ const contract = {
                         typeName: "AccessControlError",
                       },
                     ],
-                    index: 73,
+                    index: 74,
                     name: "AccessControlError",
                   },
                   {
@@ -3353,7 +3599,7 @@ const contract = {
                         typeName: "PSP22Error",
                       },
                     ],
-                    index: 74,
+                    index: 75,
                     name: "PSP22Error",
                   },
                   {
@@ -3363,7 +3609,7 @@ const contract = {
                         typeName: "PSP34Error",
                       },
                     ],
-                    index: 75,
+                    index: 76,
                     name: "PSP34Error",
                   },
                   {
@@ -3373,11 +3619,11 @@ const contract = {
                         typeName: "PausableError",
                       },
                     ],
-                    index: 76,
+                    index: 77,
                     name: "PausableError",
                   },
                   {
-                    index: 77,
+                    index: 78,
                     name: "CheckedOperations",
                   },
                 ],
@@ -3809,56 +4055,6 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 5,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 5,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 28,
-          type: {
-            def: {
-              sequence: {
-                type: 7,
-              },
-            },
-          },
-        },
-        {
-          id: 29,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
                         type: 28,
                       },
                     ],
@@ -3891,7 +4087,38 @@ const contract = {
           },
         },
         {
-          id: 30,
+          id: 28,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 0,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 0,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 29,
           type: {
             def: {
               variant: {
@@ -3899,7 +4126,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 7,
+                        type: 30,
                       },
                     ],
                     index: 0,
@@ -3920,7 +4147,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 7,
+                type: 30,
               },
               {
                 name: "E",
@@ -3931,7 +4158,70 @@ const contract = {
           },
         },
         {
+          id: 30,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 31,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 31,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
           id: 31,
+          type: {
+            def: {
+              composite: {
+                fields: [
+                  {
+                    name: "session_id",
+                    type: 4,
+                    typeName: "u32",
+                  },
+                  {
+                    name: "bet_number",
+                    type: 4,
+                    typeName: "u32",
+                  },
+                  {
+                    name: "time",
+                    type: 9,
+                    typeName: "Timestamp",
+                  },
+                  {
+                    name: "used",
+                    type: 6,
+                    typeName: "bool",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "pandora", "data", "NFTInfomation"],
+          },
+        },
+        {
+          id: 32,
           type: {
             def: {
               variant: {
@@ -3971,7 +4261,7 @@ const contract = {
           },
         },
         {
-          id: 32,
+          id: 33,
           type: {
             def: {
               variant: {
@@ -4011,7 +4301,7 @@ const contract = {
           },
         },
         {
-          id: 33,
+          id: 34,
           type: {
             def: {
               variant: {
@@ -4019,7 +4309,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 0,
+                        type: 35,
                       },
                     ],
                     index: 0,
@@ -4040,7 +4330,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 0,
+                type: 35,
               },
               {
                 name: "E",
@@ -4051,7 +4341,78 @@ const contract = {
           },
         },
         {
-          id: 34,
+          id: 35,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 5,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 5,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 36,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 5,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 5,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 37,
           type: {
             def: {
               variant: {
@@ -4091,134 +4452,28 @@ const contract = {
           },
         },
         {
-          id: 35,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 36,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 36,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 36,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 5,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 5,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 37,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 38,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 38,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
           id: 38,
           type: {
             def: {
               variant: {
                 variants: [
                   {
+                    fields: [
+                      {
+                        type: 39,
+                      },
+                    ],
                     index: 0,
-                    name: "None",
+                    name: "Ok",
                   },
                   {
                     fields: [
                       {
-                        type: 0,
+                        type: 12,
                       },
                     ],
                     index: 1,
-                    name: "Some",
+                    name: "Err",
                   },
                 ],
               },
@@ -4226,355 +4481,18 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 0,
+                type: 39,
+              },
+              {
+                name: "E",
+                type: 12,
               },
             ],
-            path: ["Option"],
+            path: ["Result"],
           },
         },
         {
           id: 39,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 40,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 40,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 40,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 41,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 41,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 41,
-          type: {
-            def: {
-              composite: {
-                fields: [
-                  {
-                    name: "random_number",
-                    type: 4,
-                    typeName: "u32",
-                  },
-                  {
-                    name: "status",
-                    type: 42,
-                    typeName: "SessionsStatusType",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "pandora", "data", "SessionInfo"],
-          },
-        },
-        {
-          id: 42,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "Processing",
-                  },
-                  {
-                    index: 1,
-                    name: "Finalized",
-                  },
-                  {
-                    index: 2,
-                    name: "Completed",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "pandora", "data", "SessionsStatusType"],
-          },
-        },
-        {
-          id: 43,
-          type: {
-            def: {
-              sequence: {
-                type: 24,
-              },
-            },
-          },
-        },
-        {
-          id: 44,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 45,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 45,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 45,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 46,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 46,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 46,
-          type: {
-            def: {
-              composite: {
-                fields: [
-                  {
-                    name: "session_id",
-                    type: 4,
-                    typeName: "u32",
-                  },
-                  {
-                    name: "bet_number",
-                    type: 4,
-                    typeName: "u32",
-                  },
-                  {
-                    name: "time",
-                    type: 9,
-                    typeName: "Timestamp",
-                  },
-                  {
-                    name: "used",
-                    type: 6,
-                    typeName: "bool",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "pandora", "data", "NFTInfomation"],
-          },
-        },
-        {
-          id: 47,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 24,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 24,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 48,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 24,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 24,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 49,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 50,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 50,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 50,
           type: {
             def: {
               variant: {
@@ -4605,7 +4523,7 @@ const contract = {
           },
         },
         {
-          id: 51,
+          id: 40,
           type: {
             def: {
               variant: {
@@ -4613,7 +4531,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 52,
+                        type: 41,
                       },
                     ],
                     index: 0,
@@ -4634,7 +4552,335 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 52,
+                type: 41,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 41,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 24,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 24,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 42,
+          type: {
+            def: {
+              sequence: {
+                type: 7,
+              },
+            },
+          },
+        },
+        {
+          id: 43,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 42,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 42,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 44,
+          type: {
+            def: {
+              sequence: {
+                type: 24,
+              },
+            },
+          },
+        },
+        {
+          id: 45,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 7,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 7,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 46,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "Processing",
+                  },
+                  {
+                    index: 1,
+                    name: "Finalized",
+                  },
+                  {
+                    index: 2,
+                    name: "Completed",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "pandora", "data", "SessionsStatusType"],
+          },
+        },
+        {
+          id: 47,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 0,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 0,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 48,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 49,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 49,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 49,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 50,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 50,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 50,
+          type: {
+            def: {
+              composite: {
+                fields: [
+                  {
+                    name: "random_number",
+                    type: 4,
+                    typeName: "u32",
+                  },
+                  {
+                    name: "status",
+                    type: 46,
+                    typeName: "SessionsStatusType",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "pandora", "data", "SessionInfo"],
+          },
+        },
+        {
+          id: 51,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 24,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 24,
               },
               {
                 name: "E",
@@ -4646,6 +4892,46 @@ const contract = {
         },
         {
           id: 52,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 53,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 53,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 53,
           type: {
             def: {
               variant: {
@@ -4685,7 +4971,7 @@ const contract = {
           },
         },
         {
-          id: 53,
+          id: 54,
           type: {
             def: {
               variant: {
@@ -4693,7 +4979,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 54,
+                        type: 55,
                       },
                     ],
                     index: 0,
@@ -4714,7 +5000,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 54,
+                type: 55,
               },
               {
                 name: "E",
@@ -4725,7 +5011,7 @@ const contract = {
           },
         },
         {
-          id: 54,
+          id: 55,
           type: {
             def: {
               variant: {
@@ -4765,7 +5051,7 @@ const contract = {
           },
         },
         {
-          id: 55,
+          id: 56,
           type: {
             def: {
               composite: {
@@ -4781,7 +5067,7 @@ const contract = {
           },
         },
         {
-          id: 56,
+          id: 57,
           type: {
             def: {
               variant: {
@@ -4789,7 +5075,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 57,
+                        type: 58,
                       },
                     ],
                     index: 0,
@@ -4810,7 +5096,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 57,
+                type: 58,
               },
               {
                 name: "E",
@@ -4821,7 +5107,7 @@ const contract = {
           },
         },
         {
-          id: 57,
+          id: 58,
           type: {
             def: {
               variant: {
@@ -4838,7 +5124,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 58,
+                        type: 59,
                       },
                     ],
                     index: 1,
@@ -4854,14 +5140,14 @@ const contract = {
               },
               {
                 name: "E",
-                type: 58,
+                type: 59,
               },
             ],
             path: ["Result"],
           },
         },
         {
-          id: 58,
+          id: 59,
           type: {
             def: {
               variant: {
@@ -4913,7 +5199,7 @@ const contract = {
           },
         },
         {
-          id: 59,
+          id: 60,
           type: {
             def: {
               variant: {
@@ -4921,7 +5207,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 60,
+                        type: 61,
                       },
                     ],
                     index: 0,
@@ -4942,7 +5228,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 60,
+                type: 61,
               },
               {
                 name: "E",
@@ -4953,7 +5239,7 @@ const contract = {
           },
         },
         {
-          id: 60,
+          id: 61,
           type: {
             def: {
               variant: {
@@ -4993,7 +5279,7 @@ const contract = {
           },
         },
         {
-          id: 61,
+          id: 62,
           type: {
             def: {
               variant: {},
@@ -5006,10 +5292,10 @@ const contract = {
     },
   },
   mainnet: {
-    CONTRACT_ADDRESS: "5H7azQyF4jNVwynYi3mv8qmQ3Cdq6wHNqoyL5DFTb7j7emaP",
+    CONTRACT_ADDRESS: "5GYD63nBUoTPaAWESjnWCW8y2WCM6H4kgDBUWpJ5kPv6ew96",
     CONTRACT_ABI: {
       source: {
-        hash: "0x8ed4814727da2acdb32b0942ae52703d6b38435b8854f0fbabdbdadc89ea366f",
+        hash: "0x17c67fee38afb2b892db47ab81ed74382809f8381c3fc6bfce010b004088b836",
         language: "ink! 4.3.0",
         compiler: "rustc 1.75.0-nightly",
         build_info: {
@@ -5108,11 +5394,11 @@ const contract = {
           },
           chainExtension: {
             displayName: ["ChainExtension"],
-            type: 61,
+            type: 62,
           },
           hash: {
             displayName: ["Hash"],
-            type: 55,
+            type: 56,
           },
           maxEventTopics: 4,
           timestamp: {
@@ -5138,7 +5424,7 @@ const contract = {
                 label: "player",
                 type: {
                   displayName: ["Option"],
-                  type: 38,
+                  type: 28,
                 },
               },
               {
@@ -5180,7 +5466,7 @@ const contract = {
                 label: "player",
                 type: {
                   displayName: ["Option"],
-                  type: 38,
+                  type: 28,
                 },
               },
               {
@@ -5204,7 +5490,7 @@ const contract = {
                 label: "buyer",
                 type: {
                   displayName: ["Option"],
-                  type: 38,
+                  type: 28,
                 },
               },
               {
@@ -5370,6 +5656,27 @@ const contract = {
           {
             args: [
               {
+                label: "amount",
+                type: {
+                  displayName: ["Balance"],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update total win amount"],
+            label: "update_total_win_amount",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0xdd28222f",
+          },
+          {
+            args: [
+              {
                 label: "account",
                 type: {
                   displayName: ["psp34burnable_external", "BurnInput1"],
@@ -5398,50 +5705,73 @@ const contract = {
           {
             args: [
               {
-                label: "state",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "ChangeStateInput1",
-                  ],
-                  type: 6,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::change_state",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0xf360cf77",
-          },
-          {
-            args: [
-              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "TotalPlayersInSessionInput1",
+                    "GetPlayersInSessionByIndexInput1",
                   ],
                   type: 4,
+                },
+              },
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetPlayersInSessionByIndexInput2",
+                  ],
+                  type: 5,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "PandoraPoolTraits::total_players_in_session",
+            label: "PandoraPoolTraits::get_players_in_session_by_index",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 27,
             },
-            selector: "0x4dce7946",
+            selector: "0xd130f5ed",
+          },
+          {
+            args: [
+              {
+                label: "token_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetNftInfoInput1",
+                  ],
+                  type: 24,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_nft_info",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 29,
+            },
+            selector: "0x63a8ad62",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" Get Hold Player Count"],
+            label: "PandoraPoolTraits::get_hold_bidder_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 32,
+            },
+            selector: "0xaebc15cb",
           },
           {
             args: [
@@ -5478,235 +5808,51 @@ const contract = {
             selector: "0x68437b43",
           },
           {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetAttributesInput1",
-                  ],
-                  type: 24,
-                },
-              },
-              {
-                label: "attributes",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetAttributesInput2",
-                  ],
-                  type: 28,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_attributes",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 29,
-            },
-            selector: "0x6fd81de8",
-          },
-          {
-            args: [
-              {
-                label: "index",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetAttributeNameInput1",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_attribute_name",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 30,
-            },
-            selector: "0xe4c75a10",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: ["pandorapooltraits_external", "TokenUriInput1"],
-                  type: 9,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::token_uri",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 30,
-            },
-            selector: "0x61f220f9",
-          },
-          {
             args: [],
             default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_last_token_id",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 31,
-            },
-            selector: "0xa1688e52",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "IsLockedNftInput1",
-                  ],
-                  type: 24,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::is_locked_nft",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 32,
-            },
-            selector: "0xd93bc3ea",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get ticket_amount_ratio"],
-            label: "PandoraPoolTraits::get_session_total_ticket_amount",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0xe23d8b94",
-          },
-          {
-            args: [
-              {
-                label: "uri",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SetBaseUriInput1",
-                  ],
-                  type: 7,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::set_base_uri",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x316cfcc6",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get betaz address"],
-            label: "PandoraPoolTraits::get_betaz_token_address",
+            docs: [" get is locked"],
+            label: "PandoraPoolTraits::get_is_locked",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 33,
             },
-            selector: "0x121f4211",
+            selector: "0x225447fa",
           },
           {
-            args: [],
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "AddChainlinkRequestIdInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "chainlink_request_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "AddChainlinkRequestIdInput2",
+                  ],
+                  type: 7,
+                },
+              },
+            ],
             default: false,
-            docs: [" get last session id"],
-            label: "PandoraPoolTraits::get_last_session_id",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 34,
-            },
-            selector: "0xaadab449",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_attribute_count",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 34,
-            },
-            selector: "0x8c49ee28",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::add_new_bet_session",
+            docs: [" add chainlink request id"],
+            label: "PandoraPoolTraits::add_chainlink_request_id",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 13,
             },
-            selector: "0x6e8baa4d",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::burn_betaz_token",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x6e6c7a17",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get max_bet_number"],
-            label: "PandoraPoolTraits::get_max_bet_number",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 34,
-            },
-            selector: "0xa0bd542e",
+            selector: "0x94a4200b",
           },
           {
             args: [
@@ -5738,63 +5884,70 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 35,
+              type: 34,
             },
             selector: "0xce2766b7",
           },
           {
             args: [
               {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateNftInfoInput1",
-                  ],
-                  type: 24,
-                },
-              },
-              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "UpdateNftInfoInput2",
+                    "SessionTotalTicketAmountInput1",
                   ],
                   type: 4,
-                },
-              },
-              {
-                label: "bet_number",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateNftInfoInput3",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "status",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateNftInfoInput4",
-                  ],
-                  type: 6,
                 },
               },
             ],
             default: false,
-            docs: [],
-            label: "PandoraPoolTraits::update_nft_info",
+            docs: [" get total ticket in session"],
+            label: "PandoraPoolTraits::session_total_ticket_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x15d02921",
+          },
+          {
+            args: [
+              {
+                label: "price",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "SetPublicMintPriceInput1",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" set public_mint_price"],
+            label: "PandoraPoolTraits::set_public_mint_price",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 13,
             },
-            selector: "0x02b4d724",
+            selector: "0xb583898c",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_locked_token_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 32,
+            },
+            selector: "0x8e3df689",
           },
           {
             args: [
@@ -5840,33 +5993,96 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 27,
             },
             selector: "0x5d742f27",
           },
           {
-            args: [
-              {
-                label: "ticket_amount_ratio",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SetSessionTotalTicketAmountInput1",
-                  ],
-                  type: 5,
-                },
-              },
-            ],
+            args: [],
             default: false,
-            docs: [" set ticket_amount_ratio"],
-            label: "PandoraPoolTraits::set_session_total_ticket_amount",
+            docs: [" get last session id"],
+            label: "PandoraPoolTraits::get_last_session_id",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 37,
+            },
+            selector: "0xaadab449",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::burn_betaz_token",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 13,
             },
-            selector: "0x5a776234",
+            selector: "0x6e6c7a17",
+          },
+          {
+            args: [
+              {
+                label: "uri",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "SetBaseUriInput1",
+                  ],
+                  type: 7,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::set_base_uri",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x316cfcc6",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get max_bet_number"],
+            label: "PandoraPoolTraits::get_max_bet_number",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 37,
+            },
+            selector: "0xa0bd542e",
+          },
+          {
+            args: [
+              {
+                label: "address",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetHoldAmountPlayersInput1",
+                  ],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get hold amount players"],
+            label: "PandoraPoolTraits::get_hold_amount_players",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 34,
+            },
+            selector: "0x045c951e",
           },
           {
             args: [
@@ -5906,297 +6122,26 @@ const contract = {
           {
             args: [
               {
-                label: "amounts",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "PublicBuyInput1",
-                  ],
-                  type: 9,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::public_buy",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x1f9a66b6",
-          },
-          {
-            args: [
-              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "GetBetSessionInput1",
+                    "GetChainlinkRequestIdBySessionIdInput1",
                   ],
                   type: 4,
                 },
               },
             ],
             default: false,
-            docs: [" get bet session"],
-            label: "PandoraPoolTraits::get_bet_session",
+            docs: [" get chainlink request id by session id"],
+            label: "PandoraPoolTraits::get_chainlink_request_id_by_session_id",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 39,
+              type: 38,
             },
-            selector: "0x7c4dc868",
-          },
-          {
-            args: [
-              {
-                label: "token_ids",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "BurnTicketUsedInput1",
-                  ],
-                  type: 43,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::burn_ticket_used",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x84dd0f1b",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "TotalTicketsWinInput1",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "random_number",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "TotalTicketsWinInput2",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::total_tickets_win",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x8ad46672",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "GetNftInfoInput1",
-                  ],
-                  type: 24,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_nft_info",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 44,
-            },
-            selector: "0x63a8ad62",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_owner",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 37,
-            },
-            selector: "0x4a992a16",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::get_locked_token_count",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 31,
-            },
-            selector: "0x8e3df689",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get public_mint_price"],
-            label: "PandoraPoolTraits::get_public_mint_price",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x055405b3",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [" get total win amount"],
-            label: "PandoraPoolTraits::get_total_win_amount",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x9c52f857",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateBetSessionInput1",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "random_number",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateBetSessionInput2",
-                  ],
-                  type: 4,
-                },
-              },
-              {
-                label: "status_type",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateBetSessionInput3",
-                  ],
-                  type: 42,
-                },
-              },
-            ],
-            default: false,
-            docs: [" update bet session"],
-            label: "PandoraPoolTraits::update_bet_session",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x09c6bb92",
-          },
-          {
-            args: [
-              {
-                label: "token_id",
-                type: {
-                  displayName: ["pandorapooltraits_external", "LockInput1"],
-                  type: 24,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::lock",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x3b9f811d",
-          },
-          {
-            args: [
-              {
-                label: "price",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SetPublicMintPriceInput1",
-                  ],
-                  type: 5,
-                },
-              },
-            ],
-            default: false,
-            docs: [" set public_mint_price"],
-            label: "PandoraPoolTraits::set_public_mint_price",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0xb583898c",
-          },
-          {
-            args: [
-              {
-                label: "is_locked",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "UpdateIsLockedInput1",
-                  ],
-                  type: 6,
-                },
-              },
-            ],
-            default: false,
-            docs: [" update is locked"],
-            label: "PandoraPoolTraits::update_is_locked",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x430c53c5",
+            selector: "0x9e02d145",
           },
           {
             args: [
@@ -6225,101 +6170,15 @@ const contract = {
           {
             args: [],
             default: false,
-            docs: [" get is locked"],
-            label: "PandoraPoolTraits::get_is_locked",
+            docs: [" get public_mint_price"],
+            label: "PandoraPoolTraits::get_public_mint_price",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 32,
+              type: 36,
             },
-            selector: "0x225447fa",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: ["pandorapooltraits_external", "FinalizeInput1"],
-                  type: 4,
-                },
-              },
-              {
-                label: "random_number",
-                type: {
-                  displayName: ["pandorapooltraits_external", "FinalizeInput2"],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::finalize",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x5f2b6996",
-          },
-          {
-            args: [
-              {
-                label: "winner",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "WithdrawWinAmountInput1",
-                  ],
-                  type: 0,
-                },
-              },
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "WithdrawWinAmountInput2",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "PandoraPoolTraits::withdraw_win_amount",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 13,
-            },
-            selector: "0x0ec48697",
-          },
-          {
-            args: [
-              {
-                label: "session_id",
-                type: {
-                  displayName: [
-                    "pandorapooltraits_external",
-                    "SessionTotalTicketAmountInput1",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [" get total ticket in session"],
-            label: "PandoraPoolTraits::session_total_ticket_amount",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 27,
-            },
-            selector: "0x15d02921",
+            selector: "0x055405b3",
           },
           {
             args: [
@@ -6354,6 +6213,161 @@ const contract = {
               type: 13,
             },
             selector: "0x1a9f91ea",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get ticket_amount_ratio"],
+            label: "PandoraPoolTraits::get_session_total_ticket_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0xe23d8b94",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get total hold amount"],
+            label: "PandoraPoolTraits::get_total_hold_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x3cf6a1f8",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "TotalTicketsWinInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "random_number",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "TotalTicketsWinInput2",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::total_tickets_win",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x8ad46672",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_attribute_count",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 37,
+            },
+            selector: "0x8c49ee28",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetIdInSessionByIndexInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetIdInSessionByIndexInput2",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" get Id in session"],
+            label: "PandoraPoolTraits::get_id_in_session_by_index",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 40,
+            },
+            selector: "0xcc5dbd65",
+          },
+          {
+            args: [
+              {
+                label: "is_locked",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateIsLockedInput1",
+                  ],
+                  type: 6,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update is locked"],
+            label: "PandoraPoolTraits::update_is_locked",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x430c53c5",
+          },
+          {
+            args: [
+              {
+                label: "state",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "ChangeStateInput1",
+                  ],
+                  type: 6,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::change_state",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0xf360cf77",
           },
           {
             args: [
@@ -6392,11 +6406,117 @@ const contract = {
           {
             args: [
               {
+                label: "token_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetAttributesInput1",
+                  ],
+                  type: 24,
+                },
+              },
+              {
+                label: "attributes",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetAttributesInput2",
+                  ],
+                  type: 42,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_attributes",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 43,
+            },
+            selector: "0x6fd81de8",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::add_new_bet_session",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x6e8baa4d",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: ["pandorapooltraits_external", "FinalizeInput1"],
+                  type: 4,
+                },
+              },
+              {
+                label: "random_number",
+                type: {
+                  displayName: ["pandorapooltraits_external", "FinalizeInput2"],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::finalize",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x5f2b6996",
+          },
+          {
+            args: [
+              {
+                label: "token_id",
+                type: {
+                  displayName: ["pandorapooltraits_external", "LockInput1"],
+                  type: 24,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::lock",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x3b9f811d",
+          },
+          {
+            args: [
+              {
                 label: "session_id",
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "GetPlayersInSessionByIndexInput1",
+                    "GetIdInSessionByRandomNumberAndIndexInput1",
+                  ],
+                  type: 4,
+                },
+              },
+              {
+                label: "random_number",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetIdInSessionByRandomNumberAndIndexInput2",
                   ],
                   type: 4,
                 },
@@ -6406,7 +6526,111 @@ const contract = {
                 type: {
                   displayName: [
                     "pandorapooltraits_external",
-                    "GetPlayersInSessionByIndexInput2",
+                    "GetIdInSessionByRandomNumberAndIndexInput3",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" get Id in session by random number"],
+            label:
+              "PandoraPoolTraits::get_id_in_session_by_random_number_and_index",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 40,
+            },
+            selector: "0x1c7b8061",
+          },
+          {
+            args: [
+              {
+                label: "token_ids",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "BurnTicketUsedInput1",
+                  ],
+                  type: 44,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::burn_ticket_used",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x84dd0f1b",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "TotalPlayersInSessionInput1",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::total_players_in_session",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x4dce7946",
+          },
+          {
+            args: [
+              {
+                label: "token_id",
+                type: {
+                  displayName: ["pandorapooltraits_external", "TokenUriInput1"],
+                  type: 9,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::token_uri",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 45,
+            },
+            selector: "0x61f220f9",
+          },
+          {
+            args: [
+              {
+                label: "receiver",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "WithdrawHoldAmountInput1",
+                  ],
+                  type: 0,
+                },
+              },
+              {
+                label: "amount",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "WithdrawHoldAmountInput2",
                   ],
                   type: 5,
                 },
@@ -6414,84 +6638,267 @@ const contract = {
             ],
             default: false,
             docs: [],
-            label: "PandoraPoolTraits::get_players_in_session_by_index",
+            label: "PandoraPoolTraits::withdraw_hold_amount",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x8b9f4bfe",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_player_not_yet_processed",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 36,
             },
-            selector: "0xd130f5ed",
+            selector: "0xc1dde424",
           },
           {
             args: [
               {
-                label: "owner",
+                label: "token_id",
                 type: {
-                  displayName: ["psp34_external", "AllowanceInput1"],
-                  type: 0,
-                },
-              },
-              {
-                label: "operator",
-                type: {
-                  displayName: ["psp34_external", "AllowanceInput2"],
-                  type: 0,
-                },
-              },
-              {
-                label: "id",
-                type: {
-                  displayName: ["psp34_external", "AllowanceInput3"],
-                  type: 47,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "IsLockedNftInput1",
+                  ],
+                  type: 24,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "PSP34::allowance",
+            label: "PandoraPoolTraits::is_locked_nft",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 33,
+            },
+            selector: "0xd93bc3ea",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_last_token_id",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 32,
             },
-            selector: "0x4790f55a",
+            selector: "0xa1688e52",
           },
           {
             args: [
               {
-                label: "operator",
+                label: "session_id",
                 type: {
-                  displayName: ["psp34_external", "ApproveInput1"],
-                  type: 0,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateBetSessionInput1",
+                  ],
+                  type: 4,
                 },
               },
               {
-                label: "id",
+                label: "random_number",
                 type: {
-                  displayName: ["psp34_external", "ApproveInput2"],
-                  type: 47,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateBetSessionInput2",
+                  ],
+                  type: 4,
                 },
               },
               {
-                label: "approved",
+                label: "status_type",
                 type: {
-                  displayName: ["psp34_external", "ApproveInput3"],
-                  type: 6,
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "UpdateBetSessionInput3",
+                  ],
+                  type: 46,
+                },
+              },
+            ],
+            default: false,
+            docs: [" update bet session"],
+            label: "PandoraPoolTraits::update_bet_session",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x09c6bb92",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get betaz address"],
+            label: "PandoraPoolTraits::get_betaz_token_address",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 47,
+            },
+            selector: "0x121f4211",
+          },
+          {
+            args: [
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetHoldPlayersByIndexInput1",
+                  ],
+                  type: 9,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Get hold players by index"],
+            label: "PandoraPoolTraits::get_hold_players_by_index",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 27,
+            },
+            selector: "0x00878623",
+          },
+          {
+            args: [
+              {
+                label: "session_id",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetBetSessionInput1",
+                  ],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [" get bet session"],
+            label: "PandoraPoolTraits::get_bet_session",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 48,
+            },
+            selector: "0x7c4dc868",
+          },
+          {
+            args: [
+              {
+                label: "ticket_amount_ratio",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "SetSessionTotalTicketAmountInput1",
+                  ],
+                  type: 5,
+                },
+              },
+            ],
+            default: false,
+            docs: [" set ticket_amount_ratio"],
+            label: "PandoraPoolTraits::set_session_total_ticket_amount",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 13,
+            },
+            selector: "0x5a776234",
+          },
+          {
+            args: [
+              {
+                label: "index",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "GetAttributeNameInput1",
+                  ],
+                  type: 4,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "PSP34::approve",
+            label: "PandoraPoolTraits::get_attribute_name",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 45,
+            },
+            selector: "0xe4c75a10",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::get_owner",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 27,
+            },
+            selector: "0x4a992a16",
+          },
+          {
+            args: [
+              {
+                label: "amounts",
+                type: {
+                  displayName: [
+                    "pandorapooltraits_external",
+                    "PublicBuyInput1",
+                  ],
+                  type: 9,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PandoraPoolTraits::public_buy",
             mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 25,
+              type: 13,
             },
-            selector: "0x1932a8b0",
+            selector: "0x1f9a66b6",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [" get total win amount"],
+            label: "PandoraPoolTraits::get_total_win_amount",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x9c52f857",
           },
           {
             args: [
@@ -6532,14 +6939,14 @@ const contract = {
             args: [],
             default: false,
             docs: [],
-            label: "PSP34::total_supply",
+            label: "PSP34::collection_id",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 27,
+              type: 51,
             },
-            selector: "0x628413fe",
+            selector: "0xffa27a5f",
           },
           {
             args: [
@@ -6558,22 +6965,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 34,
+              type: 37,
             },
             selector: "0xcde7e55f",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "PSP34::collection_id",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 48,
-            },
-            selector: "0xffa27a5f",
           },
           {
             args: [
@@ -6592,9 +6986,92 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 37,
+              type: 27,
             },
             selector: "0x1168624d",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "PSP34::total_supply",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 36,
+            },
+            selector: "0x628413fe",
+          },
+          {
+            args: [
+              {
+                label: "owner",
+                type: {
+                  displayName: ["psp34_external", "AllowanceInput1"],
+                  type: 0,
+                },
+              },
+              {
+                label: "operator",
+                type: {
+                  displayName: ["psp34_external", "AllowanceInput2"],
+                  type: 0,
+                },
+              },
+              {
+                label: "id",
+                type: {
+                  displayName: ["psp34_external", "AllowanceInput3"],
+                  type: 41,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PSP34::allowance",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 33,
+            },
+            selector: "0x4790f55a",
+          },
+          {
+            args: [
+              {
+                label: "operator",
+                type: {
+                  displayName: ["psp34_external", "ApproveInput1"],
+                  type: 0,
+                },
+              },
+              {
+                label: "id",
+                type: {
+                  displayName: ["psp34_external", "ApproveInput2"],
+                  type: 41,
+                },
+              },
+              {
+                label: "approved",
+                type: {
+                  displayName: ["psp34_external", "ApproveInput3"],
+                  type: 6,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "PSP34::approve",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 25,
+            },
+            selector: "0x1932a8b0",
           },
           {
             args: [
@@ -6620,7 +7097,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 49,
+              type: 38,
             },
             selector: "0xf19d48d1",
           },
@@ -6654,7 +7131,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 51,
+              type: 52,
             },
             selector: "0x3bcfb511",
           },
@@ -6678,43 +7155,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 51,
+              type: 52,
             },
             selector: "0xcd0340d0",
-          },
-          {
-            args: [],
-            default: false,
-            docs: [],
-            label: "Ownable::owner",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 37,
-            },
-            selector: "0x4fa43c8c",
-          },
-          {
-            args: [
-              {
-                label: "new_owner",
-                type: {
-                  displayName: ["ownable_external", "TransferOwnershipInput1"],
-                  type: 38,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "Ownable::transfer_ownership",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 53,
-            },
-            selector: "0x11f43efd",
           },
           {
             args: [],
@@ -6725,9 +7168,43 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 53,
+              type: 54,
             },
             selector: "0x5e228753",
+          },
+          {
+            args: [
+              {
+                label: "new_owner",
+                type: {
+                  displayName: ["ownable_external", "TransferOwnershipInput1"],
+                  type: 28,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "Ownable::transfer_ownership",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 54,
+            },
+            selector: "0x11f43efd",
+          },
+          {
+            args: [],
+            default: false,
+            docs: [],
+            label: "Ownable::owner",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 27,
+            },
+            selector: "0x4fa43c8c",
           },
           {
             args: [],
@@ -6738,7 +7215,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 32,
+              type: 33,
             },
             selector: "0xd123ce11",
           },
@@ -6748,7 +7225,7 @@ const contract = {
                 label: "new_code_hash",
                 type: {
                   displayName: ["upgradeable_external", "SetCodeHashInput1"],
-                  type: 55,
+                  type: 56,
                 },
               },
             ],
@@ -6759,9 +7236,37 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 56,
+              type: 57,
             },
             selector: "0x1700ae80",
+          },
+          {
+            args: [
+              {
+                label: "role",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                  type: 4,
+                },
+              },
+              {
+                label: "account",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
+                  type: 28,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "AccessControl::renounce_role",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 60,
+            },
+            selector: "0xeaf1248a",
           },
           {
             args: [
@@ -6780,37 +7285,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 34,
+              type: 37,
             },
             selector: "0x83da3bb2",
-          },
-          {
-            args: [
-              {
-                label: "role",
-                type: {
-                  displayName: ["accesscontrol_external", "HasRoleInput1"],
-                  type: 4,
-                },
-              },
-              {
-                label: "address",
-                type: {
-                  displayName: ["accesscontrol_external", "HasRoleInput2"],
-                  type: 38,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "AccessControl::has_role",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 32,
-            },
-            selector: "0xc1d9ac18",
           },
           {
             args: [
@@ -6825,7 +7302,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "GrantRoleInput2"],
-                  type: 38,
+                  type: 28,
                 },
               },
             ],
@@ -6836,7 +7313,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 59,
+              type: 60,
             },
             selector: "0x4ac062fd",
           },
@@ -6853,7 +7330,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "RevokeRoleInput2"],
-                  type: 38,
+                  type: 28,
                 },
               },
             ],
@@ -6864,7 +7341,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 59,
+              type: 60,
             },
             selector: "0x6e4f0991",
           },
@@ -6873,28 +7350,28 @@ const contract = {
               {
                 label: "role",
                 type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                  displayName: ["accesscontrol_external", "HasRoleInput1"],
                   type: 4,
                 },
               },
               {
-                label: "account",
+                label: "address",
                 type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
-                  type: 38,
+                  displayName: ["accesscontrol_external", "HasRoleInput2"],
+                  type: 28,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "AccessControl::renounce_role",
-            mutates: true,
+            label: "AccessControl::has_role",
+            mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 59,
+              type: 33,
             },
-            selector: "0xeaf1248a",
+            selector: "0xc1d9ac18",
           },
         ],
       },
@@ -7574,6 +8051,57 @@ const contract = {
                             },
                           },
                           name: "player_nfts",
+                        },
+                        {
+                          layout: {
+                            root: {
+                              layout: {
+                                leaf: {
+                                  key: "0x7180a2ac",
+                                  ty: 7,
+                                },
+                              },
+                              root_key: "0x7180a2ac",
+                            },
+                          },
+                          name: "chainlink_request_id_session_link",
+                        },
+                        {
+                          layout: {
+                            root: {
+                              layout: {
+                                leaf: {
+                                  key: "0x2443cbd6",
+                                  ty: 5,
+                                },
+                              },
+                              root_key: "0x2443cbd6",
+                            },
+                          },
+                          name: "hold_amount_players",
+                        },
+                        {
+                          layout: {
+                            root: {
+                              layout: {
+                                leaf: {
+                                  key: "0x57ecaff6",
+                                  ty: 0,
+                                },
+                              },
+                              root_key: "0x57ecaff6",
+                            },
+                          },
+                          name: "hold_players",
+                        },
+                        {
+                          layout: {
+                            leaf: {
+                              key: "0x00000000",
+                              ty: 5,
+                            },
+                          },
+                          name: "total_tickets_win",
                         },
                         {
                           layout: {
@@ -8333,13 +8861,17 @@ const contract = {
                     name: "RewardNotAdded",
                   },
                   {
+                    index: 72,
+                    name: "ChainlinkRequestIdIsExists",
+                  },
+                  {
                     fields: [
                       {
                         type: 16,
                         typeName: "OwnableError",
                       },
                     ],
-                    index: 72,
+                    index: 73,
                     name: "OwnableError",
                   },
                   {
@@ -8349,7 +8881,7 @@ const contract = {
                         typeName: "AccessControlError",
                       },
                     ],
-                    index: 73,
+                    index: 74,
                     name: "AccessControlError",
                   },
                   {
@@ -8359,7 +8891,7 @@ const contract = {
                         typeName: "PSP22Error",
                       },
                     ],
-                    index: 74,
+                    index: 75,
                     name: "PSP22Error",
                   },
                   {
@@ -8369,7 +8901,7 @@ const contract = {
                         typeName: "PSP34Error",
                       },
                     ],
-                    index: 75,
+                    index: 76,
                     name: "PSP34Error",
                   },
                   {
@@ -8379,11 +8911,11 @@ const contract = {
                         typeName: "PausableError",
                       },
                     ],
-                    index: 76,
+                    index: 77,
                     name: "PausableError",
                   },
                   {
-                    index: 77,
+                    index: 78,
                     name: "CheckedOperations",
                   },
                 ],
@@ -8815,56 +9347,6 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 5,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 5,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 28,
-          type: {
-            def: {
-              sequence: {
-                type: 7,
-              },
-            },
-          },
-        },
-        {
-          id: 29,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
                         type: 28,
                       },
                     ],
@@ -8897,7 +9379,38 @@ const contract = {
           },
         },
         {
-          id: 30,
+          id: 28,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 0,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 0,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 29,
           type: {
             def: {
               variant: {
@@ -8905,7 +9418,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 7,
+                        type: 30,
                       },
                     ],
                     index: 0,
@@ -8926,7 +9439,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 7,
+                type: 30,
               },
               {
                 name: "E",
@@ -8937,7 +9450,70 @@ const contract = {
           },
         },
         {
+          id: 30,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 31,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 31,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
           id: 31,
+          type: {
+            def: {
+              composite: {
+                fields: [
+                  {
+                    name: "session_id",
+                    type: 4,
+                    typeName: "u32",
+                  },
+                  {
+                    name: "bet_number",
+                    type: 4,
+                    typeName: "u32",
+                  },
+                  {
+                    name: "time",
+                    type: 9,
+                    typeName: "Timestamp",
+                  },
+                  {
+                    name: "used",
+                    type: 6,
+                    typeName: "bool",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "pandora", "data", "NFTInfomation"],
+          },
+        },
+        {
+          id: 32,
           type: {
             def: {
               variant: {
@@ -8977,7 +9553,7 @@ const contract = {
           },
         },
         {
-          id: 32,
+          id: 33,
           type: {
             def: {
               variant: {
@@ -9017,7 +9593,7 @@ const contract = {
           },
         },
         {
-          id: 33,
+          id: 34,
           type: {
             def: {
               variant: {
@@ -9025,7 +9601,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 0,
+                        type: 35,
                       },
                     ],
                     index: 0,
@@ -9046,7 +9622,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 0,
+                type: 35,
               },
               {
                 name: "E",
@@ -9057,7 +9633,78 @@ const contract = {
           },
         },
         {
-          id: 34,
+          id: 35,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 5,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 5,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 36,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 5,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 5,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 37,
           type: {
             def: {
               variant: {
@@ -9097,134 +9744,28 @@ const contract = {
           },
         },
         {
-          id: 35,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 36,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 36,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 36,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 5,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 5,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 37,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 38,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 38,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
           id: 38,
           type: {
             def: {
               variant: {
                 variants: [
                   {
+                    fields: [
+                      {
+                        type: 39,
+                      },
+                    ],
                     index: 0,
-                    name: "None",
+                    name: "Ok",
                   },
                   {
                     fields: [
                       {
-                        type: 0,
+                        type: 12,
                       },
                     ],
                     index: 1,
-                    name: "Some",
+                    name: "Err",
                   },
                 ],
               },
@@ -9232,355 +9773,18 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 0,
+                type: 39,
+              },
+              {
+                name: "E",
+                type: 12,
               },
             ],
-            path: ["Option"],
+            path: ["Result"],
           },
         },
         {
           id: 39,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 40,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 40,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 40,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 41,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 41,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 41,
-          type: {
-            def: {
-              composite: {
-                fields: [
-                  {
-                    name: "random_number",
-                    type: 4,
-                    typeName: "u32",
-                  },
-                  {
-                    name: "status",
-                    type: 42,
-                    typeName: "SessionsStatusType",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "pandora", "data", "SessionInfo"],
-          },
-        },
-        {
-          id: 42,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "Processing",
-                  },
-                  {
-                    index: 1,
-                    name: "Finalized",
-                  },
-                  {
-                    index: 2,
-                    name: "Completed",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "pandora", "data", "SessionsStatusType"],
-          },
-        },
-        {
-          id: 43,
-          type: {
-            def: {
-              sequence: {
-                type: 24,
-              },
-            },
-          },
-        },
-        {
-          id: 44,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 45,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 45,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 45,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 46,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 46,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 46,
-          type: {
-            def: {
-              composite: {
-                fields: [
-                  {
-                    name: "session_id",
-                    type: 4,
-                    typeName: "u32",
-                  },
-                  {
-                    name: "bet_number",
-                    type: 4,
-                    typeName: "u32",
-                  },
-                  {
-                    name: "time",
-                    type: 9,
-                    typeName: "Timestamp",
-                  },
-                  {
-                    name: "used",
-                    type: 6,
-                    typeName: "bool",
-                  },
-                ],
-              },
-            },
-            path: ["bet_a0", "impls", "pandora", "data", "NFTInfomation"],
-          },
-        },
-        {
-          id: 47,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 24,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 24,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 48,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 24,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 24,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 49,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 50,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 12,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 50,
-              },
-              {
-                name: "E",
-                type: 12,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 50,
           type: {
             def: {
               variant: {
@@ -9611,7 +9815,7 @@ const contract = {
           },
         },
         {
-          id: 51,
+          id: 40,
           type: {
             def: {
               variant: {
@@ -9619,7 +9823,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 52,
+                        type: 41,
                       },
                     ],
                     index: 0,
@@ -9640,7 +9844,335 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 52,
+                type: 41,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 41,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 24,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 24,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 42,
+          type: {
+            def: {
+              sequence: {
+                type: 7,
+              },
+            },
+          },
+        },
+        {
+          id: 43,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 42,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 42,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 44,
+          type: {
+            def: {
+              sequence: {
+                type: 24,
+              },
+            },
+          },
+        },
+        {
+          id: 45,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 7,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 7,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 46,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "Processing",
+                  },
+                  {
+                    index: 1,
+                    name: "Finalized",
+                  },
+                  {
+                    index: 2,
+                    name: "Completed",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "pandora", "data", "SessionsStatusType"],
+          },
+        },
+        {
+          id: 47,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 0,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 0,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 48,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 49,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 49,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 49,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 50,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 50,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 50,
+          type: {
+            def: {
+              composite: {
+                fields: [
+                  {
+                    name: "random_number",
+                    type: 4,
+                    typeName: "u32",
+                  },
+                  {
+                    name: "status",
+                    type: 46,
+                    typeName: "SessionsStatusType",
+                  },
+                ],
+              },
+            },
+            path: ["bet_a0", "impls", "pandora", "data", "SessionInfo"],
+          },
+        },
+        {
+          id: 51,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 24,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 24,
               },
               {
                 name: "E",
@@ -9652,6 +10184,46 @@ const contract = {
         },
         {
           id: 52,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 53,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 12,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 53,
+              },
+              {
+                name: "E",
+                type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 53,
           type: {
             def: {
               variant: {
@@ -9691,7 +10263,7 @@ const contract = {
           },
         },
         {
-          id: 53,
+          id: 54,
           type: {
             def: {
               variant: {
@@ -9699,7 +10271,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 54,
+                        type: 55,
                       },
                     ],
                     index: 0,
@@ -9720,7 +10292,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 54,
+                type: 55,
               },
               {
                 name: "E",
@@ -9731,7 +10303,7 @@ const contract = {
           },
         },
         {
-          id: 54,
+          id: 55,
           type: {
             def: {
               variant: {
@@ -9771,7 +10343,7 @@ const contract = {
           },
         },
         {
-          id: 55,
+          id: 56,
           type: {
             def: {
               composite: {
@@ -9787,7 +10359,7 @@ const contract = {
           },
         },
         {
-          id: 56,
+          id: 57,
           type: {
             def: {
               variant: {
@@ -9795,7 +10367,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 57,
+                        type: 58,
                       },
                     ],
                     index: 0,
@@ -9816,7 +10388,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 57,
+                type: 58,
               },
               {
                 name: "E",
@@ -9827,7 +10399,7 @@ const contract = {
           },
         },
         {
-          id: 57,
+          id: 58,
           type: {
             def: {
               variant: {
@@ -9844,7 +10416,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 58,
+                        type: 59,
                       },
                     ],
                     index: 1,
@@ -9860,14 +10432,14 @@ const contract = {
               },
               {
                 name: "E",
-                type: 58,
+                type: 59,
               },
             ],
             path: ["Result"],
           },
         },
         {
-          id: 58,
+          id: 59,
           type: {
             def: {
               variant: {
@@ -9919,7 +10491,7 @@ const contract = {
           },
         },
         {
-          id: 59,
+          id: 60,
           type: {
             def: {
               variant: {
@@ -9927,7 +10499,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 60,
+                        type: 61,
                       },
                     ],
                     index: 0,
@@ -9948,7 +10520,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 60,
+                type: 61,
               },
               {
                 name: "E",
@@ -9959,7 +10531,7 @@ const contract = {
           },
         },
         {
-          id: 60,
+          id: 61,
           type: {
             def: {
               variant: {
@@ -9999,7 +10571,7 @@ const contract = {
           },
         },
         {
-          id: 61,
+          id: 62,
           type: {
             def: {
               variant: {},

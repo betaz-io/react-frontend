@@ -170,8 +170,6 @@ const Predict = () => {
       try {
         let finalized = await betaz_core.finalize(currentAccount);
 
-        await delay(2000);
-
         console.log({ finalized });
 
         if (finalized) {
@@ -201,10 +199,19 @@ const Predict = () => {
               },
             });
           loadBalance();
+          toast.dismiss(toastHandle);
+          return;
+        } else {
+          setLuckyNumber(-1);
+          setIsDisabled(false);
+          setGameOn(false);
+          loadBalance();
+          toast.dismiss(toastHandle);
+          return;
         }
       } catch (error) {
         console.log({ error });
-        toast.error(`${error.response.data.error}`);
+        toast.error(`${error}`);
         setLuckyNumber(-1);
         setIsDisabled(false);
         setGameOn(false);
@@ -229,15 +236,23 @@ const Predict = () => {
     setLuckyNumber(-1);
 
     if (betAmount <= maxBet) {
-      let played = await betaz_core.play(
-        currentAccount,
-        betAmount,
-        position,
-        rollOver
-      );
+      try {
+        let played = await betaz_core.play(
+          currentAccount,
+          betAmount,
+          position,
+          rollOver
+        );
 
-      if (!played) {
-        toast.error("Something wrong with your roll");
+        if (!played) {
+          setLuckyNumber(-1);
+          setIsDisabled(false);
+          setGameOn(false);
+          loadBalance();
+          return;
+        }
+      } catch (error) {
+        toast.error(`${error}`);
         setLuckyNumber(-1);
         setIsDisabled(false);
         setGameOn(false);
@@ -276,8 +291,6 @@ const Predict = () => {
     try {
       let finalized = await betaz_core.finalize(currentAccount);
 
-      await delay(2000);
-
       console.log({ finalized });
 
       if (finalized) {
@@ -307,10 +320,17 @@ const Predict = () => {
             },
           });
         loadBalance();
+      } else {
+        setLuckyNumber(-1);
+        setIsDisabled(false);
+        setGameOn(false);
+        loadBalance();
+        toast.dismiss(toastHandle);
+        return;
       }
     } catch (error) {
       console.log({ error });
-      toast.error(`${error.response.data.error}`);
+      toast.error(`${error}`);
       setLuckyNumber(-1);
       setIsDisabled(false);
       setGameOn(false);
@@ -603,9 +623,9 @@ const Predict = () => {
                     <Text className="linear-text small-content">
                       {rollOver
                         ? parseInt(betRates?.overRates[parseInt(position)]) /
-                          100
+                          betRates?.percentageRates
                         : parseInt(betRates?.underRates[parseInt(position)]) /
-                          100}
+                          betRates?.percentageRates}
                       X
                     </Text>
                   </Box>

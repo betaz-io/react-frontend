@@ -18,6 +18,7 @@ import { Keyring } from "@polkadot/keyring";
 import { getAzeroBalanceOfAddress } from "utils/contracts";
 import { formatQueryResultToNumber } from "utils";
 import { convertBalanceToNumber } from "utils";
+import { getDomainToAddress } from "utils";
 
 const options = [
   { value: "core", label: "Core pool", color: "#0d171b" },
@@ -44,10 +45,18 @@ const WithdrawFee = () => {
       return;
     }
 
-    if (!isValidAddressPolkadotAddress(address)) {
+    const azeroIdAddress = await getDomainToAddress(address);
+    let receiver;
+
+    if (isValidAddressPolkadotAddress(azeroIdAddress))
+      receiver = azeroIdAddress;
+    else receiver = address;
+
+    if (!isValidAddressPolkadotAddress(receiver)) {
       toast.error("Invalid address");
       return;
     }
+
     if (value === 0 || value === "") {
       toast.error("Invalid value");
       return;
@@ -105,7 +114,7 @@ const WithdrawFee = () => {
           betaz_core_contract.CONTRACT_ADDRESS,
           0,
           "betA0CoreTrait::withdrawFee",
-          address,
+          receiver,
           convertToBalance(value)
         );
       } else if (selected === "staking") {
@@ -130,7 +139,7 @@ const WithdrawFee = () => {
           staking_pool_contract.CONTRACT_ADDRESS,
           0,
           "stakingPoolTrait::withdrawFee",
-          address,
+          receiver,
           convertToBalance(value)
         );
       } else if (selected === "pandora") {
@@ -155,7 +164,7 @@ const WithdrawFee = () => {
           pandora_pool_contract.CONTRACT_ADDRESS,
           0,
           "pandoraPoolTraits::withdrawFee",
-          address,
+          receiver,
           convertToBalance(value)
         );
       } else if (selected === "treasury") {
@@ -175,7 +184,7 @@ const WithdrawFee = () => {
         const alice = keyring.createFromUri(treasuryPoolPhase);
 
         const transfer = api.tx.balances.transfer(
-          address,
+          receiver,
           convertToBalance(value)
         );
 

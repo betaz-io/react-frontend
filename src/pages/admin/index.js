@@ -31,13 +31,16 @@ const tabData = [
     label: "Withdraw fee",
   },
   {
-    label: "Set Clamied Status Address",
-  },
-  {
     label: "Whitelist Manager",
   },
   {
     label: "Staking pool management",
+  },
+  {
+    label: "Pandora pool management",
+  },
+  {
+    label: "Multi player",
   },
 ];
 
