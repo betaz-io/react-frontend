@@ -264,6 +264,7 @@ const Predict = () => {
     } else {
       setGameOn(false);
       toast.error("Not enough balance!");
+      setIsDisabled(false);
       return;
     }
 
