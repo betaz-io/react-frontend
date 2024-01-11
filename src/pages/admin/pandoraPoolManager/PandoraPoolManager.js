@@ -198,6 +198,9 @@ const PandoraPoolManager = () => {
           <Text textAlign="center">
             Await cron job pandora pool at 6:30 AM on sunday
           </Text>
+          <Text textAlign="center">
+            Run script withdraw hold players
+          </Text>
         </Flex>
       </Flex>
     </SectionContainer>
