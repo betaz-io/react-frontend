@@ -28,14 +28,41 @@ export const formatTableValue = (value, key) => {
           </Box>
         </Flex>
       );
+    case "currentTime":
+      function formatTimestamp(timestamp) {
+        let date = new Date(timestamp);
+
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+
+        let formattedTime = `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+        return formattedTime;
+      }
+
+      return (
+        <Flex minH="40px" justifyContent="center" alignItems="center">
+          <Text textAlign="center">{formatTimestamp(value)}</Text>;
+        </Flex>
+      );
+    case "action":
+      return <PendingUnstakeButton data={value} />;
     case "time":
       return (
         <Flex minH="40px" justifyContent="center" alignItems="center">
           <BETAZPendingUnstakeCountDown date={value} />
         </Flex>
       );
-    case "action":
-      return <PendingUnstakeButton data={value} />;
+    case "status":
+      return (
+        <Flex minH="40px" justifyContent="center" alignItems="center">
+          <Text textAlign="center">{value}</Text>;
+        </Flex>
+      );
     default:
       return <Text textAlign="center">{value}</Text>;
   }

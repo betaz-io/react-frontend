@@ -71,6 +71,9 @@ const tabData = [
   {
     label: "Cancel unstake requests",
   },
+  {
+    label: "History requests",
+  },
 ];
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
@@ -125,7 +128,7 @@ const UnstakeModal = ({ isOpen, onClose }) => {
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Count down",
+        label: "Time",
         key: "time",
         icon: <BiTime size="24px" style={{ marginRight: "8px" }} />,
       },
@@ -225,6 +228,8 @@ const UnstakeModal = ({ isOpen, onClose }) => {
     dispatch(fetchBalance());
   };
 
+  console.log(dataPending)
+
   const isMobile = useCheckMobileScreen(480);
   return (
     <Modal onClose={onClose} size="lg" isOpen={isOpen}>
@@ -320,11 +325,7 @@ const UnstakeModal = ({ isOpen, onClose }) => {
                   }}
                 >
                   <Text>
-                    {currentTab === 0
-                      ? tabData[0].label
-                      : currentTab === 1
-                      ? tabData[1].label
-                      : tabData[2].label}{" "}
+                    {tabData[currentTab].label}{" "}
                     not found!
                   </Text>
                 </Box>
@@ -425,11 +426,7 @@ const UnstakeModal = ({ isOpen, onClose }) => {
                           }}
                         >
                           <Text textAlign="center">
-                            {currentTab === 0
-                              ? tabData[0].label
-                              : currentTab === 1
-                              ? tabData[1].label
-                              : tabData[2].label}{" "}
+                          {tabData[currentTab].label}{" "}
                             not found!
                           </Text>
                         </Box>

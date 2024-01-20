@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { clientAPITotalPages } from "api/client";
 import { clientAPI } from "api/client";
 
@@ -80,7 +80,7 @@ export const {
   incrementCurrentPage,
   decrementCurrentPage,
   setCurrentTab,
-  setCurrentPage
+  setCurrentPage,
 } = stakingSlice.actions;
 
 export default stakingSlice.reducer;
@@ -114,6 +114,25 @@ export const fetchPendingUnstake = createAsyncThunk(
     };
     data.forEach(addActionTime);
     let newData = data.map(({ index, ...rest }) => rest);
+
+    if (currentTab === 3) {
+      let [historyData, historyTotal] = await Promise.all([
+        clientAPI("post", "/getHistoryStaking", {
+          caller: currentAccount?.address,
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+          status: currentTab,
+        }),
+        clientAPITotalPages("post", "/getHistoryStaking", {
+          caller: currentAccount?.address,
+          limit: 10,
+          offset: 10 * (currentPage - 1),
+          status: currentTab,
+        }),
+      ]);
+      newData = historyData;
+      total = historyTotal;
+    }
 
     if (currentAccount === "") {
       let data = [];

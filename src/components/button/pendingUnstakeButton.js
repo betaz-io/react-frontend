@@ -56,10 +56,21 @@ export default function PendingUnstakeButton({ data }) {
         toast.dismiss(toastUnstake);
 
         // delete resquest unstake
-        await clientAPI("post", "/updatePendingUnstake", {
-          caller: currentAccount?.address,
-        });
-        dispatch(fetchPendingUnstake(currentAccount))
+        await Promise.all([
+          clientAPI("post", "/updatePendingUnstake", {
+            caller: currentAccount?.address,
+          }),
+          clientAPI("post", "/updateHistoryStaking", {
+            caller: currentAccount?.address,
+            amount: data?.amount,
+            currentTime: new Date().getTime(),
+            status: "Unstake"
+          }),
+        ]);
+        // await clientAPI("post", "/updatePendingUnstake", {
+        //   caller: currentAccount?.address,
+        // });
+        dispatch(fetchPendingUnstake(currentAccount));
       } else toast.dismiss(toastUnstake);
     } catch (error) {
       // toast.dismiss(toastUnstake);
@@ -110,10 +121,21 @@ export default function PendingUnstakeButton({ data }) {
         toast.dismiss(toastUnstake);
 
         // delete resquest unstake
-        await clientAPI("post", "/updatePendingUnstake", {
-          caller: currentAccount?.address,
-        });
-        dispatch(fetchPendingUnstake(currentAccount))
+        await Promise.all([
+          clientAPI("post", "/updatePendingUnstake", {
+            caller: currentAccount?.address,
+          }),
+          clientAPI("post", "/updateHistoryStaking", {
+            caller: currentAccount?.address,
+            amount: data?.amount,
+            currentTime: new Date().getTime(),
+            status: "Cancel Unstake"
+          }),
+        ]);
+        // await clientAPI("post", "/updatePendingUnstake", {
+        //   caller: currentAccount?.address,
+        // });
+        dispatch(fetchPendingUnstake(currentAccount));
       } else toast.dismiss(toastUnstake);
     } catch (error) {
       setIsLoading(false);

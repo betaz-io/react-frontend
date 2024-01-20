@@ -27,6 +27,10 @@ import { execContractQuery, execContractTx } from "utils/contracts";
 import staking_pool_contract from "utils/contracts/staking_pool";
 import betaz_token_contract from "utils/contracts/betaz_token";
 import { useModal } from "contexts/useModal";
+import { clientAPI } from "api/client";
+import {
+  fetchPendingUnstake,
+} from "store/slices/stakingSlide";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -122,8 +126,17 @@ const StakingPool = () => {
           convertToBalance(stakeAmount)
         );
         if (result) {
-          await delay(3000)
+          await delay(3000);
           toast.dismiss(toastStake);
+
+          await clientAPI("post", "/updateHistoryStaking", {
+            caller: currentAccount?.address,
+            amount: stakeAmount,
+            currentTime: new Date().getTime(),
+            status: "Stake",
+          });
+
+          dispatch(fetchPendingUnstake(currentAccount))
         } else toast.dismiss(toastStake);
       }
     } catch (error) {
@@ -132,6 +145,7 @@ const StakingPool = () => {
       console.log(error);
     }
     // await delay(2000);
+    setStakeValue(0);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
     setIsLoading(false);
@@ -166,10 +180,7 @@ const StakingPool = () => {
                   </Flex>
                 </Flex>
                 {/* Stake */}
-                <SimpleGrid
-                  spacing="24px"
-                  mt="24px"
-                >
+                <SimpleGrid spacing="24px" mt="24px">
                   <Flex flexDirection="column" gap="24px">
                     <Box className="deposit-box-amount-box">
                       <Text>Your Betaz token Balance</Text>

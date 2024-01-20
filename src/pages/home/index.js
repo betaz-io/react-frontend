@@ -160,7 +160,10 @@ const HomePage = () => {
       receiver = azeroIdAddress;
     else receiver = address;
 
-    if (!isValidAddressPolkadotAddress(receiver) || receiver !== currentAccount.address) {
+    if (
+      !isValidAddressPolkadotAddress(receiver) ||
+      receiver !== currentAccount.address
+    ) {
       toast.error("Invalid address");
       return;
     }
@@ -178,6 +181,7 @@ const HomePage = () => {
         const result = await sale_pool.faucet(currentAccount, 100);
         if (result) {
           toast.success(`fauset BetAZ success`);
+          setAddress("");
           getMaxbuy();
         }
       } catch (err) {
