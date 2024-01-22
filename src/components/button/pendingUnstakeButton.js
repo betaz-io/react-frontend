@@ -8,7 +8,11 @@ import { clientAPI } from "api/client";
 import staking_pool_contract from "utils/contracts/staking_pool";
 import { convertToBalance, delay } from "utils";
 import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
-import { execContractQuery, execContractTx } from "utils/contracts";
+import {
+  execContractQuery,
+  execContractTx,
+  execContractTxAndUpdateHistoryStaking,
+} from "utils/contracts";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { fetchPendingUnstake } from "store/slices/stakingSlide";
 
@@ -43,7 +47,9 @@ export default function PendingUnstakeButton({ data }) {
       }
 
       const toastUnstake = toast.loading("Unstake ...");
-      const result = await execContractTx(
+      const result = await execContractTxAndUpdateHistoryStaking(
+        "Unstake",
+        data?.amount,
         currentAccount,
         staking_pool_contract.CONTRACT_ABI,
         staking_pool_contract.CONTRACT_ADDRESS,
@@ -56,20 +62,9 @@ export default function PendingUnstakeButton({ data }) {
         toast.dismiss(toastUnstake);
 
         // delete resquest unstake
-        await Promise.all([
-          clientAPI("post", "/updatePendingUnstake", {
-            caller: currentAccount?.address,
-          }),
-          clientAPI("post", "/updateHistoryStaking", {
-            caller: currentAccount?.address,
-            amount: data?.amount,
-            currentTime: new Date().getTime(),
-            status: "Unstake"
-          }),
-        ]);
-        // await clientAPI("post", "/updatePendingUnstake", {
-        //   caller: currentAccount?.address,
-        // });
+        await clientAPI("post", "/updatePendingUnstake", {
+          caller: currentAccount?.address,
+        });
         dispatch(fetchPendingUnstake(currentAccount));
       } else toast.dismiss(toastUnstake);
     } catch (error) {
@@ -108,7 +103,9 @@ export default function PendingUnstakeButton({ data }) {
       }
 
       const toastUnstake = toast.loading("Cancel request unstake ...");
-      const result = await execContractTx(
+      const result = await execContractTxAndUpdateHistoryStaking(
+        "Cancel request unstake",
+        data?.amount,
         currentAccount,
         staking_pool_contract.CONTRACT_ABI,
         staking_pool_contract.CONTRACT_ADDRESS,
@@ -121,20 +118,9 @@ export default function PendingUnstakeButton({ data }) {
         toast.dismiss(toastUnstake);
 
         // delete resquest unstake
-        await Promise.all([
-          clientAPI("post", "/updatePendingUnstake", {
-            caller: currentAccount?.address,
-          }),
-          clientAPI("post", "/updateHistoryStaking", {
-            caller: currentAccount?.address,
-            amount: data?.amount,
-            currentTime: new Date().getTime(),
-            status: "Cancel Unstake"
-          }),
-        ]);
-        // await clientAPI("post", "/updatePendingUnstake", {
-        //   caller: currentAccount?.address,
-        // });
+        await clientAPI("post", "/updatePendingUnstake", {
+          caller: currentAccount?.address,
+        });
         dispatch(fetchPendingUnstake(currentAccount));
       } else toast.dismiss(toastUnstake);
     } catch (error) {

@@ -23,14 +23,16 @@ import {
   delay,
 } from "utils";
 import CommonButton from "components/button/commonButton";
-import { execContractQuery, execContractTx } from "utils/contracts";
+import {
+  execContractQuery,
+  execContractTx,
+  execContractTxAndUpdateHistoryStaking,
+} from "utils/contracts";
 import staking_pool_contract from "utils/contracts/staking_pool";
 import betaz_token_contract from "utils/contracts/betaz_token";
 import { useModal } from "contexts/useModal";
 import { clientAPI } from "api/client";
-import {
-  fetchPendingUnstake,
-} from "store/slices/stakingSlide";
+import { fetchPendingUnstake } from "store/slices/stakingSlide";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -117,7 +119,9 @@ const StakingPool = () => {
       if (allowance && currentAccount?.address) {
         const toastStake = toast.loading("Staking ...");
         let stakeAmount = parseFloat(stakeValue);
-        const result = await execContractTx(
+        const result = await execContractTxAndUpdateHistoryStaking(
+          "Stake",
+          stakeAmount,
           currentAccount,
           staking_pool_contract.CONTRACT_ABI,
           staking_pool_contract.CONTRACT_ADDRESS,
@@ -129,14 +133,7 @@ const StakingPool = () => {
           await delay(3000);
           toast.dismiss(toastStake);
 
-          await clientAPI("post", "/updateHistoryStaking", {
-            caller: currentAccount?.address,
-            amount: stakeAmount,
-            currentTime: new Date().getTime(),
-            status: "Stake",
-          });
-
-          dispatch(fetchPendingUnstake(currentAccount))
+          dispatch(fetchPendingUnstake(currentAccount));
         } else toast.dismiss(toastStake);
       }
     } catch (error) {

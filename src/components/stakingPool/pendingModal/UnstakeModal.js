@@ -228,8 +228,6 @@ const UnstakeModal = ({ isOpen, onClose }) => {
     dispatch(fetchBalance());
   };
 
-  console.log(dataPending)
-
   const isMobile = useCheckMobileScreen(480);
   return (
     <Modal onClose={onClose} size="lg" isOpen={isOpen}>

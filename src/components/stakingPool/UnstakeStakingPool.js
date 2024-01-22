@@ -23,7 +23,7 @@ import {
   delay,
 } from "utils";
 import CommonButton from "components/button/commonButton";
-import { execContractQuery, execContractTx } from "utils/contracts";
+import { execContractQuery, execContractTx, execContractTxAndUpdateHistoryStaking } from "utils/contracts";
 import staking_pool_contract from "utils/contracts/staking_pool";
 import { useModal } from "contexts/useModal";
 import staking_pool_calls from "utils/contracts/staking_pool_calls";
@@ -89,7 +89,9 @@ const StakingPool = () => {
 
       const toastUnstake = toast.loading("Request unstake ...");
       let unstakeAmount = parseFloat(unstakeValue);
-      const result = await execContractTx(
+      const result = await execContractTxAndUpdateHistoryStaking(
+        "Request unstake",
+        unstakeAmount,
         currentAccount,
         staking_pool_contract.CONTRACT_ABI,
         staking_pool_contract.CONTRACT_ADDRESS,
@@ -102,20 +104,9 @@ const StakingPool = () => {
         toast.dismiss(toastUnstake);
 
         // get Time resquest unstake
-        await Promise.all([
-          clientAPI("post", "/updatePendingUnstake", {
-            caller: currentAccount?.address,
-          }),
-          clientAPI("post", "/updateHistoryStaking", {
-            caller: currentAccount?.address,
-            amount: unstakeAmount,
-            currentTime: new Date().getTime(),
-            status: "Request Unstake",
-          }),
-        ]);
-        // await clientAPI("post", "/updatePendingUnstake", {
-        //   caller: currentAccount?.address,
-        // });
+        await clientAPI("post", "/updatePendingUnstake", {
+          caller: currentAccount?.address,
+        });
         dispatch(fetchPendingUnstake(currentAccount));
       } else toast.dismiss(toastUnstake);
     } catch (error) {
