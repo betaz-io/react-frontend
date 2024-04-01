@@ -424,6 +424,7 @@ const HomePage = () => {
                 height={{ sm: "770px" }}
                 alt="Tokenomic-cup"
                 src={TokenomicCup}
+                loading="lazy"
               />
             </Flex>
           </SimpleGrid>

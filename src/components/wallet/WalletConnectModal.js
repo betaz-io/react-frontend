@@ -56,7 +56,7 @@ const WalletItem = ({ data, SetWalletData }) => {
           justifyContent: "center",
         }}
       >
-        <Image height={{ base: "32px" }} alt="logo-wallet" src={data?.icon} />
+        <Image height={{ base: "32px" }} alt="logo-wallet" src={data?.icon} loading="lazy" />
       </Box>
       <Text
         sx={{
