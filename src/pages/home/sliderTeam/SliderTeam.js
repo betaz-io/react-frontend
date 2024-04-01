@@ -152,7 +152,6 @@ const SliderTeam = () => {
               alt="Tokenomic-cup"
               src={e.avatar}
               verticalAlign="middle"
-              loading="lazy"
             />
             <Box className="member-infor-container">
               <Box py="24px" px="12px" bg="#131a20">

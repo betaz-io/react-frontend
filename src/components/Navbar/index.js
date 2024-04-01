@@ -16,7 +16,7 @@ const Navbar = () => {
       >
         <Flex className="navbar-logo-container">
           <Link to={"/"}>
-            <Image className="navbar-logo" alt="logo-app" src={AppLogo} loading="lazy" />
+            <Image className="navbar-logo" alt="logo-app" src={AppLogo} />
           </Link>
         </Flex>
         <Box

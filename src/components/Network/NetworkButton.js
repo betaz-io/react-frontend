@@ -26,7 +26,7 @@ const ChainItem = ({ data }) => {
       onClick={() => updateNetwork(data)}
     >
       <Box display={{ base: "flex" }} alignItems="center">
-        <Image height={{ base: "32px" }} alt="logo-app" src={data?.icon} loading="lazy" />
+        <Image height={{ base: "32px" }} alt="logo-app" src={data?.icon} />
         <Text
           sx={{
             color: "#FFF",
@@ -79,8 +79,7 @@ const NetWorkButton = () => {
                       <Image
                         height={{ base: "24px" }}
                         alt="logo-app"
-                        src={currentNetwork?.icon}
-                        loading="lazy"
+                        src={currentNetwork?.icon}                       
                       />
                     )}
                   </Box>
