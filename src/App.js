@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layouts";
 import HomePage from "./pages/home";
-import Predict from "./pages/predict";
-import NotFoundPage from "pages/404/404";
-import PrivateRouter from "components/PrivateRoute/PrivateRoute";
+// import Predict from "./pages/predict";
+// import NotFoundPage from "pages/404/404";
+// import PrivateRouter from "components/PrivateRoute/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { toast } from "react-hot-toast";
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import jsonrpc from "@polkadot/types/interfaces/jsonrpc";
@@ -34,8 +34,17 @@ import {
 } from "store/slices/substrateSlice";
 import { web3Enable } from "@polkadot/extension-dapp";
 import { Flex, Spinner } from "@chakra-ui/react";
+import { BrowserRouter } from "react-router-dom";
 
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
+
+// const HomePage = lazy(() => import("./pages/home"));
+const Predict = lazy(() => import("./pages/predict"));
+const NotFoundPage = lazy(() => import("./pages/404/404.js"));
+const PrivateRouter = lazy(() =>
+  import("./components/PrivateRoute/PrivateRoute.js")
+);
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -112,14 +121,18 @@ const App = () => {
   }, [api, currentAccount?.address]);
 
   return (
-    <DefaultLayout>
-      <Routes>
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/app" element={<Predict />} />
-        <Route path="/admin" element={<PrivateRouter />} />
-      </Routes>
-    </DefaultLayout>
+    <BrowserRouter>
+      <DefaultLayout>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/app" element={<Predict />} />
+            <Route path="/admin" element={<PrivateRouter />} />
+          </Routes>
+        </Suspense>
+      </DefaultLayout>
+    </BrowserRouter>
   );
 };
 

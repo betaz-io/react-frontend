@@ -6,7 +6,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import customTheme from "theme";
 import { WalletProvider } from "contexts/useWallet";
 import { GameProvider } from "contexts/useGame";
-import { BrowserRouter } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import "@fontsource/space-grotesk"; // Defaults to weight 400
 import "@fontsource/space-grotesk/500.css"; // Specify weight
@@ -16,6 +15,7 @@ import "react-clock/dist/Clock.css";
 import { Toaster } from "react-hot-toast";
 import store from "store/store";
 import { ModalProvider } from "contexts/useModal";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const toastStyle = {
   className: "toast-config",
@@ -48,11 +48,12 @@ const toastStyle = {
     border: "1px solid rgba(255, 255, 255, 0.1)",
   },
 };
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={customTheme}>
         <ReduxProvider store={store}>
           <WalletProvider>
@@ -69,7 +70,7 @@ root.render(
           </WalletProvider>
         </ReduxProvider>
       </ChakraProvider>
-    </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

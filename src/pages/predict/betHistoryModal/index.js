@@ -41,6 +41,7 @@ import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { clientAPITotalPages } from "api/client";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { useQuery } from "react-query";
 
 const tabData = [
   {
@@ -114,12 +115,20 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
       setdata(data);
     }
   };
-  useInterval(() => getData(), 5000);
+
+  const dataQuery = useQuery("query-player-event", async () => {
+    await new Promise(async (resolve) => {
+      await getData();
+      resolve();
+    });
+  });
+
+  useInterval(() => dataQuery.refetch(), 5000);
 
   useEffect(() => {
     currentPage = 1;
     setUIPage(currentPage);
-    getData();
+    dataQuery.refetch();
   }, [currentTab]);
 
   const nextPage = useCallback(() => {
@@ -203,7 +212,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
 
   const handlePageChange = (selectedPage) => {
     currentPage = selectedPage.selected + 1;
-    getData();
+    dataQuery.refetch();
   };
 
   const isMobile = useCheckMobileScreen(480);

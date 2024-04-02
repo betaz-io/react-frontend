@@ -37,6 +37,7 @@ import { AppIcon, TokenIcon, AzeroIcon } from "components/icons";
 import CommonButton from "components/button/commonButton";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import axios from "axios";
+import { useQuery } from "react-query";
 
 const labelStyles = {
   fontSize: "20px",
@@ -352,9 +353,16 @@ const Predict = () => {
     }
   };
 
+  const dataQuery = useQuery(["query-max-bet"], async () => {
+    await new Promise(async (resolve) => {
+      await loadMaxBet();
+      resolve();
+    });
+  });
+
   useInterval(() => {
     if (api) {
-      loadMaxBet();
+      dataQuery.refetch();
     }
   }, 3000);
 

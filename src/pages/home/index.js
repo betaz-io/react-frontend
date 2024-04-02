@@ -52,6 +52,7 @@ import "./styles.css";
 import SliderTeam from "./sliderTeam/SliderTeam";
 import { formatNumDynDecimal } from "utils";
 import { delay } from "utils";
+import { useQuery } from "react-query";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -66,8 +67,16 @@ const HomePage = () => {
 
   /*************** Count down time ********************/
   let endTimeNumber = convertTimeStampToNumber(buyStatus?.endTime);
+
+  const dataQuery = useQuery(["query-buy-status"], async () => {
+    await new Promise(async (resolve) => {
+      await dispatch(fetchBuyStatus());
+      resolve();
+    });
+  });
+
   useInterval(() => {
-    dispatch(fetchBuyStatus());
+    dataQuery.refetch();
   }, 5000);
 
   /*************** End Count down time ********************/
@@ -423,7 +432,7 @@ const HomePage = () => {
               <Image
                 height={{ sm: "770px" }}
                 alt="Tokenomic-cup"
-                src={TokenomicCup}               
+                src={TokenomicCup}
               />
             </Flex>
           </SimpleGrid>

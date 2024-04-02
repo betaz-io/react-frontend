@@ -34,6 +34,7 @@ import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { execContractQuery } from "utils/contracts";
 import sale_pool_contract from "utils/contracts/sale_pool";
 import { formatNumDynDecimal } from "utils";
+import { useQuery } from "react-query";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -52,8 +53,15 @@ const DepositModal = ({ visible, onClose }) => {
 
   /** Count down time */
   let endTimeNumber = convertTimeStampToNumber(buyStatus?.endTime);
+  const buyStatusQuery = useQuery(["query-buy-status"], async () => {
+    await new Promise(async (resolve) => {
+      await dispatch(fetchBuyStatus());
+      resolve();
+    });
+  });
+
   useInterval(() => {
-    dispatch(fetchBuyStatus());
+    buyStatusQuery.refetch();
   }, 5000);
 
   /** Buy token */
