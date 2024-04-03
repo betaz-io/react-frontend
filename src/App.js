@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layouts";
 import HomePage from "./pages/home";
-// import Predict from "./pages/predict";
-// import NotFoundPage from "pages/404/404";
-// import PrivateRouter from "components/PrivateRoute/PrivateRoute";
+import Predict from "./pages/predict";
+import NotFoundPage from "pages/404/404";
+import PrivateRouter from "components/PrivateRoute/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { toast } from "react-hot-toast";
@@ -22,8 +22,8 @@ import sale_pool_contract from "utils/contracts/sale_pool";
 import { setSalePoolContract } from "utils/contracts/sale_pool_calls";
 import pandora_pool_contract from "utils/contracts/pandora_pool";
 import { setPandoraPoolContract } from "utils/contracts/pandora_pool_calls";
-import dia_contract from "utils/contracts/dia_contract";
-import { setDiaContract } from "utils/contracts/dia_contract_calls";
+import bet_random_contract from "utils/contracts/bet_random_contract";
+import { setBetRandomContract } from "utils/contracts/bet_random_contract_calls";
 import { delay } from "utils";
 import {
   fetchUserBalance,
@@ -39,11 +39,11 @@ import { BrowserRouter } from "react-router-dom";
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 
 // const HomePage = lazy(() => import("./pages/home"));
-const Predict = lazy(() => import("./pages/predict"));
-const NotFoundPage = lazy(() => import("./pages/404/404.js"));
-const PrivateRouter = lazy(() =>
-  import("./components/PrivateRoute/PrivateRoute.js")
-);
+// const Predict = lazy(() => import("./pages/predict"));
+// const NotFoundPage = lazy(() => import("./pages/404/404.js"));
+// const PrivateRouter = lazy(() =>
+//   import("./components/PrivateRoute/PrivateRoute.js")
+// );
 
 
 const App = () => {
@@ -83,7 +83,7 @@ const App = () => {
 
     setPandoraPoolContract(wsApi, pandora_pool_contract);
 
-    setDiaContract(wsApi, dia_contract);
+    setBetRandomContract(wsApi, bet_random_contract);
 
     // await wsApi.rpc.chain.subscribeNewHeads((lastHeader) => {
     //   // eslint-disable-next-line no-unused-vars

@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import betaz_core from "utils/contracts/betaz_core_calls";
-import dia_random from "utils/contracts/dia_contract_calls";
+import bet_random_random from "utils/contracts/bet_random_contract_calls";
 import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import { delay } from "utils";
 import CommonButton from "components/button/commonButton";
@@ -67,7 +67,7 @@ const MultiPlayers = () => {
       let numberForRound = false;
       while (!numberForRound) {
         try {
-          numberForRound = await dia_random.getRandomNumberForRound(
+          numberForRound = await bet_random_random.getRandomNumberForRound(
             defaultCaller,
             bet?.oracleRound?.replaceAll(",", "")
           );
@@ -148,7 +148,7 @@ const MultiPlayers = () => {
     let numberForRound = false;
     while (!numberForRound) {
       try {
-        numberForRound = await dia_random.getRandomNumberForRound(
+        numberForRound = await bet_random_random.getRandomNumberForRound(
           defaultCaller,
           newBet?.oracleRound?.replaceAll(",", "")
         );

@@ -21,7 +21,7 @@ import DepositModal from "./depositModal";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import betaz_core from "utils/contracts/betaz_core_calls";
-import dia_random from "utils/contracts/dia_contract_calls";
+import bet_random from "utils/contracts/bet_random_contract_calls";
 import useInterval from "hooks/useInterval";
 import { useGame } from "contexts/useGame";
 import { useWallet } from "contexts/useWallet";
@@ -153,7 +153,7 @@ const Predict = () => {
       let numberForRound = false;
       while (!numberForRound) {
         try {
-          numberForRound = await dia_random.getRandomNumberForRound(
+          numberForRound = await bet_random.getRandomNumberForRound(
             defaultCaller,
             bet?.oracleRound?.replaceAll(",", "")
           );
@@ -278,7 +278,7 @@ const Predict = () => {
     let numberForRound = false;
     while (!numberForRound) {
       try {
-        numberForRound = await dia_random.getRandomNumberForRound(
+        numberForRound = await bet_random.getRandomNumberForRound(
           defaultCaller,
           newBet?.oracleRound?.replaceAll(",", "")
         );

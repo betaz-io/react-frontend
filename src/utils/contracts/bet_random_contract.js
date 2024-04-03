@@ -3421,5 +3421,5 @@ const contract = {
   },
 };
 
-const dia_contract = contract[process.env.REACT_APP_ENV];
-export default dia_contract;
+const bet_random_contract = contract[process.env.REACT_APP_ENV];
+export default bet_random_contract;
