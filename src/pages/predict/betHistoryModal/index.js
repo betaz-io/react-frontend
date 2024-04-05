@@ -59,7 +59,7 @@ let currentPage = 1;
 
 const BetHistoryModal = ({ isOpen, onClose }) => {
   const { currentAccount } = useSelector((s) => s.substrate);
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(1);
   const [uiPage, setUIPage] = useState(1);
   const [data, setdata] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
