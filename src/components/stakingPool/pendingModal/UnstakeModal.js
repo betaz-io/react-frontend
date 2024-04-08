@@ -300,15 +300,6 @@ const UnstakeModal = ({ isOpen, onClose }) => {
             </Flex>
           </Box>
           <Box className="history-modal-tabs">
-            {isLoading && (
-              <CircularProgress
-                alignSelf={"center"}
-                isIndeterminate
-                size={"40px"}
-                color="#93F0F5"
-                sx={{ marginTop: "8px" }}
-              />
-            )}
             {tabData?.map((e, index) => {
               const isActive = currentTab === index;
               return (
