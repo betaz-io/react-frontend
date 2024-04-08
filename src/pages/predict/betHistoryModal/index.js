@@ -263,7 +263,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
             })}
           </Box>
           {dataQuery.isFetching ? (
-            <Box mt="24px" w="100%" minH="80px">
+            <Box mt="24px" w="100%" minH="800px">
               <CircularProgress
                 position="absolute"
                 top="50%"
