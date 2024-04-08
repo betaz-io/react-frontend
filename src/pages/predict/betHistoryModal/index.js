@@ -71,7 +71,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         setdata([]);
         return;
       }
-      let [data, total] = await Promise.all([
+      let [newData, total] = await Promise.all([
         clientAPI("post", "/getEventsByPlayer", {
           player: currentAccount?.address,
           limit: 10,
@@ -84,10 +84,13 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         }),
       ]);
       // console.log({mybets: data});
-      setdata(data);
-      setTotalPages(Math.ceil(total / 10));
+      if (newData !== data);
+      {
+        setdata(newData);
+        setTotalPages(Math.ceil(total / 10));
+      }
     } else if (currentTab === 1) {
-      let [data, total] = await Promise.all([
+      let [newData, total] = await Promise.all([
         clientAPI("post", "/getEvents", {
           limit: 10,
           offset: 10 * (currentPage - 1),
@@ -98,10 +101,13 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         }),
       ]);
       // console.log({ all: data });
-      setdata(data);
-      setTotalPages(Math.ceil(total / 10));
+      if (newData !== data);
+      {
+        setdata(newData);
+        setTotalPages(Math.ceil(total / 10));
+      }
     } else if (currentTab === 2) {
-      let [data, total] = await Promise.all([
+      let [newData, total] = await Promise.all([
         clientAPI("post", "/getRareWins", {
           limit: 10,
           offset: 10 * (currentPage - 1),
@@ -112,19 +118,26 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         }),
       ]);
       // console.log({rarewins: data});
-      setTotalPages(Math.ceil(total / 10));
-      setdata(data);
+      if (newData !== data);
+      {
+        setdata(newData);
+        setTotalPages(Math.ceil(total / 10));
+      }
     }
   };
 
-  const dataQuery = useQuery("query-player-event", async () => {
-    await new Promise(async (resolve) => {
-      await getData();
-      resolve();
-    });
-  });
+  const dataQuery = useQuery(
+    "query-player-event",
+    async () => {
+      await new Promise(async (resolve) => {
+        await getData();
+        resolve();
+      });
+    },
+    { refetchOnWindowFocus: false}
+  );
 
-  useInterval(() => dataQuery.refetch(), 5000);
+  useInterval(() => getData(), 4000);
 
   useEffect(() => {
     currentPage = 1;
@@ -260,7 +273,18 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
               );
             })}
           </Box>
-          {isMobile ? (
+          {dataQuery.isLoading || dataQuery.isFetching ? (
+            <Box mt="24px" w="100%" minH="800px">
+              <CircularProgress
+                position="absolute"
+                top="50%"
+                left="50%"
+                transform="translateX(-50%)"
+                isIndeterminate
+                color="#1beca6"
+              />
+            </Box>
+          ) : isMobile ? (
             <Flex direction="column" maxH="600px" overflowY="auto" mt="12px">
               {historyTableData.data.length > 0 ? (
                 historyTableData.data.map((e, rowIndex) => {

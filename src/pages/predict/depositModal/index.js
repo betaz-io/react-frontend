@@ -62,7 +62,7 @@ const DepositModal = ({ visible, onClose }) => {
 
   useInterval(() => {
     buyStatusQuery.refetch();
-  }, 5000);
+  }, 7000);
 
   /** Buy token */
   const getMaxbuy = async () => {

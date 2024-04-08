@@ -77,7 +77,7 @@ const HomePage = () => {
 
   useInterval(() => {
     dataQuery.refetch();
-  }, 5000);
+  }, 7000);
 
   /*************** End Count down time ********************/
 
