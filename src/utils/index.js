@@ -38,21 +38,6 @@ export const addressShortener = (addr = "", digits = 5) => {
   return `${addr.substring(0, digits)}...${addr.slice(-digits)}`;
 };
 
-export const formatNumDynDecimal = (num = 0, dec = 4) => {
-  const number = parseInt(num * 10 ** dec) / 10 ** dec;
-  const numStr = number.toString();
-  const dotIdx = numStr.indexOf(".");
-
-  if (dotIdx === -1) {
-    return numeral(numStr).format("0,0");
-  }
-
-  const intPart = numeral(numStr.slice(0, dotIdx)).format("0,0");
-  const decPart = numStr.slice(dotIdx + 1, numStr.length);
-
-  return intPart + `${dotIdx === -1 ? "" : `.${decPart}`}`;
-};
-
 export const formatQueryResultToNumber = (result, chainDecimals = 12) => {
   const ret = result?.toHuman()?.Ok?.replaceAll(",", "");
 
@@ -251,9 +236,23 @@ export const numberWithCommas = (x) => {
 export const formatPoolBalance = (result, decimal = 12, dec = 4) => {
   const ret = result?.toHuman()?.Ok?.replaceAll(",", "");
   let x = ret / 10 ** decimal;
-  return (x.toFixed(dec) * 10 ** dec) / 10 ** dec;
+  return formatNumDynDecimal(x);
 };
 
+export const formatNumDynDecimal = (num = 0, dec = 4) => {
+  const number = parseInt(num * 10 ** dec) / 10 ** dec;
+  const numStr = number.toString();
+  const dotIdx = numStr.indexOf(".");
+
+  if (dotIdx === -1) {
+    return numeral(numStr).format("0,0");
+  }
+
+  const intPart = numeral(numStr.slice(0, dotIdx)).format("0,0");
+  const decPart = numStr.slice(dotIdx + 1, numStr.length);
+
+  return intPart + `${dotIdx === -1 ? "" : `.${decPart}`}`;
+};
 // AZERO ID
 export const resolveDomain = async (address) => {
   const chain = {
