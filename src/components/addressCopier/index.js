@@ -52,14 +52,37 @@ export const AddressCopier = ({ address, truncated = true, fontWeight }) => {
                 <BiCopyAlt w="24px" h="21px" color="white" />
               </Flex>
             </MenuButton>
-            <MenuList>
+            <MenuList
+              sx={{
+                background: "#122126",
+                border: "2px solid rgba(255, 255, 255, 0.70)",
+                boxShadow: "0px 4px 4px 0px rgba(64, 64, 64, 0.20)",
+              }}
+              borderRadius={{ base: "12px" }}
+            >
               <MenuItem
                 fontSize={"16px"}
+                sx={{
+                  background: "#122126",
+                  color: "#F7F7F8",
+                  _hover: {
+                    background: "#F7F7F8",
+                    color: "#122126"
+                  }
+                }}
                 onClick={() => handleCopy("Azero ID", azeroID)}
               >
                 Copy ID
               </MenuItem>
               <MenuItem
+                sx={{
+                  background: "#122126",
+                  color: "#F7F7F8",
+                  _hover: {
+                    background: "#F7F7F8",
+                    color: "#122126"
+                  }
+                }}
                 fontSize={"16px"}
                 onClick={() => handleCopy("Address", address)}
               >
