@@ -9,7 +9,7 @@ import AzeroLogo from "assets/img/azero.png";
 export const AppIcon = ({ size = "24px", padding = "0px", rest }) => {
   return (
     <Box sx={{ ...rest, padding }}>
-      <Image aspectRatio={1} h={size} w={size} alt="logo-app" src={AppLogo} />
+      <Image aspectRatio={1} h={size} w={size} alt="logo-app" src={AppLogo} loading="lazy" />
     </Box>
   );
 };
@@ -17,7 +17,7 @@ export const AppIcon = ({ size = "24px", padding = "0px", rest }) => {
 export const AzeroIcon = ({ size = "24px", padding = "0px", rest }) => {
   return (
     <Box sx={{ ...rest, padding }}>
-      <Image aspectRatio={1} h={size} w={size} alt="logo-app" src={AzeroLogo} />
+      <Image aspectRatio={1} h={size} w={size} alt="logo-app" src={AzeroLogo} loading="lazy" />
     </Box>
   );
 };
@@ -31,6 +31,7 @@ export const TokenIcon = ({ size = "24px", padding = "0px", rest }) => {
         w={size}
         alt="logo-token"
         src={TokenLogo}
+        loading="lazy"
       />
     </Box>
   );
@@ -54,7 +55,7 @@ export const EclipseIcon = ({ sx, text }) => {
       >
         {text || ""}
       </Text>
-      <Image aspectRatio={1} alt="bg-eclipse" src={IconBGEclipse} />
+      <Image aspectRatio={1} alt="bg-eclipse" src={IconBGEclipse} loading="lazy" />
     </Box>
   );
 };
@@ -62,7 +63,7 @@ export const EclipseIcon = ({ sx, text }) => {
 export const SmallRecIcon = ({ sx }) => {
   return (
     <Box sx={sx}>
-      <Image aspectRatio={1} alt="icon-small-rectangle" src={IconSmallRec} />
+      <Image aspectRatio={1} alt="icon-small-rectangle" src={IconSmallRec} loading="lazy" />
     </Box>
   );
 };
@@ -76,6 +77,7 @@ export const BigRecIcon = ({ sx, size }) => {
         w={size}
         alt="icon-big-rectangle"
         src={IconBigRec}
+        loading="lazy"
       />
     </Box>
   );

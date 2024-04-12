@@ -29,7 +29,8 @@ const BETAZFooter = () => {
                 <Image
                   height={{ base: "24px" }}
                   alt="app-logo-text"
-                  src={AppLogoText}             
+                  src={AppLogoText}
+                  loading="lazy"            
                 />
                 <SimpleGrid ml="24px" columns={4} spacing="12px">
                   {[
