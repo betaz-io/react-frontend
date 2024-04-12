@@ -73,6 +73,7 @@ export const NavbarLandingPage = () => {
               className="navbar-logo"
               alt="logo-app"
               src={isMobile ? AppLogo2 : AppLogo}
+              loading="lazy"
             />
           </Link>
         </Flex>
