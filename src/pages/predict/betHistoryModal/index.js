@@ -43,6 +43,7 @@ import { clientAPITotalPages } from "api/client";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { useQuery } from "react-query";
+import useWebSocket from "react-use-websocket";
 
 const tabData = [
   {
@@ -58,12 +59,35 @@ const tabData = [
 
 let currentPage = 1;
 
+const wssUrl = process.env.REACT_APP_WSS_API || "ws://localhost:3010";
+
 const BetHistoryModal = ({ isOpen, onClose }) => {
   const { currentAccount } = useSelector((s) => s.substrate);
   const [currentTab, setCurrentTab] = useState(1);
   const [uiPage, setUIPage] = useState(1);
   const [data, setdata] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+
+  const {} = useWebSocket(wssUrl, {
+    onOpen: () => console.log(`connected websocket ${wssUrl}`),
+    onMessage: (event) => {
+      const message = JSON.parse(event?.data);
+      console.log({ message });
+      if (
+        message?.event == "added WinEvent" ||
+        message?.event == "added LoseEvent"
+      ) {
+        console.log("start refetch");
+        getData();
+      }
+    },
+    onClose: () => console.log(`disconnected websocket ${wssUrl}`),
+    onError: (error) => {
+      console.log(`Error from websocket ${wssUrl}`);
+      console.log(error);
+    },
+    shouldReconnect: (closeEvent) => true,
+  });
 
   const getData = async () => {
     if (currentTab === 0) {
@@ -134,10 +158,10 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         resolve();
       });
     },
-    { refetchOnWindowFocus: false}
+    { refetchOnWindowFocus: false }
   );
 
-  useInterval(() => getData(), 4000);
+  // useInterval(() => getData(), 4000);
 
   useEffect(() => {
     currentPage = 1;
