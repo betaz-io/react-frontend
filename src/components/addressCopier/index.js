@@ -14,7 +14,7 @@ import { BiCopyAlt } from "react-icons/bi";
 import { truncateStr } from "utils";
 import { addressShortener, resolveDomain } from "utils";
 
-export const AddressCopier = ({ address, truncated = true, fontWeight }) => {
+export const AddressCopier = ({ address, truncated = true, fontWeight, justifyContent }) => {
   const handleCopy = (label, text) => {
     toast.success(`${label} copied!`);
     navigator.clipboard.writeText(text);
@@ -101,6 +101,7 @@ export const AddressCopier = ({ address, truncated = true, fontWeight }) => {
         onClick={() => handleCopy("Address", address)}
         _hover={{ color: "text.2" }}
         sx={{ fontWeight: fontWeight || "bold", color: "#F7F7F8" }}
+        justifyContent={justifyContent}
       >
         <Text mr="4px">{truncated ? addressShortener(address) : address}</Text>
         <BiCopyAlt w="24px" h="21px" />
