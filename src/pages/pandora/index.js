@@ -83,7 +83,6 @@ const PandoraMode = () => {
     );
 
     let total = Number(totalId?.toHuman().Ok);
-    console.log({ total });
     let amount = 0;
     for (let i = 1; i < total; i++) {
       let temp = await execContractQuery(
@@ -96,7 +95,6 @@ const PandoraMode = () => {
         currentAccount?.address
       );
       temp = temp?.toHuman().Ok?.replaceAll(",", "");
-      console.log({ temp });
       if (temp) amount = +temp;
     }
     setWinAmountPlayer(amount);

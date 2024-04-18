@@ -32,6 +32,7 @@ import { useQuery } from "react-query";
 import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
 import PandoraInput from "../components/Input";
 import { useModal } from "contexts/useModal";
+import { delay } from "utils";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -70,6 +71,7 @@ const PandoraWithdrawModal = memo(({ visible, onClose }) => {
           amount
         );
         if (result) {
+          await delay(3000);
           toast.success(`Withdraw success`);
           dispatch(fetchUserBalance({ currentAccount }));
           dispatch(fetchBalance({ currentAccount }));

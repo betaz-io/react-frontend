@@ -53,14 +53,7 @@ import { incrementCurrentPage } from "store/slices/pandoraNftSlice";
 import { decrementCurrentPage } from "store/slices/pandoraNftSlice";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
-const dataTest = [
-  //   { ticketId: 1 },
-  //   { ticketId: 2 },
-  //   { ticketId: 3 },
-  //   { ticketId: 4 },
-  //   { ticketId: 5 },
-  //   { ticketId: 6 },
-];
+
 const PandoraSelectTicketModal = ({ visible, onClose }) => {
   const dispatch = useDispatch();
   const { setModalPandoraSelectTicketVisible } = useModal();

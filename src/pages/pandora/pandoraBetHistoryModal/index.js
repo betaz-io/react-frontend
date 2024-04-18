@@ -37,7 +37,7 @@ import { formatTableValue, formatTableValueMobile } from "./formatTable";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import toast from "react-hot-toast";
 import { clientAPI } from "api/client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useInterval from "hooks/useInterval";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { clientAPITotalPages } from "api/client";
@@ -48,6 +48,7 @@ import useWebSocket from "react-use-websocket";
 import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import BGModalBetHistory from "assets/img/BGModalBetHistory.png";
+import { fetchPandoraBetData } from "store/slices/pandoraBetHistorySlice";
 
 const tabData = [
   {
@@ -61,116 +62,42 @@ const tabData = [
   },
 ];
 
-let currentPage = 1;
-
-const wssUrl = process.env.REACT_APP_WSS_API || "ws://localhost:3010";
-
-const testData = [
-  {
-    sessionId: 1,
-    chainlinkRequestId:
-      "27707942043588774860135988945225866651795936831673981405221750687713864260403",
-    betNumberWin: 123456,
-    rewardAmount: 123,
-    totalTicketWin: 2,
-    playerWin: "5FeUFukeTfUGsR75kv434h6w28tpzqaTh3DPMPPbQ9uQcX9B",
-    ticketIdWin: 12,
-  },
-  {
-    sessionId: 1,
-    chainlinkRequestId:
-      "27707942043588774860135988945225866651795936831673981405221750687713864260403",
-    betNumberWin: 123456,
-    rewardAmount: 12,
-    totalTicketWin: 2,
-    playerWin: "5FeUFukeTfUGsR75kv434h6w28tpzqaTh3DPMPPbQ9uQcX9B",
-    ticketIdWin: 12,
-  },
-  {
-    sessionId: 1,
-    chainlinkRequestId:
-      "27707942043588774860135988945225866651795936831673981405221750687713864260403",
-    betNumberWin: 123456,
-    rewardAmount: 12,
-    totalTicketWin: 2,
-    playerWin: "5FeUFukeTfUGsR75kv434h6w28tpzqaTh3DPMPPbQ9uQcX9B",
-    ticketIdWin: 12,
-  },
-];
+// let currentPage = 1;
 
 const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const { currentAccount } = useSelector((s) => s.substrate);
-  const [currentTab, setCurrentTab] = useState(1);
   const [uiPage, setUIPage] = useState(1);
-  const [data, setdata] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
+  // const [data, setdata] = useState([]);
+  // const [totalPages, setTotalPages] = useState(0);
+
+  const { pandoraHistoryData, currentPage, currentTab, totalPages } = useSelector(
+    (s) => s.pandoraHistory
+  );
   const [rowActive, setRowActive] = useState(0);
-
-  const {} = useWebSocket(wssUrl, {
-    onOpen: () => console.log(`connected websocket ${wssUrl}`),
-    onMessage: (event) => {
-      const message = JSON.parse(event?.data);
-      console.log({ message });
-      if (
-        message?.event == "added WinEvent" ||
-        message?.event == "added LoseEvent"
-      ) {
-        console.log("start refetch");
-        getData();
-      }
-    },
-    onClose: () => console.log(`disconnected websocket ${wssUrl}`),
-    onError: (error) => {
-      console.log(`Error from websocket ${wssUrl}`);
-      console.log(error);
-    },
-    shouldReconnect: (closeEvent) => true,
-  });
-
-  const getData = async () => {
-    if (currentTab === 1) {
-      let [newData, total] = await Promise.all([
-        clientAPI("post", "/getEvents", {
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-        clientAPITotalPages("post", "/getEvents", {
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-      ]);
-      // console.log({ all: data });
-      if (newData !== data);
-      {
-        setdata(newData);
-        setTotalPages(Math.ceil(total / 10));
-      }
-    }
-  };
 
   const dataQuery = useQuery(
     "query-player-event",
     async () => {
       await new Promise(async (resolve) => {
-        await getData();
+        await dispatch(fetchPandoraBetData());
         resolve();
       });
     },
     { refetchOnWindowFocus: false }
   );
 
-  // useInterval(() => getData(), 4000);
 
   useEffect(() => {
-    currentPage = 1;
+    // currentPage = 1;
     setUIPage(currentPage);
     dataQuery.refetch();
-  }, [currentTab]);
+  }, [currentAccount]);
 
   const goToPage = useCallback((page) => {
     currentPage = page;
     setUIPage(page);
-    getData();
+    // getData();
   });
 
   // console.log({ totalPages, currentPage });
@@ -216,7 +143,7 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
         icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
       },
     ],
-    data: testData,
+    data: pandoraHistoryData,
   };
 
   // const [currentPage, setCurrentPage] = useState(0);

@@ -6,6 +6,7 @@ import whitelistReducer from "./slices/whitelistSlide";
 import rewardStakingReducer from "./slices/rewardStakingSlide";
 import pandoraNftReducer from "./slices/pandoraNftSlice";
 import pandoraBetHistoryReducer from "./slices/pandoraYourBetHistorySlice"
+import pandoraHistoryReducer from "./slices/pandoraBetHistorySlice"
 
 const rootReducer = combineReducers({
   substrate: substrateReducer,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   whitelist: whitelistReducer,
   rewardStaking: rewardStakingReducer,
   pandoraNft: pandoraNftReducer,
-  pandoraBetHistory: pandoraBetHistoryReducer
+  pandoraBetHistory: pandoraBetHistoryReducer,
+  pandoraHistory: pandoraHistoryReducer
 });
 
 const store = configureStore({
