@@ -19,6 +19,7 @@ import {
   Thead,
   Tr,
   CircularProgress,
+  Image,
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
 import { BiLayer } from "react-icons/bi";
@@ -36,7 +37,7 @@ import { formatTableValue, formatTableValueMobile } from "./formatTable";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import toast from "react-hot-toast";
 import { clientAPI } from "api/client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useInterval from "hooks/useInterval";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { clientAPITotalPages } from "api/client";
@@ -44,206 +45,78 @@ import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { useQuery } from "react-query";
 import useWebSocket from "react-use-websocket";
+import EffectIcon from "assets/img/LightIcon1.png";
+import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
+import BGModalBetHistory from "assets/img/BGModalBetHistory.png";
+import { fetchPandoraYourBetData } from "store/slices/pandoraYourBetHistorySlice";
 
-const tabData = [
-  {
-    label: "My bets",
-  },
-  {
-    label: "All bets",
-  },
-  {
-    label: "Rare win",
-  },
-];
-
-let currentPage = 1;
+// let currentPage = 1;
 
 const wssUrl = process.env.REACT_APP_WSS_API || "ws://localhost:3010";
 
-const BetHistoryModal = ({ isOpen, onClose }) => {
+const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const { currentAccount } = useSelector((s) => s.substrate);
-  const [currentTab, setCurrentTab] = useState(1);
   const [uiPage, setUIPage] = useState(1);
-  const [data, setdata] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
+  // const [data, setdata] = useState([]);
+  // const [totalPages, setTotalPages] = useState(0);
 
-  const {} = useWebSocket(wssUrl, {
-    onOpen: () => console.log(`connected websocket ${wssUrl}`),
-    onMessage: (event) => {
-      const message = JSON.parse(event?.data);
-      console.log({ message });
-      if (
-        message?.event == "added WinEvent" ||
-        message?.event == "added LoseEvent"
-      ) {
-        console.log("start refetch");
-        getData();
-      }
-    },
-    onClose: () => console.log(`disconnected websocket ${wssUrl}`),
-    onError: (error) => {
-      console.log(`Error from websocket ${wssUrl}`);
-      console.log(error);
-    },
-    shouldReconnect: (closeEvent) => true,
-  });
-
-  const getData = async () => {
-    if (currentTab === 0) {
-      if (currentAccount === "") {
-        setdata([]);
-        return;
-      }
-      let [newData, total] = await Promise.all([
-        clientAPI("post", "/getEventsByPlayer", {
-          player: currentAccount?.address,
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-        clientAPITotalPages("post", "/getEventsByPlayer", {
-          player: currentAccount?.address,
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-      ]);
-      // console.log({mybets: data});
-      if (newData !== data);
-      {
-        setdata(newData);
-        setTotalPages(Math.ceil(total / 10));
-      }
-    } else if (currentTab === 1) {
-      let [newData, total] = await Promise.all([
-        clientAPI("post", "/getEvents", {
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-        clientAPITotalPages("post", "/getEvents", {
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-      ]);
-      // console.log({ all: data });
-      if (newData !== data);
-      {
-        setdata(newData);
-        setTotalPages(Math.ceil(total / 10));
-      }
-    } else if (currentTab === 2) {
-      let [newData, total] = await Promise.all([
-        clientAPI("post", "/getRareWins", {
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-        clientAPITotalPages("post", "/getRareWins", {
-          limit: 10,
-          offset: 10 * (currentPage - 1),
-        }),
-      ]);
-      // console.log({rarewins: data});
-      if (newData !== data);
-      {
-        setdata(newData);
-        setTotalPages(Math.ceil(total / 10));
-      }
-    }
-  };
+  const { betHistoryData, currentPage, currentTab, totalPages } = useSelector(
+    (s) => s.pandoraBetHistory
+  );
+  const [rowActive, setRowActive] = useState(0);
 
   const dataQuery = useQuery(
     "query-player-event",
     async () => {
       await new Promise(async (resolve) => {
-        await getData();
+        await dispatch(fetchPandoraYourBetData(currentAccount));
         resolve();
       });
     },
     { refetchOnWindowFocus: false }
   );
 
-  // useInterval(() => getData(), 4000);
 
   useEffect(() => {
-    currentPage = 1;
+    // currentPage = 1;
     setUIPage(currentPage);
     dataQuery.refetch();
-  }, [currentTab]);
-
-  const nextPage = useCallback(() => {
-    if (currentPage < totalPages) currentPage++;
-    else toast(`Only ${totalPages} pages can be displayed`);
-    setUIPage(currentPage);
-    getData();
-  });
-
-  const previousPage = useCallback(() => {
-    if (currentPage > 1) currentPage--;
-    setUIPage(currentPage);
-    getData();
-  });
+  }, [currentAccount]);
 
   const goToPage = useCallback((page) => {
     currentPage = page;
     setUIPage(page);
-    getData();
+    // getData();
   });
 
   // console.log({ totalPages, currentPage });
   const historyTableData = {
     headers: [
       {
-        label: "Player",
+        label: "Section id",
         key: "player",
         icon: <TbMoodSmileFilled size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Block number",
-        key: "block-number",
-        icon: <BiLayer size="24px" style={{ marginRight: "8px" }} />,
+        label: "Ticket id",
+        key: "ticket-id",
+        icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Bet amount",
-        key: "bet-amount",
+        label: "Bet number",
+        key: "bet-number",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Type",
-        key: "type",
+        label: "Time stamp",
+        key: "time-stamp",
         icon: (
           <MdSwapVerticalCircle size="24px" style={{ marginRight: "8px" }} />
         ),
       },
-      {
-        label: "Prediction",
-        key: "prediction",
-        icon: (
-          <RiCopperDiamondFill size="24px" style={{ marginRight: "8px" }} />
-        ),
-      },
-      {
-        label: "Result",
-        key: "result",
-        icon: <AiFillStar size="24px" style={{ marginRight: "8px" }} />,
-      },
-      {
-        label: "Reward in $AZERO",
-        key: "won-amount",
-        icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
-      },
-      {
-        label: "Reward in $BetAZ",
-        key: "reward-amount",
-        icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
-      },
-      {
-        label: "Oracle round",
-        key: "round",
-        icon: (
-          <RiArrowTurnBackFill size="24px" style={{ marginRight: "8px" }} />
-        ),
-      },
     ],
-    data: data,
+    data: betHistoryData,
   };
 
   // const [currentPage, setCurrentPage] = useState(0);
@@ -258,45 +131,68 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
     <Modal onClose={onClose} size="lg" isOpen={isOpen}>
       <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
       <ModalContent
-        className="history-modal-content-container"
+        className="pandora-history-modal-content-container"
         maxW={{
           base: "calc(100vw) !important",
           sm: "calc(100vw - 120px) !important",
         }}
+        position="relative"
       >
+        {/* <Box
+          className="lucky-number-circle-image"
+          bgImage={BGModalBetHistory}
+          bgRepeat="no-repeat"
+          bgPosition="center"
+          position="absolute"
+          top={"-20px"}
+          left={"50%"}
+          transform={"translateX(-50%)"}
+          // zIndex={-2}
+        ></Box> */}
+        <Box
+          className="lucky-number-circle-image"
+          bgImage={PandoraBGCoin}
+          bgRepeat="no-repeat"
+          bgPosition="center"
+          w={{ base: "280px", sm: "480px" }}
+          position="absolute"
+          backdropBlur={"10px"}
+          right={"10%"}
+          top={"50%"}
+          transform={"translateY(-50%)"}
+          zIndex={-2}
+          opacity={0.5}
+        ></Box>
+        <Image
+          position="absolute"
+          w="240px"
+          sx={{
+            bottom: "200px",
+            left: "-121px",
+          }}
+          src={EffectIcon}
+          className="pandora-effect-icon"
+          transform={"rotate(-90deg)"}
+        />
+        <Image
+          position="absolute"
+          w="240px"
+          sx={{
+            top: "-36px",
+            right: "0px",
+          }}
+          src={EffectIcon}
+          className="pandora-effect-icon"
+        />
         <ModalHeader
           className="history-modal-content-title linear-text"
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
         >
-          Bet History
+          Your Bet History
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
-          <Box className="history-modal-tabs">
-            {tabData.map((e, index) => {
-              const isActive = currentTab === index;
-              return (
-                <Box
-                  key={`tab-${index}`}
-                  className={`history-modal-tab ${
-                    isActive && "history-modal-tab-active"
-                  }`}
-                  onClick={() => setCurrentTab(index)}
-                >
-                  <Text
-                    fontSize={{ base: "16px", sm: "20px" }}
-                    fontWeight={{ base: "500", sm: "700" }}
-                    className={`history-modal-label ${
-                      isActive && "history-modal-label-active"
-                    }`}
-                  >
-                    {e?.label}
-                  </Text>
-                </Box>
-              );
-            })}
-          </Box>
           {dataQuery.isLoading || dataQuery.isFetching ? (
             <Box mt="24px" w="100%" minH="800px">
               <CircularProgress
@@ -385,7 +281,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
                 className="history-table"
               >
                 <Thead>
-                  <Tr className="history-table-header-container">
+                  <Tr className="pandora-history-table-header-container">
                     {historyTableData.headers.map((e, index) => {
                       const isFirstChild = index === 0;
                       const isLastChild =
@@ -394,20 +290,19 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
                         <Th className="history-table-header-column">
                           <Box
                             sx={{
-                              borderY: "1px solid #1beca6",
-                              borderLeft: isFirstChild && "1px solid #1beca6",
-                              borderRight: isLastChild && "1px solid #1beca6",
-                              borderLeftRadius: isFirstChild && "8px",
-                              borderRightRadius: isLastChild && "8px",
-                              paddingLeft: isFirstChild && "20px",
-                              width: "full",
+                              border: "2px solid #505B60",
+                              borderRadius: "12px",
+                              padding: "20px",
+                              // width: "full",
                               py: "20px",
+                              color: "#FFA000",
+                              marginLeft: !isFirstChild && "12px",
                             }}
                             display="flex"
-                            justifyContent={index > 0 && "center"}
+                            justifyContent={"center"}
                             alignItems="center"
                           >
-                            {e?.icon}
+                            {/* {e?.icon} */}
                             {e.label}
                           </Box>
                         </Th>
@@ -429,23 +324,46 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
                             return (
                               <Td>
                                 <Box
+                                  onClick={() => {
+                                    if (rowIndex !== rowActive)
+                                      setRowActive(rowIndex);
+                                    else {
+                                      setRowActive(0);
+                                    }
+                                  }}
+                                  cursor={"pointer"}
                                   sx={{
                                     marginTop: rowIndex === 0 ? "24px" : "8px",
-                                    background: "#0d171b",
+                                    // background: "#063466",
                                     py: "16px",
                                     pl: isFirstChild && "24px",
-                                    borderY:
-                                      "1px solid rgba(255, 255, 255, 0.4)",
-                                    borderLeft:
-                                      isFirstChild &&
-                                      "1px solid rgba(255, 255, 255, 0.4)",
-                                    borderRight:
-                                      isLastChild &&
-                                      "1px solid rgba(255, 255, 255, 0.4)",
+                                    // borderY:
+                                    //   "1px solid rgba(255, 255, 255, 0.4)",
+                                    // borderLeft:
+                                    //   isFirstChild &&
+                                    //   "1px solid rgba(255, 255, 255, 0.4)",
+                                    // borderRight:
+                                    //   isLastChild &&
+                                    //   "1px solid rgba(255, 255, 255, 0.4)",
                                     borderLeftRadius: isFirstChild && "8px",
                                     borderRightRadius: isLastChild && "8px",
+                                    position: "relative",
+                                    paddingLeft: !isFirstChild && "12px",
                                   }}
                                 >
+                                  <Box
+                                    w="100%"
+                                    h="100%"
+                                    className="pandora-modal-ticket-overlay"
+                                    zIndex="-1"
+                                    borderRadius="none"
+                                    borderLeftRadius={isFirstChild && "8px"}
+                                    borderRightRadius={isLastChild && "8px"}
+                                    backgroundColor={
+                                      rowActive === rowIndex &&
+                                      "#06223F !important"
+                                    }
+                                  ></Box>
                                   {formatTableValue(e[keyvalue], keyvalue)}
                                 </Box>
                               </Td>
@@ -460,20 +378,30 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
                         <Box
                           sx={{
                             marginTop: "24px",
-                            background: "#0d171b",
+                            // background: "#0d171b",
                             py: "16px",
                             pl: "24px",
-                            borderY: "1px solid rgba(255, 255, 255, 0.4)",
-                            borderLeft: "1px solid rgba(255, 255, 255, 0.4)",
-                            borderRight: "1px solid rgba(255, 255, 255, 0.4)",
+                            // borderY: "1px solid rgba(255, 255, 255, 0.4)",
+                            // borderLeft: "1px solid rgba(255, 255, 255, 0.4)",
+                            // borderRight: "1px solid rgba(255, 255, 255, 0.4)",
                             borderLeftRadius: "8px",
                             borderRightRadius: "8px",
                             width: "100%",
                             color: "white",
                             textAlign: "center",
                             fontSize: "18px",
+                            position: "relative",
                           }}
                         >
+                          <Box
+                            w="100%"
+                            h="100%"
+                            className="pandora-modal-ticket-overlay"
+                            zIndex="-1"
+                            borderRadius="none"
+                            borderLeftRadius={"8px"}
+                            borderRightRadius={"8px"}
+                          ></Box>
                           No records found
                         </Box>
                       </Td>
@@ -505,4 +433,4 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default BetHistoryModal;
+export default PandoraYourBetHistoryModal;

@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 import store from "store/store";
 import { ModalProvider } from "contexts/useModal";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { TicketProvider } from "contexts/useSelectTicket";
 
 const toastStyle = {
   className: "toast-config",
@@ -58,14 +59,16 @@ root.render(
         <ReduxProvider store={store}>
           <WalletProvider>
             <ModalProvider>
-              <GameProvider>
-                <Toaster
-                  position="bottom-right"
-                  reverseOrder={true}
-                  toastOptions={toastStyle}
-                />
-                <App />
-              </GameProvider>
+              <TicketProvider>
+                <GameProvider>
+                  <Toaster
+                    position="bottom-right"
+                    reverseOrder={true}
+                    toastOptions={toastStyle}
+                  />
+                  <App />
+                </GameProvider>
+              </TicketProvider>
             </ModalProvider>
           </WalletProvider>
         </ReduxProvider>

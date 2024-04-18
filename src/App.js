@@ -3,6 +3,7 @@ import DefaultLayout from "./layouts";
 import HomePage from "./pages/home";
 import Predict from "./pages/predict";
 import NotFoundPage from "pages/404/404";
+import PandoraMode from "pages/pandora";
 import PrivateRouter from "components/PrivateRoute/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, lazy, Suspense } from "react";
@@ -35,6 +36,7 @@ import {
 import { web3Enable } from "@polkadot/extension-dapp";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
+import { fetchPandoraSession } from "store/slices/pandoraNftSlice";
 
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 
@@ -44,7 +46,6 @@ const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 // const PrivateRouter = lazy(() =>
 //   import("./components/PrivateRoute/PrivateRoute.js")
 // );
-
 
 const App = () => {
   const dispatch = useDispatch();
@@ -117,20 +118,22 @@ const App = () => {
       dispatch(fetchRollNumbers());
       dispatch(fetchRates());
       dispatch(fetchBuyStatus());
+      dispatch(fetchPandoraSession())
     }
   }, [api, currentAccount?.address]);
 
   return (
     <BrowserRouter>
       <DefaultLayout>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path="*" element={<NotFoundPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/app" element={<Predict />} />
-            <Route path="/admin" element={<PrivateRouter />} />
-          </Routes>
-        </Suspense>
+        {/* <Suspense fallback={<div>Loading...</div>}> */}
+        <Routes>
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/app" element={<Predict />} />
+          <Route path="/admin" element={<PrivateRouter />} />
+          <Route path="/pandora" element={<PandoraMode />} />
+        </Routes>
+        {/* </Suspense> */}
       </DefaultLayout>
     </BrowserRouter>
   );

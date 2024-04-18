@@ -1,4 +1,9 @@
-
+.pandora-history-modal-content-container {
+  /* height: calc(100vh - 120px); */
+  height: max-content;
+  background-color: #122126 !important;
+  border: 1px solid whitesmoke;
+}
 .linear-text {
   background: linear-gradient(180deg, #1bbff4 0%, #1beca7 100%);
   -webkit-background-clip: text;
