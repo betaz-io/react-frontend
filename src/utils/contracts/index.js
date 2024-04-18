@@ -368,12 +368,12 @@ export async function execContractTxAndUpdateHistoryStaking(
         events.forEach(async ({ event: { method } }) => {
           if (method === "ExtrinsicSuccess" && status.type === "Finalized") {
             // await delay(3000);
-            await clientAPI("post", "/updateHistoryStaking", {
-              caller: caller?.address,
-              amount: stakingAmount,
-              currentTime: new Date().getTime(),
-              status: stakingStatus,
-            });
+            // await clientAPI("post", "/updateHistoryStaking", {
+            //   caller: caller?.address,
+            //   amount: stakingAmount,
+            //   currentTime: new Date().getTime(),
+            //   status: stakingStatus,
+            // });
             toast.success("Successful!");
           } else if (method === "ExtrinsicFailed") {
             toast.error(`${toastMessages.CUSTOM} ${method}.`);

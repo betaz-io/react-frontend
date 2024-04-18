@@ -36,6 +36,7 @@ import {
 import { web3Enable } from "@polkadot/extension-dapp";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
+import { fetchPandoraSession } from "store/slices/pandoraNftSlice";
 
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 
@@ -117,6 +118,7 @@ const App = () => {
       dispatch(fetchRollNumbers());
       dispatch(fetchRates());
       dispatch(fetchBuyStatus());
+      dispatch(fetchPandoraSession())
     }
   }, [api, currentAccount?.address]);
 

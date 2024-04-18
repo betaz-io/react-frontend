@@ -288,3 +288,40 @@ export const getDomainToAddress = async (domain) => {
     console.log("resolveDomain error", error);
   }
 };
+
+export const getNextDayTime = (nextDay = 6) => {
+  let currentDate = new Date();
+
+  while (currentDate.getDay() !== nextDay) {
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  currentDate.setHours(0, 0, 0, 0);
+  return currentDate.getTime();
+};
+
+export const getStartAndEndOfWeek = () => {
+  let currentDate = new Date();
+
+  currentDate.setDate(currentDate.getDate() - currentDate.getDay());
+
+  let startOfWeek = currentDate.getDate();
+  let startOfMonth = currentDate.getMonth() + 1;
+  let startOfYear = currentDate.getFullYear();
+  let formattedStartOfWeek = `${startOfWeek < 10 ? "0" : ""}${startOfWeek}/${
+    startOfMonth < 10 ? "0" : ""
+  }${startOfMonth}/${startOfYear}`;
+
+  currentDate.setDate(currentDate.getDate() + 6);
+
+  let endOfWeek = currentDate.getDate();
+  let endOfMonth = currentDate.getMonth() + 1;
+  let endOfYear = currentDate.getFullYear();
+  let formattedEndOfWeek = `${endOfWeek < 10 ? "0" : ""}${endOfWeek}/${
+    endOfMonth < 10 ? "0" : ""
+  }${endOfMonth}/${endOfYear}`;
+
+  return {
+    startOfWeek: formattedStartOfWeek,
+    endOfWeek: formattedEndOfWeek,
+  };
+};

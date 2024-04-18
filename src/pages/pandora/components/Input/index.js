@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Image, Input, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Input,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import EffectIcon from "assets/img/LightIcon1.png";
 import { ClipLoader } from "react-spinners";
 import { useSelector } from "react-redux";
@@ -72,13 +80,21 @@ function PandoraInput(props) {
         w="240px"
       />
       {textXl ? (
-        <Text className="pandora-modal-text-title" color={textXlColor}>{textXl}</Text>
+        <Text className="pandora-modal-text-title" color={textXlColor}>
+          {textXl}
+        </Text>
       ) : (
-        <SimpleGrid columns={1} className="pandora-amount-box-content">
-          <Text className="pandora-linear-text" textAlign="center">
-            {value}
-          </Text>
-        </SimpleGrid>
+        <Flex className="pandora-box-amount-input">
+          <Input
+            className="pandora-text-input"
+            focusBorderColor="transparent"
+            sx={{ border: "0px", textAlign: "center", fontWeight: "600", fontSize: "24px" }}
+            onChange={onChange}
+            value={value}
+            placeholder="----------"
+            // type="Number"
+          />
+        </Flex>
       )}
     </Box>
   );

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Flex,
   Image,
   Input,
@@ -46,20 +47,68 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import { useTicket } from "contexts/useSelectTicket";
+import { fetchNftsData } from "store/slices/pandoraNftSlice";
+import { clientAPI } from "api/client";
+import { incrementCurrentPage } from "store/slices/pandoraNftSlice";
+import { decrementCurrentPage } from "store/slices/pandoraNftSlice";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 const dataTest = [
-//   { ticketId: 1 },
-//   { ticketId: 2 },
-//   { ticketId: 3 },
-//   { ticketId: 4 },
-//   { ticketId: 5 },
-//   { ticketId: 6 },
+  //   { ticketId: 1 },
+  //   { ticketId: 2 },
+  //   { ticketId: 3 },
+  //   { ticketId: 4 },
+  //   { ticketId: 5 },
+  //   { ticketId: 6 },
 ];
 const PandoraSelectTicketModal = ({ visible, onClose }) => {
+  const dispatch = useDispatch();
   const { setModalPandoraSelectTicketVisible } = useModal();
+  const { currentAccount } = useSelector((s) => s.substrate);
+  const [uiPage, setUIPage] = useState(1);
   const isMobile = useCheckMobileScreen(992);
-  const {ticketId, setTicketId} = useTicket();
+  const { ticketId, setTicketId } = useTicket();
+  const [isLoading, setLoading] = useState(false);
+
+  const { nftsData, currentPage, currentTab, totalPages } = useSelector(
+    (s) => s.pandoraNft
+  );
+
+  const updateNftData = async () => {
+    setLoading(true);
+    await clientAPI("post", "/updateNftByCaller", {
+      caller: currentAccount?.address,
+    });
+    dispatch(fetchNftsData(currentAccount));
+    setLoading(false);
+  };
+
+  const dataQuery = useQuery(
+    "query-player-event",
+    async () => {
+      await new Promise(async (resolve) => {
+        await dispatch(fetchNftsData(currentAccount));
+        resolve();
+      });
+    },
+    { refetchOnWindowFocus: false }
+  );
+
+  useEffect(() => {
+    if (currentAccount?.address) updateNftData();
+  }, [currentTab, currentAccount]);
+
+  const nextPage = useCallback(() => {
+    if (currentPage < totalPages) dispatch(incrementCurrentPage());
+    else toast("Only " + totalPages + " pages can be displayed");
+    dataQuery.refetch();
+  });
+
+  const previousPage = useCallback(() => {
+    if (currentPage > 1) dispatch(decrementCurrentPage());
+    dataQuery.refetch();
+  });
+
   return (
     <>
       <Modal isOpen={visible} onClose={onClose} isCentered>
@@ -116,10 +165,22 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                 gap="24px"
                 paddingX={"0px"}
               >
-                {dataTest?.length ? (
+                {isLoading ? (
+                  <Flex justifyContent={"center"} gap={"12px"}>
+                    <CircularProgress isIndeterminate color="#1beca6" />
+                    <Text className="pandora-modal-text-title" color="#FFA000">
+                      Loading ..........
+                    </Text>
+                  </Flex>
+                ) : nftsData?.length ? (
                   <Flex justifyContent="space-between" alignItems={"center"}>
-                    <MdOutlineArrowBackIosNew size={"84px"} color="#1BECA6" />
-                    {dataTest?.map((item) => (
+                    <MdOutlineArrowBackIosNew
+                      size={"84px"}
+                      color="#1BECA6"
+                      onClick={previousPage}
+                      cursor={"pointer"}
+                    />
+                    {nftsData?.map((item) => (
                       <Box
                         display={"flex"}
                         justifyContent={"space-between"}
@@ -131,7 +192,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                           padding={"6px"}
                           borderRadius={"6px"}
                           background={
-                            item?.ticketId === ticketId
+                            item?.nftId === ticketId
                               ? "radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)"
                               : "radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
                           }
@@ -141,10 +202,10 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                           position={"relative"}
                           cursor={"pointer"}
                           onClick={() => {
-                            if (item?.ticketId !== ticketId)
-                            setTicketId(item?.ticketId);
+                            if (item?.nftId !== ticketId)
+                              setTicketId(item?.nftId);
                             else {
-                                setTicketId(0);
+                              setTicketId(0);
                             }
                           }}
                         >
@@ -157,7 +218,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             w="200px"
                             transform={"rotate(-90deg)"}
                             zIndex={4}
-                            opacity={item?.ticketId === ticketId ? 1 : 0}
+                            opacity={item?.nftId === ticketId ? 1 : 0}
                           />
                           <Image
                             src={EffectIcon}
@@ -167,7 +228,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             left="-60px"
                             w="200px"
                             zIndex={4}
-                            opacity={item?.ticketId === ticketId ? 1 : 0}
+                            opacity={item?.nftId === ticketId ? 1 : 0}
                           />
                           <Box
                             w={"100%"}
@@ -193,14 +254,19 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                               color={"black"}
                               fontStyle="italic"
                             >
-                              Pandora secret box #{item.ticketId}
+                              Pandora secret box #{item?.nftId}
                             </Text>
                           </Box>
                         </Box>
                       </Box>
                     ))}
 
-                    <MdOutlineArrowForwardIos size={"84px"} color="#1BECA6" />
+                    <MdOutlineArrowForwardIos
+                      size={"84px"}
+                      color="#1BECA6"
+                      onClick={nextPage}
+                      cursor={"pointer"}
+                    />
                   </Flex>
                 ) : (
                   <Text className="pandora-modal-text-title" color="#FFA000">

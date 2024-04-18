@@ -32,7 +32,9 @@ import BETAZCountDown from "components/countdown/CountDown";
 import BuyTokenButton from "components/button/buyTokenButton";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { execContractQuery } from "utils/contracts";
-import sale_pool_contract from "utils/contracts/sale_pool";
+import pandora_pool_contract from "utils/contracts/pandora_pool";
+import pandora_psp34_contract from "utils/contracts/pandora_psp34";
+import pandora_pool from "utils/contracts/pandora_pool_calls";
 import { formatNumDynDecimal } from "utils";
 import { useQuery } from "react-query";
 import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
@@ -40,18 +42,180 @@ import PandoraInput from "../components/Input";
 import { useModal } from "contexts/useModal";
 import PandoraCountDownSelectTicket from "components/countdown/PandoraCountDownSelectTicket";
 import { useTicket } from "contexts/useSelectTicket";
+import { useWallet } from "contexts/useWallet";
+import { execContractTx } from "utils/contracts";
+import { delay } from "utils";
+import { clientAPI } from "api/client";
+import { fetchNftsData } from "store/slices/pandoraNftSlice";
+import { fetchPandoraYourBetData } from "store/slices/pandoraYourBetHistorySlice";
+import { getNextDayTime } from "utils";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
 const PandoraTicket = ({ visible, onClose }) => {
+  const dispatch = useDispatch();
   const isMobile = useCheckMobileScreen(992);
-  const {ticketId, setTicketId} = useTicket();
+  const { currentAccount, poolBalance } = useSelector((s) => s.substrate);
+  const { sessionId } = useSelector((s) => s.pandoraNft);
+  const { api } = useWallet();
+  const { ticketId, setTicketId } = useTicket();
+  const [betNumberVal, setBetNumberVal] = useState(0);
+  const [maxBet, setMaxBet] = useState(100000);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { setModalPandoraWithdrawVisible, setModalPandoraSelectTicketVisible } =
-    useModal();
+  const {
+    setModalPandoraWithdrawVisible,
+    setModalPandoraSelectTicketVisible,
+    modalPandoraYourBetHistoryVisible,
+    setModalPandoraYourBetHistoryVisible,
+  } = useModal();
 
   const handleOpenModalSelectTicket = () =>
     setModalPandoraSelectTicketVisible(true);
+
+  const onChangeBetNumber = useCallback((e) => {
+    const { value } = e.target;
+    const reg = /^\d*\.?\d*$/;
+    let betValue = 0;
+    if ((!isNaN(value) && reg.test(value)) || value === "") {
+      betValue = parseFloat(value);
+      if (betValue < 0) betValue = 1;
+      if (betValue > Number(maxBet)) {
+        toast.error("Max Bet is " + Number(maxBet));
+        setBetNumberVal(Number(maxBet));
+      } else {
+        setBetNumberVal(value);
+      }
+    }
+  });
+
+  const loadMaxBet = async () => {
+    let max_Bet = await execContractQuery(
+      defaultCaller,
+      pandora_pool_contract.CONTRACT_ABI,
+      pandora_pool_contract.CONTRACT_ADDRESS,
+      0,
+      "pandoraPoolTraits::getMaxBetNumber"
+    );
+    max_Bet = max_Bet?.toHuman().Ok?.replaceAll(",", "");
+    if (maxBet != max_Bet) {
+      setMaxBet(max_Bet);
+    }
+  };
+
+  useEffect(() => {
+    if (api) loadMaxBet();
+  }, [api, currentAccount]);
+
+  const onPlay = async () => {
+    if (!currentAccount?.address) {
+      toast.error("Please connect your wallet and select an account");
+      return;
+    }
+
+    if (!ticketId) {
+      toast.error("invalid Ticket!");
+      return;
+    }
+
+    if (betNumberVal === "") {
+      toast.error("invalid bet amount!");
+      return;
+    }
+
+    if (!sessionId) {
+      toast.error("invalid sessionId!");
+      return;
+    }
+
+    setIsLoading(true);
+    let owner = await execContractQuery(
+      defaultCaller,
+      pandora_psp34_contract.CONTRACT_ABI,
+      pandora_psp34_contract.CONTRACT_ADDRESS,
+      0,
+      "psp34::ownerOf",
+      { u64: ticketId }
+    );
+
+    owner = owner?.toHuman().Ok;
+    if (owner !== currentAccount?.address) {
+      toast.error("Not owner ticket!");
+      setIsLoading(false);
+      return;
+    }
+
+    let sessionInfo = await execContractQuery(
+      defaultCaller,
+      pandora_pool_contract.CONTRACT_ABI,
+      pandora_pool_contract.CONTRACT_ADDRESS,
+      0,
+      "pandoraPoolTraits::getBetSession",
+      sessionId
+    );
+
+    let sessionStatus = sessionInfo?.toHuman().Ok?.status;
+    if (sessionStatus !== "Processing") {
+      toast.error("Session not Processing!");
+      setIsLoading(false);
+      return;
+    }
+
+    const toastHandleApproved = toast.loading("Approved ...");
+    let approved = await execContractTx(
+      currentAccount,
+      pandora_psp34_contract.CONTRACT_ABI,
+      pandora_psp34_contract.CONTRACT_ADDRESS,
+      0,
+      "psp34::approve",
+      pandora_pool_contract.CONTRACT_ADDRESS,
+      {
+        u64: ticketId,
+      },
+      true
+    );
+    toast.dismiss(toastHandleApproved);
+    if (approved) {
+      const toastHandlePlay = toast.loading("Playing ...");
+      let played = await execContractTx(
+        currentAccount,
+        pandora_pool_contract.CONTRACT_ABI,
+        pandora_pool_contract.CONTRACT_ADDRESS,
+        0,
+        "pandoraPoolTraits::play",
+        sessionId,
+        betNumberVal,
+        {
+          u64: ticketId,
+        }
+      );
+      toast.dismiss(toastHandlePlay);
+      if (played) {
+        await delay(3000);
+        const fetchNft = toast.loading("Fetching Nft data ...");
+        await clientAPI("post", "/updateNftByCaller", {
+          caller: currentAccount?.address,
+        });
+        await dispatch(fetchNftsData(currentAccount));
+        toast.dismiss(fetchNft);
+        setIsLoading(false);
+        toast.success("Playing sussesfully!");
+      } else {
+        toast.error("Cannot Play!");
+        setIsLoading(false);
+        return;
+      }
+    } else {
+      toast.error("Cannot approve!");
+      setIsLoading(false);
+      return;
+    }
+
+    dispatch(fetchPandoraYourBetData(currentAccount));
+    setTicketId(0);
+    setIsLoading(false);
+  };
+
   return (
     <>
       <Box position="absolute" top="0" right="0" zIndex={2}>
@@ -87,10 +251,34 @@ const PandoraTicket = ({ visible, onClose }) => {
                 onClick={handleOpenModalSelectTicket}
               />
               <Box>
-                <Text color={"#FFA000"} fontWeight={"500"} fontSize={"24px"} mb="6px">YOUR NUMBER</Text>
+                <Text
+                  color={"#FFA000"}
+                  fontWeight={"500"}
+                  fontSize={"24px"}
+                  mb="6px"
+                >
+                  YOUR TICKET SELECTED
+                </Text>
                 <PandoraInput
                   textXl={ticketId ? ticketId : "----------"}
                   textXlColor={"white"}
+                />
+              </Box>
+              <Box>
+                {/* <Text
+                  color={"#FFA000"}
+                  fontWeight={"500"}
+                  fontSize={"24px"}
+                  mb="6px"
+                >
+                  YOUR NUMBER
+                </Text> */}
+                <PandoraInput
+                  text={"YOUR NUMBER"}
+                  onChange={onChangeBetNumber}
+                  value={betNumberVal}
+                  topRightIcon={true}
+                  bottomLeftIcon={true}
                 />
               </Box>
               <Text
@@ -104,7 +292,7 @@ const PandoraTicket = ({ visible, onClose }) => {
               </Text>
 
               <Box minW={{ base: "90%" }} mx="auto">
-                <PandoraCountDownSelectTicket date={1713427995000} />
+                <PandoraCountDownSelectTicket date={getNextDayTime()} />
               </Box>
               <Flex gap="24px">
                 <Button
@@ -112,6 +300,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                   fontStyle="normal"
                   fontSize={{ base: "16px" }}
                   w="100%"
+                  onClick={() => setModalPandoraYourBetHistoryVisible(true)}
                 >
                   YOUR BET
                 </Button>
@@ -125,19 +314,19 @@ const PandoraTicket = ({ visible, onClose }) => {
                   WITHDRAW WINNING AMOUNT
                 </Button>
               </Flex>
-              <Button
-                fontWeight="600"
-                fontStyle="normal"
-                fontSize={{ base: "18px" }}
-                background="linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important"
+              <CommonButton
+                text="BET NOW"
+                onClick={onPlay}
                 sx={{
-                  _hover: {
-                    background: "white !important",
-                  },
+                  fontWeight: "600",
+                  fontStyle: "normal",
+                  fontsize: { base: "18px" },
+                  background:
+                    "linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important",
                 }}
-              >
-                BET NOW
-              </Button>
+                isLoading={isLoading}
+                isDisabled={isLoading}
+              />
             </Box>
           </Box>
         </Box>

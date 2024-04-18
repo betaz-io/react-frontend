@@ -8,21 +8,53 @@ import PandoraBGNumberBlur from "assets/img/PandoraBGNumberBlur.png";
 import { useGame } from "contexts/useGame";
 import { convertTimeStampToNumber } from "utils";
 import PandoraCountDown from "components/countdown/PandoraCountDown";
+import { useSelector } from "react-redux";
+import { getNextDayTime } from "utils";
+import { getStartAndEndOfWeek } from "utils";
+import { useEffect, useState } from "react";
+import { execContractQuery } from "utils/contracts";
+import pandora_pool_contract from "utils/contracts/pandora_pool";
+import { useWallet } from "contexts/useWallet";
+
+const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
 const PandoraNumber = () => {
   // const { luckyNumber } = useGame();
-  let endTimeNumber = convertTimeStampToNumber(1712246008000);
+  const { sessionId } = useSelector((s) => s.pandoraNft);
+  const { api } = useWallet();
+  const [winNumber, setWinNumber] = useState(0);
+  let endTimeNumber = convertTimeStampToNumber(getNextDayTime());
+  const weeks = getStartAndEndOfWeek();
   const luckyNumber = 806542;
   const sectionPresent = {
-    sessionId: 1111,
-    startDate: "01/04/2024",
-    endDate: "03/04/2024",
+    sessionId: sessionId,
+    startDate: weeks.startOfWeek,
+    endDate: weeks.endOfWeek,
   };
   const sectionBefor = {
-    sessionId: 1112,
-    startDate: "01/04/2024",
-    endDate: "03/04/2024",
+    sessionId: +sessionId + 1,
+    startDate: weeks.startOfWeek,
+    endDate: weeks.endOfWeek,
   };
+
+  const getWinNumber = async () => {
+    const sessionIdPrev = +sessionId - 1;
+    let sessionInfo = await execContractQuery(
+      defaultCaller,
+      pandora_pool_contract.CONTRACT_ABI,
+      pandora_pool_contract.CONTRACT_ADDRESS,
+      0,
+      "pandoraPoolTraits::getBetSession",
+      sessionIdPrev
+    );
+    if (sessionIdPrev > 1)
+      setWinNumber(sessionInfo?.toHuman().Ok?.randomNumber);
+  };
+
+  useEffect(() => {
+    if (api && sessionId) getWinNumber();
+  }, [api, sessionId]);
+
   return (
     <Box className="section-pandora-left">
       <Box className="section-pandora-present-result">
@@ -124,7 +156,7 @@ const PandoraNumber = () => {
                     className="pandora-number-text"
                     fontSize={{ base: "32px", sm: "48px" }}
                   >
-                    {luckyNumber < 0 ? "--" : luckyNumber}
+                    {winNumber === 0 ? "--" : winNumber}
                   </Text>
                 </Box>
               </Box>
@@ -142,7 +174,7 @@ const PandoraNumber = () => {
         >
           Session #{sectionBefor.sessionId} begins in
         </Text>
-        <Box maxW={{base: "360px"}} mx="auto">
+        <Box maxW={{ base: "360px" }} mx="auto">
           <PandoraCountDown date={endTimeNumber} />
         </Box>
       </Box>

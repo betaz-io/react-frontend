@@ -11,16 +11,10 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import depositBGLightStage from "assets/img/deposit-bg-light-stage.png";
-import AppLogoText from "assets/img/app-logo-text.png";
-import DepositAmountCircle from "assets/img/deposit-amount-circle.png";
-import { IoMdClose } from "react-icons/io";
-import { AppIcon, AzeroIcon } from "components/icons";
 import { useDispatch, useSelector } from "react-redux";
 // import betaz_token from "utils/contracts/betaz_token_calls";
-import sale_pool from "utils/contracts/sale_pool_calls";
-import betaz_core from "utils/contracts/betaz_core_calls";
-import { useState, useCallback, useEffect, useRef } from "react";
+import pandora_pool from "utils/contracts/pandora_pool_calls";
+import { useState, useCallback, useEffect, useRef, memo } from "react";
 import toast from "react-hot-toast";
 import { fetchUserBalance, fetchBalance } from "store/slices/substrateSlice";
 import { formatTokenBalance } from "utils";
@@ -32,7 +26,7 @@ import BETAZCountDown from "components/countdown/CountDown";
 import BuyTokenButton from "components/button/buyTokenButton";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { execContractQuery } from "utils/contracts";
-import sale_pool_contract from "utils/contracts/sale_pool";
+import pandora_pool_contract from "utils/contracts/pandora_pool";
 import { formatNumDynDecimal } from "utils";
 import { useQuery } from "react-query";
 import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
@@ -41,8 +35,70 @@ import { useModal } from "contexts/useModal";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
-const PandoraWithdrawModal = ({ visible, onClose }) => {
+const PandoraWithdrawModal = memo(({ visible, onClose }) => {
+  const dispatch = useDispatch();
+  const { currentAccount, poolBalance } = useSelector((s) => s.substrate);
+  const [holdAmount, setHoldAmount] = useState(0);
+  const [holdAmountVal, setHoldAmountVal] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const { setModalPandoraWithdrawVisible } = useModal();
+  const getHoldAmount = async () => {
+    const holdAmount = await pandora_pool.getHoldAmountPlayers(currentAccount);
+    if (holdAmount) setHoldAmount(holdAmount);
+    else setHoldAmount(0);
+  };
+
+  const withdraw = async () => {
+    setIsLoading(true);
+    if (currentAccount?.address) {
+      if (holdAmountVal === "") {
+        toast.error("invalid inputs!");
+        return;
+      }
+      if (!holdAmount) {
+        toast.error("You not hold amount!");
+        setIsLoading(false);
+        return;
+      } else if (poolBalance?.core == 0) {
+        toast.error("Pool not enough balance!");
+        setIsLoading(false);
+        return;
+      } else {
+        let amount = parseFloat(holdAmountVal);
+        const result = await pandora_pool.withdrawWinAmount(
+          currentAccount,
+          amount
+        );
+        if (result) {
+          toast.success(`Withdraw success`);
+          dispatch(fetchUserBalance({ currentAccount }));
+          dispatch(fetchBalance({ currentAccount }));
+          getHoldAmount();
+        }
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const onChangeholdAmount = useCallback((e) => {
+    const { value } = e.target;
+    const reg = /^\d*\.?\d*$/;
+    let holdValue = 0;
+    if ((!isNaN(value) && reg.test(value)) || value === "") {
+      holdValue = parseFloat(value);
+      if (holdValue < 0) holdValue = 1;
+      if (holdValue > parseFloat(holdAmount)) {
+        toast.error("Not enough Balance!");
+        setHoldAmountVal(holdAmount);
+      } else {
+        setHoldAmountVal(value);
+      }
+    }
+  });
+
+  useEffect(() => {
+    getHoldAmount();
+  }, [currentAccount?.address]);
   const isMobile = useCheckMobileScreen(992);
   return (
     <>
@@ -104,21 +160,20 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
                 <PandoraInput
                   text={"YOUR HOLD AMOUNT BALANCE"}
                   topRightIcon={true}
-                  value={"123123123"}
+                  value={holdAmount}
                 />
                 <PandoraInput
                   text={"HOLD AMOUNT"}
-                  value={"123123123"}
+                  value={holdAmountVal}
                   bottomLeftIcon={true}
+                  onChange={onChangeholdAmount}
                 />
 
-                <Button
-                  fontWeight="600"
-                  fontStyle="normal"
-                  fontSize={{ base: "18px" }}
-                >
-                  WITHDRAW HOLD AMOUNT
-                </Button>
+                <CommonButton
+                  onClick={() => withdraw()}
+                  text="WITHDRAW HOLD AMOUNT"
+                  isLoading={isLoading}
+                />
 
                 <Box>
                   <Text textAlign="center">
@@ -138,5 +193,5 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
       </Modal>
     </>
   );
-};
+});
 export default PandoraWithdrawModal;

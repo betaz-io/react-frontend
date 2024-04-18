@@ -108,3 +108,14 @@
   line-height: normal;
   letter-spacing: 0.83px;
 }
+
+.pandora-box-amount-input {
+  border-radius: 4px;
+  background: #0d171b;
+  border: "0px";
+  align-items: center;
+  color:#1beca7;
+  margin-top: 12px;
+  padding: 8px;
+  justify-content: center;
+}

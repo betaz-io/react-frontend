@@ -18,6 +18,10 @@ export const ModalProvider = ({ children }) => {
     useState(false);
   const [modalPandoraSelectTicketVisible, setModalPandoraSelectTicketVisible] =
     useState(false);
+  const [
+    modalPandoraYourBetHistoryVisible,
+    setModalPandoraYourBetHistoryVisible,
+  ] = useState(false);
 
   return (
     <ModalContext.Provider
@@ -40,6 +44,8 @@ export const ModalProvider = ({ children }) => {
         setModalPandoraBetHistoryVisible,
         modalPandoraSelectTicketVisible,
         setModalPandoraSelectTicketVisible,
+        modalPandoraYourBetHistoryVisible,
+        setModalPandoraYourBetHistoryVisible,
       }}
     >
       {children}
