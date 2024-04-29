@@ -48,64 +48,30 @@ import { execContractQuery } from "utils/contracts";
 import pandora_pool_contract from "utils/contracts/pandora_pool";
 import { convertToBalance } from "utils";
 import { formatNumDynDecimal } from "utils";
+import { fetchPandoraHoldAmountByPlayer } from "store/slices/pandoraNftSlice";
+import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
+import PandoraRewardHistoryModal from "./pandoraRewardHistory";
+import PandoraTicketsModal from "./yourTicket";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
 const PandoraMode = () => {
   const dispatch = useDispatch();
   const { api } = useWallet();
-  const [totalPlayers, setTotalPlayers] = useState(0);
-  const [winAmountPlayer, setWinAmountPlayer] = useState(0);
+  const [holdAmountPlayer, setHoleAmountPlayer] = useState(0);
 
   const { currentAccount, poolBalance } = useSelector((s) => s.substrate);
-  const { sessionId } = useSelector((s) => s.pandoraNft);
-
-  const getTotalPlayers = async (sessionId) => {
-    const total = await execContractQuery(
-      defaultCaller,
-      pandora_pool_contract.CONTRACT_ABI,
-      pandora_pool_contract.CONTRACT_ADDRESS,
-      0,
-      "pandoraPoolTraits::totalPlayersInSession",
-      sessionId
-    );
-
-    setTotalPlayers(total?.toHuman().Ok);
-  };
-
-  const getWinAmountByPlayers = async (sessionId) => {
-    const totalId = await execContractQuery(
-      defaultCaller,
-      pandora_pool_contract.CONTRACT_ABI,
-      pandora_pool_contract.CONTRACT_ADDRESS,
-      0,
-      "pandoraPoolTraits::getLastSessionId"
-    );
-
-    let total = Number(totalId?.toHuman().Ok);
-    let amount = 0;
-    for (let i = 1; i < total; i++) {
-      let temp = await execContractQuery(
-        defaultCaller,
-        pandora_pool_contract.CONTRACT_ABI,
-        pandora_pool_contract.CONTRACT_ADDRESS,
-        0,
-        "pandoraPoolTraits::getPlayerWinAmount",
-        i,
-        currentAccount?.address
-      );
-      temp = temp?.toHuman().Ok?.replaceAll(",", "");
-      if (temp) amount = +temp;
-    }
-    setWinAmountPlayer(amount);
-  };
+  const { sessionId, holdAmount, totalPlayers } = useSelector(
+    (s) => s.pandoraNft
+  );
 
   useEffect(() => {
-    if (sessionId) getTotalPlayers(sessionId);
+    if (sessionId) dispatch(fetchTotalPlayer(sessionId));
   }, [sessionId]);
 
   useEffect(() => {
-    if (api && currentAccount) getWinAmountByPlayers();
+    if (api && currentAccount)
+      dispatch(fetchPandoraHoldAmountByPlayer(currentAccount));
   }, [currentAccount, api]);
 
   const {
@@ -117,6 +83,10 @@ const PandoraMode = () => {
     setModalPandoraSelectTicketVisible,
     modalPandoraYourBetHistoryVisible,
     setModalPandoraYourBetHistoryVisible,
+    modalPandoraRewardHistoryVisible,
+    setModalPandoraRewardHistoryVisible,
+    modalPandoraYourTicketVisible,
+    setModalPandoraYourTicketVisible,
   } = useModal();
   return (
     <>
@@ -141,6 +111,14 @@ const PandoraMode = () => {
               <PandoraYourBetHistoryModal
                 isOpen={modalPandoraYourBetHistoryVisible}
                 onClose={() => setModalPandoraYourBetHistoryVisible(false)}
+              />
+              <PandoraRewardHistoryModal
+                isOpen={modalPandoraRewardHistoryVisible}
+                onClose={() => setModalPandoraRewardHistoryVisible(false)}
+              />
+              <PandoraTicketsModal
+                isOpen={modalPandoraYourTicketVisible}
+                onClose={() => setModalPandoraYourTicketVisible(false)}
               />
               <Box
                 className="lucky-number-circle-image"
@@ -195,7 +173,7 @@ const PandoraMode = () => {
       </SectionContainer>
       <SectionContainer
         sx={{
-          marginTop: "48px",
+          marginTop: "132px",
         }}
       >
         <Flex justifyContent={"center"} gap={"24px"} flexWrap={"wrap"}>
@@ -244,7 +222,7 @@ const PandoraMode = () => {
                 >
                   {poolBalance?.pandora}
                 </Text>
-                <AppIcon size={{ base: "18px" }} padding={{ base: "4px" }} />
+                <AzIcon size={{ base: "16px" }} padding={{ base: "5px" }} />
               </Box>
             </Flex>
             <Box
@@ -340,7 +318,7 @@ const PandoraMode = () => {
                 fontSize={"18px"}
                 fontWeight={"600"}
               >
-                Win Amount
+                Hold Amount
               </Text>
               <Text
                 color={"white !important"}
@@ -355,9 +333,7 @@ const PandoraMode = () => {
                   fontSize={"18px"}
                   fontWeight={"600"}
                 >
-                  {formatNumDynDecimal(
-                    winAmountPlayer ? winAmountPlayer / 10 ** 12 : 0
-                  )}
+                  {formatNumDynDecimal(holdAmount ? holdAmount : 0)}
                 </Text>
                 <AzIcon size={{ base: "16px" }} padding={{ base: "5px" }} />
               </Box>

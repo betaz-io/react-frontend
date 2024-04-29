@@ -33,16 +33,19 @@ import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
 import PandoraInput from "../components/Input";
 import { useModal } from "contexts/useModal";
 import { delay } from "utils";
+import { useWallet } from "contexts/useWallet";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
-const PandoraWithdrawModal = memo(({ visible, onClose }) => {
+const PandoraWithdrawModal = ({ visible, onClose }) => {
   const dispatch = useDispatch();
+  const { api } = useWallet();
   const { currentAccount, poolBalance } = useSelector((s) => s.substrate);
   const [holdAmount, setHoldAmount] = useState(0);
   const [holdAmountVal, setHoldAmountVal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const { setModalPandoraWithdrawVisible } = useModal();
+
   const getHoldAmount = async () => {
     const holdAmount = await pandora_pool.getHoldAmountPlayers(currentAccount);
     if (holdAmount) setHoldAmount(holdAmount);
@@ -99,8 +102,8 @@ const PandoraWithdrawModal = memo(({ visible, onClose }) => {
   });
 
   useEffect(() => {
-    getHoldAmount();
-  }, [currentAccount?.address]);
+    if (api && currentAccount) getHoldAmount();
+  }, [currentAccount, api]);
   const isMobile = useCheckMobileScreen(992);
   return (
     <>
@@ -195,5 +198,5 @@ const PandoraWithdrawModal = memo(({ visible, onClose }) => {
       </Modal>
     </>
   );
-});
+};
 export default PandoraWithdrawModal;

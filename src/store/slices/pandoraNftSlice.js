@@ -13,6 +13,8 @@ const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
 const initialState = {
   sessionId: 0,
+  holdAmount: 0,
+  totalPlayers: 0,
   sessionInfo: null,
   nftsData: [],
   totalPages: 0,
@@ -50,12 +52,14 @@ export const pandoraNftSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchNftsData.fulfilled, (state, action) => {
-      state.nftsData = action.payload.data;
-      state.totalPages = action.payload.total;
-    });
     builder.addCase(fetchPandoraSession.fulfilled, (state, action) => {
       state.sessionId = action.payload.sessionId;
+    });
+    builder.addCase(fetchPandoraHoldAmountByPlayer.fulfilled, (state, action) => {
+      state.holdAmount = action.payload.holdAmount;
+    });
+    builder.addCase(fetchTotalPlayer.fulfilled, (state, action) => {
+      state.totalPlayers = action.payload.totalPlayers;
     });
   },
 });
@@ -71,33 +75,6 @@ export const {
 
 export default pandoraNftSlice.reducer;
 
-export const fetchNftsData = createAsyncThunk(
-  "pandoraNft/fetchNftsData",
-  async (currentAccount, { getState }) => {
-    const { currentPage, currentTab } = getState().pandoraNft;
-
-    let [data, total] = await Promise.all([
-      clientAPI("post", "/getNftByCaller", {
-        caller: currentAccount?.address,
-        limit: 6,
-        offset: 6 * (currentPage - 1),
-      }),
-      clientAPITotalPages("post", "/getNftByCaller", {
-        caller: currentAccount?.address,
-        limit: 6,
-        offset: 6 * (currentPage - 1),
-      }),
-    ]);
-
-    if (currentAccount === "") {
-      let data = [];
-      return { data, total: 0 };
-    } else {
-      return { data: data, total: Math.ceil(total / 6) };
-    }
-  }
-);
-
 export const fetchPandoraSession = createAsyncThunk(
   "substrate/fetchPandoraSession",
   async () => {
@@ -108,10 +85,42 @@ export const fetchPandoraSession = createAsyncThunk(
       0,
       "pandoraPoolTraits::getLastSessionId"
     );
+
     let sessionId = id?.toHuman().Ok;
-    if (sessionId) {
-      
-    }
     return { sessionId };
+  }
+);
+
+export const fetchPandoraHoldAmountByPlayer = createAsyncThunk(
+  "substrate/fetchPandoraHoldAmountByPlayer",
+  async (currentAccount) => {
+    const amount = await execContractQuery(
+      defaultCaller,
+      pandora_pool_contract.CONTRACT_ABI,
+      pandora_pool_contract.CONTRACT_ADDRESS,
+      0,
+      "pandoraPoolTraits::getHoldAmountPlayers",
+      currentAccount?.address
+    );
+
+    let holdAmount = Number(amount?.toHuman().Ok?.replaceAll(",", "") / 10 ** 12);
+    return { holdAmount };
+  }
+);
+
+export const fetchTotalPlayer = createAsyncThunk(
+  "substrate/fetchTotalPlayer",
+  async (sessionId) => {
+    const total = await execContractQuery(
+      defaultCaller,
+      pandora_pool_contract.CONTRACT_ABI,
+      pandora_pool_contract.CONTRACT_ADDRESS,
+      0,
+      "pandoraPoolTraits::totalPlayersInSession",
+      sessionId
+    );
+
+    let totalPlayers = Number(total?.toHuman().Ok);
+    return { totalPlayers };
   }
 );

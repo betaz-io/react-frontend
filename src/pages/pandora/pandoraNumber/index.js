@@ -27,12 +27,12 @@ const PandoraNumber = () => {
   const weeks = getStartAndEndOfWeek();
   const luckyNumber = 806542;
   const sectionPresent = {
-    sessionId: sessionId,
+    sessionId: +sessionId - 1,
     startDate: weeks.startOfWeek,
     endDate: weeks.endOfWeek,
   };
   const sectionBefor = {
-    sessionId: +sessionId + 1,
+    sessionId: Number(sessionId),
     startDate: weeks.startOfWeek,
     endDate: weeks.endOfWeek,
   };
@@ -47,7 +47,7 @@ const PandoraNumber = () => {
       "pandoraPoolTraits::getBetSession",
       sessionIdPrev
     );
-    if (sessionIdPrev > 1)
+    if (sessionIdPrev >= 1)
       setWinNumber(sessionInfo?.toHuman().Ok?.randomNumber);
   };
 
@@ -79,14 +79,16 @@ const PandoraNumber = () => {
             src={EffectIcon}
             className="pandora-effect-icon"
           />
-          <Text
-            mt={{ base: "20px" }}
-            fontSize={{ base: "32px" }}
-            fontStyle={{ base: "normal" }}
-            fontWeight={{ base: "700" }}
-          >
-            Results of Session #{sectionPresent.sessionId}
-          </Text>
+          {sectionPresent.sessionId >= 1 && (
+            <Text
+              mt={{ base: "20px" }}
+              fontSize={{ base: "32px" }}
+              fontStyle={{ base: "normal" }}
+              fontWeight={{ base: "700" }}
+            >
+              Results of Session #{sectionPresent.sessionId}
+            </Text>
+          )}
         </Box>
         <Box
           className="lucky-number-container"
@@ -98,12 +100,14 @@ const PandoraNumber = () => {
           position="relative"
         >
           <Box position="absolute" top="-20px">
-            <Text
-              className="lucky-number-text"
-              fontSize={{ base: "20px", sm: "24px" }}
-            >
-              {sectionPresent.startDate} - {sectionPresent.endDate}
-            </Text>
+            {sectionPresent.sessionId >= 1 && (
+              <Text
+                className="lucky-number-text"
+                fontSize={{ base: "20px", sm: "24px" }}
+              >
+                {sectionPresent.startDate} - {sectionPresent.endDate}
+              </Text>
+            )}
           </Box>
           <Box
             className="lucky-number-circle-image"
@@ -127,7 +131,7 @@ const PandoraNumber = () => {
                 position="absolute"
                 w="200px"
                 sx={{
-                  top: "8px",
+                  top: "-10px",
                   left: "-80px",
                 }}
                 src={EffectIcon}
@@ -137,13 +141,13 @@ const PandoraNumber = () => {
                 position="absolute"
                 w="200px"
                 sx={{
-                  bottom: "45px",
+                  bottom: "30px",
                   right: "-85px",
                 }}
                 src={EffectIcon}
                 className="pandora-effect-icon"
               />
-              <Box w={"max-content"} mb={{ base: "80px" }} overflow="hidden">
+              <Box w={"max-content"} mb={{ base: "30px" }} overflow="hidden">
                 <Box
                   className="lucky-number-circle-image"
                   bgImage={PandoraBGNumberBlur}
@@ -151,10 +155,26 @@ const PandoraNumber = () => {
                   bgPosition="center"
                   minW={{ base: "max-content" }}
                   w={{ base: "240px", sm: "240px" }}
+                  position={"relative"}
                 >
                   <Text
+                    top={"40px"}
+                    left={"50%"}
+                    transform={"translateX(-50%)"}
+                    mt={{ base: "24px" }}
+                    fontSize={{ base: "28px" }}
+                    fontStyle={{ base: "normal" }}
+                    fontWeight={{ base: "700" }}
+                    position={"absolute"}
+                    minW={"340px"}
+                    textAlign={"center"}
+                    textShadow={"3px 3px 6px #000000"}
+                  >
+                    Pandora number
+                  </Text>
+                  <Text
                     className="pandora-number-text"
-                    fontSize={{ base: "32px", sm: "48px" }}
+                    fontSize={{ base: "32px", sm: "32px" }}
                   >
                     {winNumber === 0 ? "--" : winNumber}
                   </Text>
@@ -164,7 +184,7 @@ const PandoraNumber = () => {
           </Box>
         </Box>
       </Box>
-      <Box className="section-pandora-section-later-time">
+      {/* <Box className="section-pandora-section-later-time">
         <Text
           mt={{ base: "20px" }}
           fontSize={{ base: "32px" }}
@@ -177,7 +197,7 @@ const PandoraNumber = () => {
         <Box maxW={{ base: "360px" }} mx="auto">
           <PandoraCountDown date={endTimeNumber} />
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

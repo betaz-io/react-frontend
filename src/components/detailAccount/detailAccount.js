@@ -17,14 +17,20 @@ import { memo } from "react";
 import UnstakeModal from "components/stakingPool/pendingModal/UnstakeModal";
 import { AzeroIcon, AppIcon } from "components/icons";
 import ClaimRewardStakingModal from "components/stakingPool/historyClaimRewardModal/HistoryClaimRewardModal";
+import { useLocation } from "react-router-dom";
+
+const pandoraPath = "/pandora";
 
 const DetailAccountBox = ({ onClickSwitch }) => {
   const { logoutAccountHandler } = useWallet();
+  const location = useLocation();
   const {
     setUnstakeModalVisible,
     unstakeModalVisible,
     modalClaimRewardHistoryVisible,
     setModalClaimRewardHistoryVisible,
+    setModalPandoraRewardHistoryVisible,
+    setModalPandoraYourTicketVisible
   } = useModal();
   const { currentAccount } = useSelector((s) => s.substrate);
   const onOpenUnstakeModal = () => setUnstakeModalVisible(true);
@@ -32,6 +38,44 @@ const DetailAccountBox = ({ onClickSwitch }) => {
   const onOpenClaimHistoryModal = () => setModalClaimRewardHistoryVisible(true);
   const onCloseClaimeHistoryModal = () =>
     setModalClaimRewardHistoryVisible(false);
+  const onOpenPandoraRewardHistoryModal = () =>
+    setModalPandoraRewardHistoryVisible(true);
+    const onOpenPandoraYourTicketModal = () =>
+    setModalPandoraYourTicketVisible(true);
+
+  const listInformation = [
+    {
+      title: "AZERO balance",
+      content: currentAccount?.balance?.azero,
+      key: "azero",
+    },
+    {
+      title: "BET AZ token balance",
+      content: currentAccount?.balance?.betaz,
+      key: "betaz",
+    },
+    {
+      title: "BET AZ staked amount",
+      content: currentAccount?.balance?.stake,
+      key: "betaz",
+    },
+    {
+      title: "Next reward distribution",
+      content: currentAccount?.balance?.reward,
+      key: "azero",
+    },
+  ];
+
+  const totalTicket = {
+    title: "Total tickets usable",
+    content: "--",
+    key: "betaz",
+  };
+
+  if (location?.pathname == pandoraPath) {
+    listInformation.splice(-2);
+    // listInformation.push(totalTicket)
+  }
   return (
     <>
       <Box p="20px">
@@ -43,28 +87,7 @@ const DetailAccountBox = ({ onClickSwitch }) => {
             </Heading>
           </Flex>
         </Box>
-        {[
-          {
-            title: "AZERO balance",
-            content: currentAccount?.balance?.azero,
-            key: "azero",
-          },
-          {
-            title: "BET AZ token balance",
-            content: currentAccount?.balance?.betaz,
-            key: "betaz",
-          },
-          {
-            title: "BET AZ staked amount",
-            content: currentAccount?.balance?.stake,
-            key: "betaz",
-          },
-          {
-            title: "Next reward distribution",
-            content: currentAccount?.balance?.reward,
-            key: "azero",
-          },
-        ].map(({ title, content, key }, idx) => {
+        {[...listInformation].map(({ title, content, key }, idx) => {
           return (
             <Box
               key={idx}
@@ -95,28 +118,58 @@ const DetailAccountBox = ({ onClickSwitch }) => {
           );
         })}
         <Flex direction="column">
-          <Button
-            className="landing-page-banner-button"
-            sx={{
-              mb: "8px",
-            }}
-            onClick={() => {
-              onOpenUnstakeModal(true);
-            }}
-          >
-            My Stakes
-          </Button>
-          <Button
-            className="landing-page-banner-button"
-            sx={{
-              mb: "8px",
-            }}
-            onClick={() => {
-              onOpenClaimHistoryModal(true);
-            }}
-          >
-            Reward History
-          </Button>
+          {location?.pathname !== pandoraPath && (
+            <Button
+              className="landing-page-banner-button"
+              sx={{
+                mb: "8px",
+              }}
+              onClick={() => {
+                onOpenUnstakeModal(true);
+              }}
+            >
+              My Stakes
+            </Button>
+          )}
+          {location?.pathname !== pandoraPath && (
+            <Button
+              className="landing-page-banner-button"
+              sx={{
+                mb: "8px",
+              }}
+              onClick={() => {
+                onOpenClaimHistoryModal(true);
+              }}
+            >
+              Reward History
+            </Button>
+          )}
+          {location?.pathname === pandoraPath && (
+            <Button
+              className="landing-page-banner-button"
+              sx={{
+                mb: "8px",
+              }}
+              onClick={() => {
+                onOpenPandoraRewardHistoryModal(true);
+              }}
+            >
+              Reward History
+            </Button>
+          )}
+          {location?.pathname === pandoraPath && (
+            <Button
+              className="landing-page-banner-button"
+              sx={{
+                mb: "8px",
+              }}
+              onClick={() => {
+                onOpenPandoraYourTicketModal(true);
+              }}
+            >
+              Your Ticket
+            </Button>
+          )}
           <Button
             className="landing-page-banner-button"
             sx={{

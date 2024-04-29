@@ -47,10 +47,7 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import { useTicket } from "contexts/useSelectTicket";
-import { fetchNftsData } from "store/slices/pandoraNftSlice";
-import { clientAPI } from "api/client";
-import { incrementCurrentPage } from "store/slices/pandoraNftSlice";
-import { decrementCurrentPage } from "store/slices/pandoraNftSlice";
+import { useMyTicketList } from "hooks/useMyTicketList";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -63,43 +60,24 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
   const { ticketId, setTicketId } = useTicket();
   const [isLoading, setLoading] = useState(false);
 
-  const { nftsData, currentPage, currentTab, totalPages } = useSelector(
-    (s) => s.pandoraNft
-  );
-
-  const updateNftData = async () => {
-    setLoading(true);
-    await clientAPI("post", "/updateNftByCaller", {
-      caller: currentAccount?.address,
-    });
-    dispatch(fetchNftsData(currentAccount));
-    setLoading(false);
-  };
-
-  const dataQuery = useQuery(
-    "query-player-event",
-    async () => {
-      await new Promise(async (resolve) => {
-        await dispatch(fetchNftsData(currentAccount));
-        resolve();
-      });
-    },
-    { refetchOnWindowFocus: false }
-  );
-
-  useEffect(() => {
-    if (currentAccount?.address) updateNftData();
-  }, [currentTab, currentAccount]);
+  const {
+    myTicketList: nftsData,
+    isLoading: isLoadingMyTicketList,
+    refetch: refetchMyTicketList,
+    isRefetching: isRefetchingMyTicketList,
+    prevPage: handlePrev,
+    nextPage: handleNext,
+    currentPage
+  } = useMyTicketList(currentAccount?.address);
 
   const nextPage = useCallback(() => {
-    if (currentPage < totalPages) dispatch(incrementCurrentPage());
-    else toast("Only " + totalPages + " pages can be displayed");
-    dataQuery.refetch();
+    handleNext();
+    refetchMyTicketList();
   });
 
   const previousPage = useCallback(() => {
-    if (currentPage > 1) dispatch(decrementCurrentPage());
-    dataQuery.refetch();
+    if (currentPage > 1) handlePrev();
+    refetchMyTicketList();
   });
 
   return (
@@ -158,7 +136,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                 gap="24px"
                 paddingX={"0px"}
               >
-                {isLoading ? (
+                {isRefetchingMyTicketList ? (
                   <Flex justifyContent={"center"} gap={"12px"}>
                     <CircularProgress isIndeterminate color="#1beca6" />
                     <Text className="pandora-modal-text-title" color="#FFA000">
