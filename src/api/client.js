@@ -55,3 +55,55 @@ export const clientAPITotalPages = async (method, url, options) => {
     else return data;
   }
 };
+
+const client = async (
+  method,
+  url,
+  options = {},
+  baseURL = process.env.REACT_APP_API_ARTZERO_URL
+) => {
+  const headers = {
+    Accept: "*/*",
+    "Content-Type": "application/x-www-form-urlencoded",
+  };
+
+  const urlencodedOptions = new URLSearchParams(
+    Object.entries(options)
+  ).toString();
+
+  const { data } = await axios({
+    baseURL,
+    url,
+    method,
+    headers,
+    data: urlencodedOptions,
+  });
+
+  if (data?.status === "FAILED") {
+    console.log("error FAILED @ xx>>", url, data?.message);
+  }
+
+  return data;
+};
+
+export const APICall = {
+  getNFTsByOwnerAndCollection: async ({
+    collection_address,
+    owner,
+    limit = 10000,
+    offset = 0,
+    sort = -1,
+  }) => {
+    return await client("POST", "/getNFTsByOwnerAndCollection", {
+      collection_address,
+      owner,
+      limit,
+      offset,
+      sort,
+    });
+  },
+
+  askBeUpdateNftData: async (options) => {
+    return await client("POST", "/updateNFT", options);
+  },
+}

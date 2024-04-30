@@ -29,119 +29,76 @@ import { MdSwapVerticalCircle } from "react-icons/md";
 import {
   RiCopperDiamondFill,
   RiVipDiamondFill,
-  RiArrowTurnBackFill,
 } from "react-icons/ri";
 import "./styles.css";
 import { AiFillStar } from "react-icons/ai";
 import { formatTableValue, formatTableValueMobile } from "./formatTable";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import toast from "react-hot-toast";
-import { clientAPI } from "api/client";
 import { useDispatch, useSelector } from "react-redux";
-import useInterval from "hooks/useInterval";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
-import { clientAPITotalPages } from "api/client";
 import ReactPaginate from "react-paginate";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { useQuery } from "react-query";
-import useWebSocket from "react-use-websocket";
 import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
-import BGModalBetHistory from "assets/img/BGModalBetHistory.png";
 import { usePandoraBetHistory } from "hooks/usePandoraBetHistory";
+import { usePandoraRewardHistory } from "hooks/usePandoraRewardHistory";
 
-const tabData = [
-  {
-    label: "My bets",
-  },
-  {
-    label: "All bets",
-  },
-  {
-    label: "Rare win",
-  },
-];
 
 // let currentPage = 1;
 
-const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
+const PandoraRewardHistoryModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { currentAccount } = useSelector((s) => s.substrate);
   const [uiPage, setUIPage] = useState(1);
 
   const {
-    pandoraHistoryData,
+    pandoraRewardHistoryData,
     totalPages,
-    isLoading: isLoadingPandoraHistoryData,
-    refetch: refetchPandoraHistoryData,
-    isRefetching: isRefetchingPandoraHistoryData,
+    isLoading: isLoadingPandoraRewardHistoryData,
+    refetch: refetchPandoraRewardHistoryData,
+    isRefetching: isRefetchingPandoraRewardHistoryData,
     prevPage: handlePrev,
     nextPage: handleNext,
     setCurrentPage,
     currentPage,
-  } = usePandoraBetHistory();
+  } = usePandoraRewardHistory(currentAccount?.address);
 
   const [rowActive, setRowActive] = useState(0);
 
   useEffect(() => {
-    // currentPage = 1;
-    setUIPage(currentPage);
+    refetchPandoraRewardHistoryData();
+    // setUIPage(currentPage);
   }, [currentAccount]);
-
-  const goToPage = useCallback((page) => {
-    currentPage = page;
-    setUIPage(page);
-    // getData();
-  });
 
   const historyTableData = {
     headers: [
       {
-        label: "Section id",
-        key: "player",
+        label: "withdrawer",
+        key: "withdrawer",
         icon: <TbMoodSmileFilled size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Chainlink request id",
-        key: "chainlink-request-id",
+        label: "receiver",
+        key: "receiver",
         icon: <BiLayer size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Bet number win",
-        key: "bet-number-win",
+        label: "reward amount",
+        key: "amount",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Reward amount",
-        key: "Reward-amount",
+        label: "Time",
+        key: "time",
         icon: (
           <MdSwapVerticalCircle size="24px" style={{ marginRight: "8px" }} />
         ),
       },
-      {
-        label: "Total ticket win",
-        key: "Total-ticket-win",
-        icon: (
-          <RiCopperDiamondFill size="24px" style={{ marginRight: "8px" }} />
-        ),
-      },
-      {
-        label: "Player win",
-        key: "player-win",
-        icon: <AiFillStar size="24px" style={{ marginRight: "8px" }} />,
-      },
-      {
-        label: "Ticket id win",
-        key: "ticket-id-win",
-        icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
-      },
     ],
-    data: pandoraHistoryData,
+    data: pandoraRewardHistoryData,
   };
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
-    refetchPandoraHistoryData();
+    refetchPandoraRewardHistoryData();
   };
 
   const isMobile = useCheckMobileScreen(480);
@@ -156,17 +113,6 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
         }}
         position="relative"
       >
-        {/* <Box
-          className="lucky-number-circle-image"
-          bgImage={BGModalBetHistory}
-          bgRepeat="no-repeat"
-          bgPosition="center"
-          position="absolute"
-          top={"-20px"}
-          left={"50%"}
-          transform={"translateX(-50%)"}
-          // zIndex={-2}
-        ></Box> */}
         <Box
           className="lucky-number-circle-image"
           bgImage={PandoraBGCoin}
@@ -207,11 +153,11 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
         >
-          Bet History
+          Reward History
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
-          {isLoadingPandoraHistoryData || isRefetchingPandoraHistoryData ? (
+          {isLoadingPandoraRewardHistoryData || isRefetchingPandoraRewardHistoryData ? (
             <Box mt="24px" w="100%" minH="800px">
               <CircularProgress
                 position="absolute"
@@ -352,22 +298,15 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
                                   cursor={"pointer"}
                                   sx={{
                                     marginTop: rowIndex === 0 ? "24px" : "8px",
-                                    // background: "#063466",
                                     py: "16px",
                                     pl: isFirstChild && "24px",
-                                    // borderY:
-                                    //   "1px solid rgba(255, 255, 255, 0.4)",
-                                    // borderLeft:
-                                    //   isFirstChild &&
-                                    //   "1px solid rgba(255, 255, 255, 0.4)",
-                                    // borderRight:
-                                    //   isLastChild &&
-                                    //   "1px solid rgba(255, 255, 255, 0.4)",
                                     borderLeftRadius: isFirstChild && "8px",
                                     borderRightRadius: isLastChild && "8px",
                                     position: "relative",
                                     paddingLeft: !isFirstChild && "12px",
                                   }}
+                                  display={"flex"}
+                                  justifyContent={"center"}
                                 >
                                   <Box
                                     w="100%"
@@ -396,12 +335,8 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
                         <Box
                           sx={{
                             marginTop: "24px",
-                            // background: "#0d171b",
                             py: "16px",
                             pl: "24px",
-                            // borderY: "1px solid rgba(255, 255, 255, 0.4)",
-                            // borderLeft: "1px solid rgba(255, 255, 255, 0.4)",
-                            // borderRight: "1px solid rgba(255, 255, 255, 0.4)",
                             borderLeftRadius: "8px",
                             borderRightRadius: "8px",
                             width: "100%",
@@ -451,4 +386,4 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default PandoraBetHistoryModal;
+export default PandoraRewardHistoryModal;

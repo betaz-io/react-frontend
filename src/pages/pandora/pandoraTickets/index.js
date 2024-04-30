@@ -46,9 +46,10 @@ import { useWallet } from "contexts/useWallet";
 import { execContractTx } from "utils/contracts";
 import { delay } from "utils";
 import { clientAPI } from "api/client";
-import { fetchNftsData } from "store/slices/pandoraNftSlice";
-import { fetchPandoraYourBetData } from "store/slices/pandoraYourBetHistorySlice";
 import { getNextDayTime } from "utils";
+import { useMyTicketList } from "hooks/useMyTicketList";
+import { APICall } from "api/client";
+import { usePandoraYourBetHistory } from "hooks/usePandoraYourBetHistory";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -62,6 +63,14 @@ const PandoraTicket = ({ visible, onClose }) => {
   const [betNumberVal, setBetNumberVal] = useState(0);
   const [maxBet, setMaxBet] = useState(100000);
   const [isLoading, setIsLoading] = useState(false);
+
+  const {
+    refetch: refetchMyTicketList,
+  } = useMyTicketList(currentAccount?.address);
+
+  const {
+    refetch: refetchPandoraHistoryData,
+  } = usePandoraYourBetHistory(currentAccount);
 
   const {
     setModalPandoraWithdrawVisible,
@@ -193,10 +202,13 @@ const PandoraTicket = ({ visible, onClose }) => {
       if (played) {
         await delay(3000);
         const fetchNft = toast.loading("Fetching Nft data ...");
-        await clientAPI("post", "/updateNftByCaller", {
-          caller: currentAccount?.address,
+        await APICall.askBeUpdateNftData({
+          collection_address: pandora_psp34_contract.CONTRACT_ADDRESS,
+          token_id: ticketId,
         });
-        await dispatch(fetchNftsData(currentAccount));
+        await clientAPI("post", "/updateNFTQueue", {
+          ticketId: ticketId,
+        });
         toast.dismiss(fetchNft);
         setIsLoading(false);
         toast.success("Playing sussesfully!");
@@ -211,7 +223,8 @@ const PandoraTicket = ({ visible, onClose }) => {
       return;
     }
 
-    dispatch(fetchPandoraYourBetData(currentAccount));
+    refetchPandoraHistoryData();
+    refetchMyTicketList();
     setTicketId(0);
     setIsLoading(false);
   };
@@ -288,7 +301,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                 fontWeight="500"
                 textAlign="center"
               >
-                Finisher in:
+                Session #{sessionId} Finisher in:
               </Text>
 
               <Box minW={{ base: "90%" }} mx="auto">

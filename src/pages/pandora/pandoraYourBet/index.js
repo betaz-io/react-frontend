@@ -48,7 +48,7 @@ import useWebSocket from "react-use-websocket";
 import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import BGModalBetHistory from "assets/img/BGModalBetHistory.png";
-import { fetchPandoraYourBetData } from "store/slices/pandoraYourBetHistorySlice";
+import { usePandoraYourBetHistory } from "hooks/usePandoraYourBetHistory";
 
 // let currentPage = 1;
 
@@ -57,40 +57,20 @@ const wssUrl = process.env.REACT_APP_WSS_API || "ws://localhost:3010";
 const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { currentAccount } = useSelector((s) => s.substrate);
-  const [uiPage, setUIPage] = useState(1);
-  // const [data, setdata] = useState([]);
-  // const [totalPages, setTotalPages] = useState(0);
 
-  const { betHistoryData, currentPage, currentTab, totalPages } = useSelector(
-    (s) => s.pandoraBetHistory
-  );
+  const {
+    pandoraYourBetHistoryData,
+    totalPages,
+    isLoading: isLoadingPandoraHistoryData,
+    refetch: refetchPandoraHistoryData,
+    isRefetching: isRefetchingPandoraHistoryData,
+    prevPage: handlePrev,
+    nextPage: handleNext,
+    setCurrentPage,
+    currentPage,
+  } = usePandoraYourBetHistory(currentAccount);
   const [rowActive, setRowActive] = useState(0);
 
-  const dataQuery = useQuery(
-    "query-player-event",
-    async () => {
-      await new Promise(async (resolve) => {
-        await dispatch(fetchPandoraYourBetData(currentAccount));
-        resolve();
-      });
-    },
-    { refetchOnWindowFocus: false }
-  );
-
-
-  useEffect(() => {
-    // currentPage = 1;
-    setUIPage(currentPage);
-    dataQuery.refetch();
-  }, [currentAccount]);
-
-  const goToPage = useCallback((page) => {
-    currentPage = page;
-    setUIPage(page);
-    // getData();
-  });
-
-  // console.log({ totalPages, currentPage });
   const historyTableData = {
     headers: [
       {
@@ -116,14 +96,12 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
         ),
       },
     ],
-    data: betHistoryData,
+    data: pandoraYourBetHistoryData,
   };
 
-  // const [currentPage, setCurrentPage] = useState(0);
-
   const handlePageChange = (selectedPage) => {
-    currentPage = selectedPage.selected + 1;
-    dataQuery.refetch();
+    setCurrentPage(selectedPage.selected + 1);
+    refetchPandoraHistoryData();
   };
 
   const isMobile = useCheckMobileScreen(480);
@@ -193,7 +171,7 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
-          {dataQuery.isLoading || dataQuery.isFetching ? (
+          {isLoadingPandoraHistoryData || isRefetchingPandoraHistoryData ? (
             <Box mt="24px" w="100%" minH="800px">
               <CircularProgress
                 position="absolute"
