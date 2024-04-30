@@ -67,11 +67,12 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
     isRefetching: isRefetchingMyTicketList,
     prevPage: handlePrev,
     nextPage: handleNext,
-    currentPage
+    currentPage,
   } = useMyTicketList(currentAccount?.address);
 
   const nextPage = useCallback(() => {
-    handleNext();
+    const totalPages = Math.ceil(nftsData.length / 6);
+    if (currentPage <= totalPages) handleNext();
     refetchMyTicketList();
   });
 
@@ -136,22 +137,25 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                 gap="24px"
                 paddingX={"0px"}
               >
-                {isRefetchingMyTicketList ? (
-                  <Flex justifyContent={"center"} gap={"12px"}>
-                    <CircularProgress isIndeterminate color="#1beca6" />
-                    <Text className="pandora-modal-text-title" color="#FFA000">
-                      Loading ..........
-                    </Text>
-                  </Flex>
-                ) : nftsData?.length ? (
-                  <Flex justifyContent="space-between" alignItems={"center"}>
-                    <MdOutlineArrowBackIosNew
-                      size={"84px"}
-                      color="#1BECA6"
-                      onClick={previousPage}
-                      cursor={"pointer"}
-                    />
-                    {nftsData?.map((item) => (
+                <Flex justifyContent="space-between" alignItems={"center"}>
+                  <MdOutlineArrowBackIosNew
+                    size={"84px"}
+                    color="#1BECA6"
+                    onClick={previousPage}
+                    cursor={"pointer"}
+                  />
+                  {isRefetchingMyTicketList ? (
+                    <Flex justifyContent={"center"} gap={"12px"}>
+                      <CircularProgress isIndeterminate color="#1beca6" />
+                      <Text
+                        className="pandora-modal-text-title"
+                        color="#FFA000"
+                      >
+                        Loading ..........
+                      </Text>
+                    </Flex>
+                  ) : nftsData?.length ? (
+                    nftsData?.map((item) => (
                       <Box
                         display={"flex"}
                         justifyContent={"space-between"}
@@ -230,20 +234,20 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                           </Box>
                         </Box>
                       </Box>
-                    ))}
+                    ))
+                  ) : (
+                    <Text className="pandora-modal-text-title" color="#FFA000">
+                      You don't own any tickets
+                    </Text>
+                  )}
 
-                    <MdOutlineArrowForwardIos
-                      size={"84px"}
-                      color="#1BECA6"
-                      onClick={nextPage}
-                      cursor={"pointer"}
-                    />
-                  </Flex>
-                ) : (
-                  <Text className="pandora-modal-text-title" color="#FFA000">
-                    You don't own any tickets
-                  </Text>
-                )}
+                  <MdOutlineArrowForwardIos
+                    size={"84px"}
+                    color="#1BECA6"
+                    onClick={nextPage}
+                    cursor={"pointer"}
+                  />
+                </Flex>
               </Box>
             </Box>
           </ModalBody>

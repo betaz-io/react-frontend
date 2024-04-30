@@ -23,7 +23,6 @@ import {
   Grid,
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
-import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import useInterval from "hooks/useInterval";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
@@ -37,44 +36,26 @@ import { usePandoraTickets } from "hooks/usePandoraTickets";
 import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
 import { useTicket } from "contexts/useSelectTicket";
-import PandoraTicketsCard from "components/nftCard";
+import NFTCardDetail from "./NFTDetail";
 
-const tabData = [
-  {
-    label: "All tickets",
-  },
-  {
-    label: "Used tickets",
-  },
-  {
-    label: "Unused tickets",
-  },
-];
-
-const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
-  const dispatch = useDispatch();
-  const { currentAccount } = useSelector((s) => s.substrate);
-  const { ticketId, setTicketId } = useTicket();
-  const {
-    pandoraTicketsData,
-    totalPages,
-    isLoading: isLoadingTicketsData,
-    refetch: refetchTicketsData,
-    isRefetching: isRefetchingTicketsData,
-    prevPage: handlePrev,
-    nextPage: handleNext,
-    setCurrentPage,
-    currentPage,
-    currentTab,
-    setCurrentTab,
-  } = usePandoraTickets(currentAccount);
-
-  const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected + 1);
-    refetchTicketsData();
-  };
-
+const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
   const isMobile = useCheckMobileScreen(480);
+  const [currentTab, setCurrentTab] = useState(0);
+
+  const tabData = [
+    {
+      label: "Detail",
+      content: <NFTCardDetail item={item}/>,
+    },
+    {
+      label: "Owner history",
+      content: "comming soon",
+    },
+    {
+      label: "Tx history",
+      content: "comming soon",
+    },
+  ];
   return (
     <Modal onClose={onClose} size="lg" isOpen={isOpen}>
       <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
@@ -86,6 +67,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         }}
         position="relative"
       >
+        <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
         <Box
           className="lucky-number-circle-image"
           bgImage={PandoraBGCoin}
@@ -126,11 +108,10 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
         >
-          Your Tickets
+          My NFT
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
-        <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
           <Box
             // className="history-modal-tabs"
             display={"flex"}
@@ -159,56 +140,15 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
               );
             })}
           </Box>
-          <Box
-            mt={"24px"}
-            w="100%"
-            className="pandora-modal-container"
-            gap="24px"
-            paddingX={"20px"}
-          >
-            {isLoadingTicketsData || isRefetchingTicketsData ? (
-              <Flex justifyContent={"center"} gap={"12px"}>
-                <CircularProgress isIndeterminate color="#1beca6" />
-                <Text className="pandora-modal-text-title" color="#FFA000">
-                  Loading ..........
-                </Text>
-              </Flex>
-            ) : pandoraTicketsData?.length ? (
-              <SimpleGrid
-                columns={{ md: 3, lg: 4, xl: 5, "2xl": 7 }}
-                spacing="10px"
-                spacingY={"32px"}
-              >
-                {pandoraTicketsData?.map((item) => (
-                  <PandoraTicketsCard item={item} />
-                ))}
-              </SimpleGrid>
-            ) : (
-              <Text className="pandora-modal-text-title" color="#FFA000">
-                You don't own any tickets
-              </Text>
-            )}
+
+          <Box mt={"24px"} color={"white"}>
+            {tabData[currentTab].content}
           </Box>
         </ModalBody>
-        <ModalFooter className="history-table-footer-container">
-          <Box display="flex" gap="8px">
-            <ReactPaginate
-              pageCount={totalPages}
-              pageRangeDisplayed={3}
-              marginPagesDisplayed={1}
-              onPageChange={handlePageChange}
-              containerClassName={"pagination"}
-              activeClassName={"active"}
-              breakClassName={"ellipsis"}
-              breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
-            />
-          </Box>
-        </ModalFooter>
+        <ModalFooter className="history-table-footer-container"></ModalFooter>
       </ModalContent>
     </Modal>
   );
 };
 
-export default PandoraTicketsModal;
+export default NFTCardDetailModal;

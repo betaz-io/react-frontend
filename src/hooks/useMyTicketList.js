@@ -35,12 +35,6 @@ export function useMyTicketList(ownerAddress) {
     () => fetchCollectionList(ownerAddress, currentPage),
     { refetchOnWindowFocus: false }
   );
-  useEffect(() => {
-    if (data?.length === 0) {
-      toast(`Only ${currentPage - 1} pages can be displayed`);
-      setCurrentPage(currentPage - 1);
-    }
-  }, [data]);
 
   const nextPage = () => setCurrentPage(currentPage + 1);
 

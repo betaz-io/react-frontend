@@ -12,8 +12,8 @@ async function fetchPandoraTickets(currentAccount, currentPage, currentTab) {
   try {
     const options = {
       caller: currentAccount?.address,
-      limit: 10,
-      offset: 10 * (currentPage - 1),
+      limit: 20,
+      offset: 20 * (currentPage - 1),
       sort: -1,
     };
 
@@ -46,7 +46,7 @@ async function fetchPandoraTickets(currentAccount, currentPage, currentTab) {
       data = [...newData];
       total = newTotal;
     }
-    const totalpages = Math.ceil(total / 10);
+    const totalpages = Math.ceil(total / 20);
     return { data, totalpages };
   } catch (error) {
     console.log("error", error);

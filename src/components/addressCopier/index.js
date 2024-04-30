@@ -14,7 +14,13 @@ import { BiCopyAlt } from "react-icons/bi";
 import { truncateStr } from "utils";
 import { addressShortener, resolveDomain } from "utils";
 
-export const AddressCopier = ({ address, truncated = true, fontWeight, justifyContent }) => {
+export const AddressCopier = ({
+  address,
+  truncated = true,
+  number = 7,
+  fontWeight,
+  justifyContent,
+}) => {
   const handleCopy = (label, text) => {
     toast.success(`${label} copied!`);
     navigator.clipboard.writeText(text);
@@ -48,7 +54,7 @@ export const AddressCopier = ({ address, truncated = true, fontWeight, justifyCo
               }}
             >
               <Flex alignItems="center">
-                <Text mr="4px">{truncateStr(azeroID, 7)} </Text>
+                <Text mr="4px">{truncateStr(azeroID, number)} </Text>
                 <BiCopyAlt w="24px" h="21px" color="white" />
               </Flex>
             </MenuButton>
@@ -67,8 +73,8 @@ export const AddressCopier = ({ address, truncated = true, fontWeight, justifyCo
                   color: "#F7F7F8",
                   _hover: {
                     background: "#F7F7F8",
-                    color: "#122126"
-                  }
+                    color: "#122126",
+                  },
                 }}
                 onClick={() => handleCopy("Azero ID", azeroID)}
               >
@@ -80,8 +86,8 @@ export const AddressCopier = ({ address, truncated = true, fontWeight, justifyCo
                   color: "#F7F7F8",
                   _hover: {
                     background: "#F7F7F8",
-                    color: "#122126"
-                  }
+                    color: "#122126",
+                  },
                 }}
                 fontSize={"16px"}
                 onClick={() => handleCopy("Address", address)}
