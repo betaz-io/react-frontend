@@ -49,7 +49,7 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import BGModalBetHistory from "assets/img/BGModalBetHistory.png";
 import { usePandoraYourBetHistory } from "hooks/usePandoraYourBetHistory";
-
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 // let currentPage = 1;
 
 const wssUrl = process.env.REACT_APP_WSS_API || "ws://localhost:3010";
@@ -139,7 +139,7 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
           top={"50%"}
           transform={"translateY(-50%)"}
           zIndex={-2}
-          opacity={0.5}
+          opacity={0.3} 
         ></Box>
         <Image
           position="absolute"
@@ -401,8 +401,10 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
+              initialPage={currentPage - 1}
             />
           </Box>
         </ModalFooter>

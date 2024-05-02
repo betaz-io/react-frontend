@@ -26,10 +26,7 @@ import { BiLayer } from "react-icons/bi";
 import { GiTwoCoins } from "react-icons/gi";
 import { TbMoodSmileFilled } from "react-icons/tb";
 import { MdSwapVerticalCircle } from "react-icons/md";
-import {
-  RiCopperDiamondFill,
-  RiVipDiamondFill,
-} from "react-icons/ri";
+import { RiCopperDiamondFill, RiVipDiamondFill } from "react-icons/ri";
 import "./styles.css";
 import { AiFillStar } from "react-icons/ai";
 import { formatTableValue, formatTableValueMobile } from "./formatTable";
@@ -40,8 +37,7 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import { usePandoraBetHistory } from "hooks/usePandoraBetHistory";
 import { usePandoraRewardHistory } from "hooks/usePandoraRewardHistory";
-
-
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 // let currentPage = 1;
 
 const PandoraRewardHistoryModal = ({ isOpen, onClose }) => {
@@ -125,7 +121,7 @@ const PandoraRewardHistoryModal = ({ isOpen, onClose }) => {
           top={"50%"}
           transform={"translateY(-50%)"}
           zIndex={-2}
-          opacity={0.5}
+          opacity={0.3}
         ></Box>
         <Image
           position="absolute"
@@ -157,7 +153,8 @@ const PandoraRewardHistoryModal = ({ isOpen, onClose }) => {
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
-          {isLoadingPandoraRewardHistoryData || isRefetchingPandoraRewardHistoryData ? (
+          {isLoadingPandoraRewardHistoryData ||
+          isRefetchingPandoraRewardHistoryData ? (
             <Box mt="24px" w="100%" minH="800px">
               <CircularProgress
                 position="absolute"
@@ -376,8 +373,10 @@ const PandoraRewardHistoryModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
+              initialPage={currentPage - 1}
             />
           </Box>
         </ModalFooter>

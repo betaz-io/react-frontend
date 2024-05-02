@@ -34,6 +34,7 @@ import PandoraInput from "../components/Input";
 import { useModal } from "contexts/useModal";
 import { delay } from "utils";
 import { useWallet } from "contexts/useWallet";
+import { usePandoraRewardHistory } from "hooks/usePandoraRewardHistory";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -51,6 +52,10 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
     if (holdAmount) setHoldAmount(holdAmount);
     else setHoldAmount(0);
   };
+
+  const { refetch: refetchPandoraRewardHistoryData } = usePandoraRewardHistory(
+    currentAccount?.address
+  );
 
   const withdraw = async () => {
     setIsLoading(true);
@@ -79,6 +84,7 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
           dispatch(fetchUserBalance({ currentAccount }));
           dispatch(fetchBalance({ currentAccount }));
           getHoldAmount();
+          refetchPandoraRewardHistoryData();
         }
         setIsLoading(false);
       }

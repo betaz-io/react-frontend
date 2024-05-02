@@ -105,7 +105,7 @@ const NFTCardDetail = ({ item }) => {
                   fontStyle={"italic"}
                   fontWeight={500}
                   mt={"12px"}
-                  color={"#FFA000"}
+                  color={"white"}
                 >
                   {item?.isUsed == true ? "Used" : "Unused"}
                 </Text>
@@ -126,7 +126,7 @@ const NFTCardDetail = ({ item }) => {
                     fontStyle={"italic"}
                     fontWeight={500}
                     mt={"12px"}
-                    color={"#FFA000"}
+                    color={"#white"}
                   >
                     {item?.sessionId}
                   </Text>
@@ -148,7 +148,7 @@ const NFTCardDetail = ({ item }) => {
                     fontStyle={"italic"}
                     fontWeight={500}
                     mt={"12px"}
-                    color={"#FFA000"}
+                    color={"#white"}
                   >
                     {item?.betNumber}
                   </Text>
@@ -170,7 +170,7 @@ const NFTCardDetail = ({ item }) => {
                     fontStyle={"italic"}
                     fontWeight={500}
                     mt={"12px"}
-                    color={"#FFA000"}
+                    color={"#white"}
                   >
                     {item?.time}
                   </Text>

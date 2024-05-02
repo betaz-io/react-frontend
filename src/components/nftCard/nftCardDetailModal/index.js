@@ -80,7 +80,7 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           top={"50%"}
           transform={"translateY(-50%)"}
           zIndex={-2}
-          opacity={0.5}
+          opacity={0.3}
         ></Box>
         <Image
           position="absolute"

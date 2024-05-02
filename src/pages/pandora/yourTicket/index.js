@@ -38,6 +38,7 @@ import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
 import { useTicket } from "contexts/useSelectTicket";
 import PandoraTicketsCard from "components/nftCard";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 
 const tabData = [
   {
@@ -98,7 +99,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           top={"50%"}
           transform={"translateY(-50%)"}
           zIndex={-2}
-          opacity={0.5}
+          opacity={0.3}
         ></Box>
         <Image
           position="absolute"
@@ -130,7 +131,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
-        <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
+          <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
           <Box
             // className="history-modal-tabs"
             display={"flex"}
@@ -175,7 +176,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
               </Flex>
             ) : pandoraTicketsData?.length ? (
               <SimpleGrid
-                columns={{ md: 3, lg: 4, xl: 5, "2xl": 7 }}
+                columns={{ base: 1, md: 3, lg: 4, xl: 6 }}
                 spacing="10px"
                 spacingY={"32px"}
               >
@@ -201,8 +202,10 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
+              initialPage={currentPage - 1}
             />
           </Box>
         </ModalFooter>
