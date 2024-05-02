@@ -78,6 +78,7 @@ const PandoraNumber = () => {
             }}
             src={EffectIcon}
             className="pandora-effect-icon"
+            loading="lazy"
           />
           {sectionPresent.sessionId >= 1 && (
             <Text
@@ -136,6 +137,7 @@ const PandoraNumber = () => {
                 }}
                 src={EffectIcon}
                 className="pandora-effect-icon"
+                loading="lazy"
               />
               <Image
                 position="absolute"
@@ -146,6 +148,7 @@ const PandoraNumber = () => {
                 }}
                 src={EffectIcon}
                 className="pandora-effect-icon"
+                loading="lazy"
               />
               <Box w={"max-content"} mb={{ base: "30px" }} overflow="hidden">
                 <Box

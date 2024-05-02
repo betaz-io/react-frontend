@@ -70,7 +70,7 @@ const PandoraTicketsCard = ({ item }) => {
           overflow={"hidden"}
           position={"relative"}
         >
-          <Image src={PandoraItemBG} alt="" />
+          <Image src={PandoraItemBG} alt="Pandora-item-bg" loading="lazy"/>
           <Image
             src={PandoraItem}
             alt=""
