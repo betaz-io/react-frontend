@@ -49,6 +49,7 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import BGModalBetHistory from "assets/img/BGModalBetHistory.png";
 import { usePandoraBetHistory } from "hooks/usePandoraBetHistory";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 
 const tabData = [
   {
@@ -179,7 +180,7 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
           top={"50%"}
           transform={"translateY(-50%)"}
           zIndex={-2}
-          opacity={0.5}
+          opacity={0.3}
         ></Box>
         <Image
           position="absolute"
@@ -441,8 +442,10 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
+              initialPage={currentPage - 1}
             />
           </Box>
         </ModalFooter>

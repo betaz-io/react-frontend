@@ -124,6 +124,14 @@ tr td:first-child {
   min-width: 40px !important;
   color: white;
   border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.pagination li.disabled a{
+  display: none;
 }
 
 .pagination li.active a{

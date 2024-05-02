@@ -61,6 +61,7 @@ import UnstakeStakingPool from "components/stakingPool/UnstakeStakingPool";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import ReactPaginate from "react-paginate";
 import { useQuery } from "react-query";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 // import StakingPool from "../StakingPool";
 
 const tabData = [
@@ -497,8 +498,9 @@ const UnstakeModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
             />
           </Box>
         </ModalFooter>

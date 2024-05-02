@@ -50,6 +50,7 @@ import { getNextDayTime } from "utils";
 import { useMyTicketList } from "hooks/useMyTicketList";
 import { APICall } from "api/client";
 import { usePandoraYourBetHistory } from "hooks/usePandoraYourBetHistory";
+import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -64,13 +65,12 @@ const PandoraTicket = ({ visible, onClose }) => {
   const [maxBet, setMaxBet] = useState(100000);
   const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    refetch: refetchMyTicketList,
-  } = useMyTicketList(currentAccount?.address);
+  const { refetch: refetchMyTicketList } = useMyTicketList(
+    currentAccount?.address
+  );
 
-  const {
-    refetch: refetchPandoraHistoryData,
-  } = usePandoraYourBetHistory(currentAccount);
+  const { refetch: refetchPandoraHistoryData } =
+    usePandoraYourBetHistory(currentAccount);
 
   const {
     setModalPandoraWithdrawVisible,
@@ -200,7 +200,6 @@ const PandoraTicket = ({ visible, onClose }) => {
       );
       toast.dismiss(toastHandlePlay);
       if (played) {
-        await delay(3000);
         const fetchNft = toast.loading("Fetching Nft data ...");
         await APICall.askBeUpdateNftData({
           collection_address: pandora_psp34_contract.CONTRACT_ADDRESS,
@@ -209,6 +208,10 @@ const PandoraTicket = ({ visible, onClose }) => {
         await clientAPI("post", "/updateNFTQueue", {
           ticketId: ticketId,
         });
+        await delay(3000);
+        refetchPandoraHistoryData();
+        refetchMyTicketList();
+        dispatch(fetchTotalPlayer(sessionId));
         toast.dismiss(fetchNft);
         setIsLoading(false);
         toast.success("Playing sussesfully!");
@@ -223,8 +226,6 @@ const PandoraTicket = ({ visible, onClose }) => {
       return;
     }
 
-    refetchPandoraHistoryData();
-    refetchMyTicketList();
     setTicketId(0);
     setIsLoading(false);
   };

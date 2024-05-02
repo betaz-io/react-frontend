@@ -44,6 +44,7 @@ import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { useQuery } from "react-query";
 import useWebSocket from "react-use-websocket";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 
 const tabData = [
   {
@@ -495,8 +496,9 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
             />
           </Box>
         </ModalFooter>

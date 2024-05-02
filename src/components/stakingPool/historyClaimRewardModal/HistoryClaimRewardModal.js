@@ -37,6 +37,7 @@ import StakeStakingPool from "components/stakingPool/StakeStakingPool";
 import UnstakeStakingPool from "components/stakingPool/UnstakeStakingPool";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import ReactPaginate from "react-paginate";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 
 const ClaimRewardStakingModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -284,8 +285,9 @@ const ClaimRewardStakingModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
             />
           </Box>
         </ModalFooter>
