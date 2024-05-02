@@ -141,6 +141,7 @@ const PandoraMode = () => {
                   className="pandora-effect-icon"
                   transform={"rotate(-45deg)"}
                   filter={"blur(3px) brightness(150%)"}
+                  loading="lazy"
                 />
                 <Image
                   position="absolute"
@@ -153,6 +154,7 @@ const PandoraMode = () => {
                   className="pandora-effect-icon"
                   transform={"rotate(-45deg)"}
                   filter={"blur(3px) brightness(150%)"}
+                  loading="lazy"
                 />
                 <Image
                   position="absolute"
@@ -165,6 +167,7 @@ const PandoraMode = () => {
                   className="pandora-effect-icon"
                   transform={"rotate(-45deg)"}
                   filter={"blur(3px) brightness(150%)"}
+                  loading="lazy"
                 />
               </Box>
             </Box>

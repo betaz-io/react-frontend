@@ -152,9 +152,10 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
               >
                 <Image
                   src={PandoraCloseButton}
-                  alt=""
+                  alt="Pandora-close-btn"
                   verticalAlign="middle"
                   maxW="100%"
+                  loading="lazy"
                 />
               </Box>
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>

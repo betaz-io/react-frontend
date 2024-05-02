@@ -53,7 +53,7 @@ const NFTCardDetail = ({ item }) => {
             position={"relative"}
             border={"1px solid #1BE8AD"}
           >
-            <Image src={PandoraItemBG} alt="" />
+            <Image src={PandoraItemBG} alt="pandora-item-bg" loading="lazy"/>
             <Image
               src={PandoraItem}
               alt=""

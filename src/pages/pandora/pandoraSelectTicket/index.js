@@ -126,6 +126,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                   alt=""
                   verticalAlign="middle"
                   maxW="100%"
+                  loading="lazy"
                 />
               </Box>
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
@@ -194,6 +195,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             transform={"rotate(-90deg)"}
                             zIndex={4}
                             opacity={item?.nftId === ticketId ? 1 : 0}
+                            loading="lazy"
                           />
                           <Image
                             src={EffectIcon}
@@ -204,6 +206,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             w="200px"
                             zIndex={4}
                             opacity={item?.nftId === ticketId ? 1 : 0}
+                            loading="lazy"
                           />
                           <Box
                             w={"100%"}
@@ -211,15 +214,16 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             overflow={"hidden"}
                             position={"relative"}
                           >
-                            <Image src={PandoraItemBG} alt="" />
+                            <Image src={PandoraItemBG} alt="pandora-item-bg" loading="lazy"/>
                             <Image
                               src={PandoraItem}
-                              alt=""
+                              alt="pandora-item-bg"
                               position={"absolute"}
                               top={"50%"}
                               left={"50%"}
                               transform={"translate(-50%, -50%)"}
                               w={"90%"}
+                              loading="lazy"
                             />
                           </Box>
                           <Box>

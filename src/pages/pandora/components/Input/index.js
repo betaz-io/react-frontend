@@ -51,6 +51,7 @@ function PandoraInput(props) {
         top="-36px"
         left="0"
         w="240px"
+        loading="lazy"
       />
       <Image
         opacity={topRightIcon ? 1 : 0}
@@ -60,6 +61,7 @@ function PandoraInput(props) {
         top="-36px"
         right="0px"
         w="240px"
+        loading="lazy"
       />
       <Image
         opacity={bottomLeftIcon ? 1 : 0}
@@ -69,6 +71,7 @@ function PandoraInput(props) {
         bottom="-36px"
         left="0px"
         w="240px"
+        loading="lazy"
       />
       <Image
         opacity={bottomRightIcon ? 1 : 0}
@@ -78,6 +81,7 @@ function PandoraInput(props) {
         bottom="-36px"
         right="0px"
         w="240px"
+        loading="lazy"
       />
       {textXl ? (
         <Text className="pandora-modal-text-title" color={textXlColor}>

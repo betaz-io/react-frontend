@@ -92,6 +92,7 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           src={EffectIcon}
           className="pandora-effect-icon"
           transform={"rotate(-90deg)"}
+          loading="lazy"
         />
         <Image
           position="absolute"
@@ -102,6 +103,7 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           }}
           src={EffectIcon}
           className="pandora-effect-icon"
+          loading="lazy"
         />
         <ModalHeader
           className="history-modal-content-title linear-text"
