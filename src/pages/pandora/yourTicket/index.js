@@ -236,6 +236,8 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
                 columns={{ base: 1, md: 3, lg: 4, xl: 6 }}
                 spacing="10px"
                 spacingY={"32px"}
+                overflowY={"auto"}
+                maxH={"600px"}
               >
                 {pandoraTicketsData?.map((item) => (
                   <PandoraTicketsCard item={item} />
