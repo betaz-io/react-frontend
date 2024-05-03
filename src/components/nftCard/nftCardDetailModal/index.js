@@ -37,6 +37,8 @@ import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
 import { useTicket } from "contexts/useSelectTicket";
 import NFTCardDetail from "./NFTDetail";
+import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
+import PandoraListCoin from "assets/img/PandoraListCoin.png";
 
 const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
   const isMobile = useCheckMobileScreen(480);
@@ -44,15 +46,15 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
 
   const tabData = [
     {
-      label: "Detail",
-      content: <NFTCardDetail item={item}/>,
+      label: "DETAIL",
+      content: <NFTCardDetail item={item} />,
     },
     {
-      label: "Owner history",
+      label: "OWNER HISTORY",
       content: "comming soon",
     },
     {
-      label: "Tx history",
+      label: "TX HISTORY",
       content: "comming soon",
     },
   ];
@@ -66,6 +68,8 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           sm: "calc(100vw - 120px) !important",
         }}
         position="relative"
+        border={"none"}
+        borderRadius={"12px"}
       >
         <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
         <Box
@@ -82,7 +86,20 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           zIndex={-2}
           opacity={0.3}
         ></Box>
-        <Image
+        <Box
+          className="lucky-number-circle-image"
+          bgImage={PandoraListCoin}
+          bgRepeat="no-repeat"
+          bgPosition="center"
+          maxW={{ base: "280px", sm: "760px" }}
+          w={{ base: "280px", sm: "760px" }}
+          position="absolute"
+          backdropBlur={"10px"}
+          right={"-40px"}
+          top={"210px"}
+          zIndex={2}
+        ></Box>
+        {/* <Image
           position="absolute"
           w="240px"
           sx={{
@@ -104,16 +121,14 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           src={EffectIcon}
           className="pandora-effect-icon"
           loading="lazy"
-        />
+        /> */}
         <ModalHeader
-          className="history-modal-content-title linear-text"
+          className="history-modal-content-title"
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
+          background={"linear-gradient(90deg, #1BECA6 0%, #1BBEF5 100%)"}
+          borderTopRadius={"12px"}
         >
-          My NFT
-        </ModalHeader>
-        <ModalCloseButton color="#FFF" />
-        <ModalBody>
           <Box
             // className="history-modal-tabs"
             display={"flex"}
@@ -124,17 +139,15 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
               return (
                 <Box
                   key={`tab-${index}`}
-                  className={`history-modal-tab ${
-                    isActive && "history-modal-tab-active"
-                  }`}
                   onClick={() => setCurrentTab(index)}
+                  minW={{ base: "240px" }}
+                  cursor={"pointer"}
                 >
                   <Text
                     fontSize={{ base: "16px", sm: "20px" }}
-                    fontWeight={{ base: "500", sm: "700" }}
-                    className={`history-modal-label ${
-                      isActive && "history-modal-label-active"
-                    }`}
+                    fontWeight={{ base: "500", sm: isActive && "700" }}
+                    className={` ${isActive && ""}`}
+                    textShadow={isActive && "3px 3px 6px #000000"}
                   >
                     {e?.label}
                   </Text>
@@ -142,12 +155,36 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
               );
             })}
           </Box>
-
-          <Box mt={"24px"} color={"white"}>
+        </ModalHeader>
+        <ModalBody paddingTop={"0px"} paddingX={"12px"} paddingBottom={"12px"}>
+          <Box
+            className="pandora-btn-close"
+            position="absolute"
+            top="0px"
+            right="0px"
+            zIndex={3}
+            onClick={onClose}
+          >
+            <Image
+              src={PandoraCloseButton}
+              alt="Pandora-close-btn"
+              verticalAlign="middle"
+              maxW="100%"
+              loading="lazy"
+            />
+          </Box>
+          <Box
+            padding={"24px"}
+            color={"white"}
+            borderLeft={"1px solid #1BECA6"}
+            borderRight={"1px solid #1BECA6"}
+            borderBottom={"1px solid #1BECA6"}
+            borderBottomLeftRadius={"12px"}
+            borderBottomRightRadius={"12px"}
+          >
             {tabData[currentTab].content}
           </Box>
         </ModalBody>
-        <ModalFooter className="history-table-footer-container"></ModalFooter>
       </ModalContent>
     </Modal>
   );
