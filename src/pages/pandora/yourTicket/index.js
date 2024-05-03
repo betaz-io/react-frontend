@@ -33,22 +33,27 @@ import { useQuery } from "react-query";
 import useWebSocket from "react-use-websocket";
 import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
+import PandoraDetailBg from "assets/img/PandoraDetailBg.png";
 import { usePandoraTickets } from "hooks/usePandoraTickets";
 import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
 import { useTicket } from "contexts/useSelectTicket";
 import PandoraTicketsCard from "components/nftCard";
-import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
 
 const tabData = [
   {
-    label: "All tickets",
+    label: "ALL",
   },
   {
-    label: "Used tickets",
+    label: "USED",
   },
   {
-    label: "Unused tickets",
+    label: "UNUSED",
   },
 ];
 
@@ -80,13 +85,22 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
     <Modal onClose={onClose} size="lg" isOpen={isOpen}>
       <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
       <ModalContent
-        className="pandora-history-modal-content-container"
+        // className="pandora-history-modal-content-container"
+        backgroundColor={"transparent !important"}
         maxW={{
           base: "calc(100vw) !important",
-          sm: "calc(100vw - 120px) !important",
+          sm: "calc(100vw - 200px) !important",
         }}
         position="relative"
       >
+        <Image
+          src={PandoraDetailBg}
+          alt=""
+          position={"absolute"}
+          zIndex={"-1"}
+          w={"100%"}
+          top={"64px"}
+        ></Image>
         <Box
           className="lucky-number-circle-image"
           bgImage={PandoraBGCoin}
@@ -106,14 +120,14 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           w="240px"
           sx={{
             bottom: "200px",
-            left: "-121px",
+            left: "-112px",
           }}
           src={EffectIcon}
           className="pandora-effect-icon"
           transform={"rotate(-90deg)"}
           loading="lazy"
         />
-        <Image
+        {/* <Image
           position="absolute"
           w="240px"
           sx={{
@@ -123,38 +137,41 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           src={EffectIcon}
           className="pandora-effect-icon"
           loading="lazy"
-        />
+        /> */}
+        <Text
+          className="pandora-modal-select-ticket-text-title"
+          mb={"16px"}
+          textAlign={"center"}
+        >
+          YOUR TICKETS
+        </Text>
         <ModalHeader
-          className="history-modal-content-title linear-text"
+          className="history-modal-content-title"
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
         >
-          Your Tickets
-        </ModalHeader>
-        <ModalCloseButton color="#FFF" />
-        <ModalBody>
-          <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
           <Box
             // className="history-modal-tabs"
             display={"flex"}
-            gap={"16px"}
+            margin={"0 auto"}
+            w={"max-content"}
           >
             {tabData.map((e, index) => {
               const isActive = currentTab === index;
+              const lastIndex = tabData.length - 1 - index;
               return (
                 <Box
                   key={`tab-${index}`}
-                  className={`history-modal-tab ${
-                    isActive && "history-modal-tab-active"
-                  }`}
                   onClick={() => setCurrentTab(index)}
+                  cursor={"pointer"}
+                  minW={"200px"}
+                  borderRight={lastIndex && "4px solid #FFA000"}
                 >
                   <Text
                     fontSize={{ base: "16px", sm: "20px" }}
                     fontWeight={{ base: "500", sm: "700" }}
-                    className={`history-modal-label ${
-                      isActive && "history-modal-label-active"
-                    }`}
+                    color={"#0076CE"}
+                    className={`${isActive && "linear-text"}`}
                   >
                     {e?.label}
                   </Text>
@@ -162,12 +179,50 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
               );
             })}
           </Box>
+        </ModalHeader>
+        {/* <ModalCloseButton color="#FFF" /> */}
+        <ModalBody>
+          {/* <Box w="100%" h="100%" className="pandora-modal-overlay"></Box> */}
           <Box
-            mt={"24px"}
+            className="pandora-btn-close"
+            position="absolute"
+            top="116px"
+            right="8px"
+            zIndex={3}
+            onClick={onClose}
+          >
+            <Image
+              src={PandoraCloseButton}
+              alt="Pandora-close-btn"
+              verticalAlign="middle"
+              maxW="100%"
+              loading="lazy"
+            />
+          </Box>
+
+          <Box
+            className="pandora-btn-close"
+            position="absolute"
+            top="70px"
+            left="82%"
+            zIndex={3}
+            onClick={onClose}
+          >
+            <Text
+              className="pandora-modal-select-ticket-text-title"
+              mb={"16px"}
+              textAlign={"center"}
+              fontSize={"24px"}
+            >
+              TOTAL: {pandoraTicketsData?.length}
+            </Text>
+          </Box>
+          <Box
             w="100%"
             className="pandora-modal-container"
             gap="24px"
             paddingX={"20px"}
+            border={"none"}
           >
             {isLoadingTicketsData || isRefetchingTicketsData ? (
               <Flex justifyContent={"center"} gap={"12px"}>
@@ -193,7 +248,10 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
             )}
           </Box>
         </ModalBody>
-        <ModalFooter className="history-table-footer-container">
+        <ModalFooter
+          className="history-table-footer-container"
+          position={"relative"}
+        >
           <Box display="flex" gap="8px">
             <ReactPaginate
               pageCount={totalPages}
