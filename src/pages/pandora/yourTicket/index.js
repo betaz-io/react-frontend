@@ -119,7 +119,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           position="absolute"
           w="240px"
           sx={{
-            bottom: "200px",
+            bottom: "0px",
             left: "-112px",
           }}
           src={EffectIcon}
