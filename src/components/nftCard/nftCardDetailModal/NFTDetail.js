@@ -188,7 +188,7 @@ const NFTCardDetail = ({ item }) => {
                     opacity={0.6}
                   ></Box>
                   <Text fontSize={"16px"} fontWeight={500} color={"#A8A8A8"}>
-                    Session
+                    Bet Session
                   </Text>
                   <Text
                     fontSize={"20px"}
@@ -218,7 +218,7 @@ const NFTCardDetail = ({ item }) => {
                     opacity={0.6}
                   ></Box>
                   <Text fontSize={"16px"} fontWeight={500} color={"#A8A8A8"}>
-                    Bet number
+                    Bet Number
                   </Text>
                   <Text
                     fontSize={"20px"}

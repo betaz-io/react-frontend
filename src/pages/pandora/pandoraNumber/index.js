@@ -86,8 +86,9 @@ const PandoraNumber = () => {
               fontSize={{ base: "32px" }}
               fontStyle={{ base: "normal" }}
               fontWeight={{ base: "700" }}
+              textTransform={"uppercase"}
             >
-              Results of Session #{sectionPresent.sessionId}
+              Results of session #{sectionPresent.sessionId}
             </Text>
           )}
         </Box>
@@ -173,7 +174,7 @@ const PandoraNumber = () => {
                     textAlign={"center"}
                     textShadow={"3px 3px 6px #000000"}
                   >
-                    Pandora number
+                    Pandora Number
                   </Text>
                   <Text
                     className="pandora-number-text"

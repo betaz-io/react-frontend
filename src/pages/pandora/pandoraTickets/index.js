@@ -302,7 +302,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                 fontWeight="500"
                 textAlign="center"
               >
-                Session #{sessionId} Finisher in:
+                Session #{sessionId} finisher in:
               </Text>
 
               <Box minW={{ base: "90%" }} mx="auto">

@@ -208,7 +208,7 @@ const PandoraMode = () => {
                 fontSize={"18px"}
                 fontWeight={"600"}
               >
-                Pandora pool
+                Pandora Pool
               </Text>
               <Text
                 color={"white !important"}
