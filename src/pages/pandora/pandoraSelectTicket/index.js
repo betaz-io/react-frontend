@@ -45,6 +45,7 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
+  MdOutlineClear
 } from "react-icons/md";
 import { useTicket } from "contexts/useSelectTicket";
 import { useMyTicketList } from "hooks/useMyTicketList";

@@ -53,6 +53,7 @@ import { usePandoraYourBetHistory } from "hooks/usePandoraYourBetHistory";
 import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
 import { getNextHourTime } from "utils";
 import ClearIcon from "assets/img/broom.png";
+import { MdOutlineClear } from "react-icons/md";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -281,14 +282,12 @@ const PandoraTicket = ({ visible, onClose }) => {
                     textXlColor={"white"}
                     onClick={handleOpenModalSelectTicket}
                   />
-                  <Button h={"72px"} onClick={() => setTicketId(0)} paddingX={"8px"}>
-                    <Image
-                      src={ClearIcon}
-                      alt=""
-                      maxW={"100%"}
-                      verticalAlign={"middle"}
-                      w={"54px"}
-                    />
+                  <Button
+                    h={"72px"}
+                    onClick={() => setTicketId(0)}
+                    paddingX={"8px"}
+                  >
+                    <MdOutlineClear size={"54px"} color="#C62828" />
                   </Button>
                 </Box>
               </Box>
