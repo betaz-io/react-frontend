@@ -41,6 +41,7 @@ function PandoraInput(props) {
       backgroundColor="#122126"
       onClick={onClick}
       cursor={"pointer"}
+      w={"100%"}
     >
       {text && <Text className="pandora-title-input">{text}</Text>}
       <Image

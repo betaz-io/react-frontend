@@ -51,6 +51,8 @@ import { useMyTicketList } from "hooks/useMyTicketList";
 import { APICall } from "api/client";
 import { usePandoraYourBetHistory } from "hooks/usePandoraYourBetHistory";
 import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
+import { getNextHourTime } from "utils";
+import ClearIcon from "assets/img/broom.png";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -273,12 +275,24 @@ const PandoraTicket = ({ visible, onClose }) => {
                 >
                   YOUR TICKET SELECTED
                 </Text>
-                <PandoraInput
-                  textXl={ticketId ? ticketId : "----------"}
-                  textXlColor={"white"}
-                />
+                <Box display={"flex"} gap={"12px"}>
+                  <PandoraInput
+                    textXl={ticketId ? ticketId : "----------"}
+                    textXlColor={"white"}
+                    onClick={handleOpenModalSelectTicket}
+                  />
+                  <Button h={"72px"} onClick={() => setTicketId(0)} paddingX={"8px"}>
+                    <Image
+                      src={ClearIcon}
+                      alt=""
+                      maxW={"100%"}
+                      verticalAlign={"middle"}
+                      w={"54px"}
+                    />
+                  </Button>
+                </Box>
               </Box>
-              <Box>
+              <Box display={"flex"} gap={"12px"}>
                 {/* <Text
                   color={"#FFA000"}
                   fontWeight={"500"}
@@ -306,7 +320,7 @@ const PandoraTicket = ({ visible, onClose }) => {
               </Text>
 
               <Box minW={{ base: "90%" }} mx="auto">
-                <PandoraCountDownSelectTicket date={getNextDayTime()} />
+                <PandoraCountDownSelectTicket date={getNextHourTime(4)} />
               </Box>
               <Flex gap="24px">
                 <Button

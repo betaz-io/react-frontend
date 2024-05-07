@@ -299,6 +299,33 @@ export const getNextDayTime = (nextDay = 6) => {
   return currentDate.getTime();
 };
 
+export const getNextHourTime = (hours = 4) => {
+  let currentDate = new Date();
+  let start = currentDate.getHours();
+  let startHour = currentDate.getHours();
+
+  if (start > 0 && start < 4) {
+    startHour = 0;
+  } else if (start > 4 && start < 8) {
+    startHour = 4;
+  } else if (start > 8 && start < 12) {
+    startHour = 8;
+  } else if (start > 12 && start < 16) {
+    startHour = 12;
+  } else if (start > 16 && start < 20) {
+    startHour = 16;
+  } else if (start > 20 && start < 24) {
+    startHour = 20;
+  }
+
+  currentDate.setHours(startHour + hours);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
+
+  return currentDate.getTime();
+};
+
 export const getStartAndEndOfWeek = () => {
   let currentDate = new Date();
 

@@ -23,16 +23,9 @@ const PandoraNumber = () => {
   const { sessionId } = useSelector((s) => s.pandoraNft);
   const { api } = useWallet();
   const [winNumber, setWinNumber] = useState(0);
-  let endTimeNumber = convertTimeStampToNumber(getNextDayTime());
-  const weeks = getStartAndEndOfWeek();
-  const luckyNumber = 806542;
+  const weeks = getStartAndEndOfWeek(7);
   const sectionPresent = {
     sessionId: +sessionId - 1,
-    startDate: weeks.startOfWeek,
-    endDate: weeks.endOfWeek,
-  };
-  const sectionBefor = {
-    sessionId: Number(sessionId),
     startDate: weeks.startOfWeek,
     endDate: weeks.endOfWeek,
   };

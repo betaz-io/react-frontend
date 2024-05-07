@@ -180,10 +180,8 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                           onClick={() => {
                             if (item?.nftId !== ticketId)
                               setTicketId(item?.nftId);
-                            else {
-                              setTicketId(0);
-                            }
                           }}
+                          onDoubleClick={onClose}
                         >
                           <Image
                             src={EffectIcon}
@@ -214,7 +212,11 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             overflow={"hidden"}
                             position={"relative"}
                           >
-                            <Image src={PandoraItemBG} alt="pandora-item-bg" loading="lazy"/>
+                            <Image
+                              src={PandoraItemBG}
+                              alt="pandora-item-bg"
+                              loading="lazy"
+                            />
                             <Image
                               src={PandoraItem}
                               alt="pandora-item-bg"
