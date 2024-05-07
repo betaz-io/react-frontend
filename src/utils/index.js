@@ -352,3 +352,13 @@ export const getStartAndEndOfWeek = () => {
     endOfWeek: formattedEndOfWeek,
   };
 };
+
+export const convertToFixedLengthNumberString = (number, length) => {
+  let numberString = String(number);
+  
+  const zerosToAdd = Math.max(0, length - numberString.length);
+  
+  const fixedLengthNumberString = "0".repeat(zerosToAdd) + numberString;
+  
+  return fixedLengthNumberString;
+};

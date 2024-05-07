@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { execContractQuery } from "utils/contracts";
 import pandora_pool_contract from "utils/contracts/pandora_pool";
 import { useWallet } from "contexts/useWallet";
+import { convertToFixedLengthNumberString } from "utils";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -44,6 +45,7 @@ const PandoraNumber = () => {
       setWinNumber(sessionInfo?.toHuman().Ok?.randomNumber);
   };
 
+  console.log({ winNumber });
   useEffect(() => {
     if (api && sessionId) getWinNumber();
   }, [api, sessionId]);
@@ -173,7 +175,12 @@ const PandoraNumber = () => {
                     className="pandora-number-text"
                     fontSize={{ base: "32px", sm: "32px" }}
                   >
-                    {winNumber === 0 ? "--" : winNumber}
+                    {winNumber === 0
+                      ? "--"
+                      : convertToFixedLengthNumberString(
+                          Number(winNumber?.replaceAll(",", "")),
+                          6
+                        )}
                   </Text>
                 </Box>
               </Box>

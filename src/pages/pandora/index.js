@@ -52,6 +52,7 @@ import { fetchPandoraHoldAmountByPlayer } from "store/slices/pandoraNftSlice";
 import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
 import PandoraRewardHistoryModal from "./pandoraRewardHistory";
 import PandoraTicketsModal from "./yourTicket";
+import { fetchPandoraPoolAmount } from "store/slices/pandoraNftSlice";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -61,7 +62,7 @@ const PandoraMode = () => {
   const [holdAmountPlayer, setHoleAmountPlayer] = useState(0);
 
   const { currentAccount, poolBalance } = useSelector((s) => s.substrate);
-  const { sessionId, holdAmount, totalPlayers } = useSelector(
+  const { sessionId, holdAmount, totalPlayers, pandoraPoolAmount } = useSelector(
     (s) => s.pandoraNft
   );
 
@@ -70,8 +71,10 @@ const PandoraMode = () => {
   }, [sessionId]);
 
   useEffect(() => {
-    if (api && currentAccount)
+    if (api && currentAccount) {
       dispatch(fetchPandoraHoldAmountByPlayer(currentAccount));
+      dispatch(fetchPandoraPoolAmount());
+    }
   }, [currentAccount, api]);
 
   const {
@@ -223,7 +226,7 @@ const PandoraMode = () => {
                   fontSize={"18px"}
                   fontWeight={"600"}
                 >
-                  {poolBalance?.pandora}
+                  {pandoraPoolAmount}
                 </Text>
                 <AzIcon size={{ base: "16px" }} padding={{ base: "5px" }} />
               </Box>

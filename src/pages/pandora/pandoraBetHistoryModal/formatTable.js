@@ -2,14 +2,19 @@ import { Box, Text } from "@chakra-ui/react";
 import { AddressCopierMobile } from "components/addressCopier";
 import { AddressCopier } from "components/addressCopier";
 import { AppIcon, AzeroIcon } from "components/icons";
+import { isAddressValid } from "utils";
 import { formatNumDynDecimal, formatTokenBalance } from "utils";
 
 export const formatTableValue = (value, key) => {
   switch (key) {
     case "playerWin":
-      return <AddressCopier address={value} justifyContent="center"/>;
+      return isAddressValid(value) ? (
+        <AddressCopier address={value} justifyContent="center" />
+      ) : (
+        <Text textAlign="center">{value}</Text>
+      );
     case "chainlinkRequestId":
-      return <AddressCopier address={value} justifyContent="center"/>;
+      return <AddressCopier address={value} justifyContent="center" />;
     case "rewardAmount":
       return (
         <Box

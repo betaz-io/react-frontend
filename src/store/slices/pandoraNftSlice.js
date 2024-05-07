@@ -4,6 +4,8 @@ import { clientAPI } from "api/client";
 import { execContractQuery } from "utils/contracts";
 import { execContractQuerybyMetadata } from "utils/contracts";
 import pandora_pool_contract from "utils/contracts/pandora_pool";
+import betaz_core_contract from "utils/contracts/betaz_core";
+import { formatNumDynDecimal } from "utils";
 
 // import { formatNumDynDecimal, formatQueryResultToNumber } from "utils";
 // import { execContractQuerybyMetadata } from "utils/contracts";
@@ -15,6 +17,7 @@ const initialState = {
   sessionId: 0,
   holdAmount: 0,
   totalPlayers: 0,
+  pandoraPoolAmount: 0,
   sessionInfo: null,
   nftsData: [],
   totalPages: 0,
@@ -55,11 +58,17 @@ export const pandoraNftSlice = createSlice({
     builder.addCase(fetchPandoraSession.fulfilled, (state, action) => {
       state.sessionId = action.payload.sessionId;
     });
-    builder.addCase(fetchPandoraHoldAmountByPlayer.fulfilled, (state, action) => {
-      state.holdAmount = action.payload.holdAmount;
-    });
+    builder.addCase(
+      fetchPandoraHoldAmountByPlayer.fulfilled,
+      (state, action) => {
+        state.holdAmount = action.payload.holdAmount;
+      }
+    );
     builder.addCase(fetchTotalPlayer.fulfilled, (state, action) => {
       state.totalPlayers = action.payload.totalPlayers;
+    });
+    builder.addCase(fetchPandoraPoolAmount.fulfilled, (state, action) => {
+      state.pandoraPoolAmount = action.payload.pandoraPoolAmount;
     });
   },
 });
@@ -103,8 +112,10 @@ export const fetchPandoraHoldAmountByPlayer = createAsyncThunk(
       currentAccount?.address
     );
 
-    let holdAmount = Number(amount?.toHuman().Ok?.replaceAll(",", "") / 10 ** 12);
-    return { holdAmount };
+    let pandoraPoolAmount = Number(
+      amount?.toHuman().Ok?.replaceAll(",", "") / 10 ** 12
+    );
+    return { pandoraPoolAmount };
   }
 );
 
@@ -122,5 +133,32 @@ export const fetchTotalPlayer = createAsyncThunk(
 
     let totalPlayers = Number(total?.toHuman().Ok);
     return { totalPlayers };
+  }
+);
+
+export const fetchPandoraPoolAmount = createAsyncThunk(
+  "substrate/fetchPandoraPoolAmount",
+  async () => {
+    const [amountWin, amountPool] = await Promise.all([
+      execContractQuery(
+        defaultCaller,
+        pandora_pool_contract.CONTRACT_ABI,
+        pandora_pool_contract.CONTRACT_ADDRESS,
+        0,
+        "pandoraPoolTraits::getTotalWinAmount"
+      ),
+      execContractQuerybyMetadata(
+        defaultCaller,
+        betaz_core_contract.CONTRACT_ABI,
+        betaz_core_contract.CONTRACT_ADDRESS,
+        0,
+        "betA0CoreTrait::getPandoraPoolAmount"
+      ),
+    ]);
+
+    const amount1 = Number(amountWin?.toHuman()?.Ok?.replaceAll(",", ""));
+    const amount2 = Number(amountPool?.toHuman()?.Ok?.replaceAll(",", ""));
+    let pandoraPoolAmount = formatNumDynDecimal((amount1 + amount2) / 10 ** 12);
+    return { pandoraPoolAmount };
   }
 );
