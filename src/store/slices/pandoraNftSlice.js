@@ -112,10 +112,10 @@ export const fetchPandoraHoldAmountByPlayer = createAsyncThunk(
       currentAccount?.address
     );
 
-    let pandoraPoolAmount = Number(
+    let holdAmount = Number(
       amount?.toHuman().Ok?.replaceAll(",", "") / 10 ** 12
     );
-    return { pandoraPoolAmount };
+    return { holdAmount };
   }
 );
 
