@@ -116,6 +116,7 @@ const PandoraTicket = ({ visible, onClose }) => {
       }
     }
     if (value === "") setBetNumberVal("0000000");
+    if (Number(value) >= Number(maxBet)) setBetNumberVal(Number(maxBet));
   });
 
   const loadMaxBet = async () => {
