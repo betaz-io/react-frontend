@@ -54,6 +54,7 @@ import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
 import { getNextHourTime } from "utils";
 import ClearIcon from "assets/img/broom.png";
 import { MdOutlineClear } from "react-icons/md";
+import { convertToFixedLengthNumberString } from "utils";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -64,7 +65,7 @@ const PandoraTicket = ({ visible, onClose }) => {
   const { sessionId } = useSelector((s) => s.pandoraNft);
   const { api } = useWallet();
   const { ticketId, setTicketId } = useTicket();
-  const [betNumberVal, setBetNumberVal] = useState(0);
+  const [betNumberVal, setBetNumberVal] = useState("000000");
   const [maxBet, setMaxBet] = useState(100000);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -87,18 +88,34 @@ const PandoraTicket = ({ visible, onClose }) => {
 
   const onChangeBetNumber = useCallback((e) => {
     const { value } = e.target;
-    const reg = /^\d*\.?\d*$/;
-    let betValue = 0;
-    if ((!isNaN(value) && reg.test(value)) || value === "") {
-      betValue = parseFloat(value);
-      if (betValue < 0) betValue = 1;
-      if (betValue > Number(maxBet)) {
-        toast.error("Max Bet is " + Number(maxBet));
-        setBetNumberVal(Number(maxBet));
+    // const reg = /^\d{0,6}$/;
+    // let betValue = 0;
+    // if ((!isNaN(value) && reg.test(value)) || value === "") {
+    //   betValue = parseFloat(value);
+    //   if (betValue < 0) betValue = 1;
+    //   if (betValue > Number(maxBet)) {
+    //     toast.error("Max Bet is " + Number(maxBet));
+    //     setBetNumberVal(Number(maxBet));
+    //   } else {
+    //     setBetNumberVal(value);
+    //   }
+    // } else setBetNumberVal("000000");
+    // if (value === "") setBetNumberVal(maxBet);
+    if (!isNaN(value)) {
+      if (value.length <= 6) {
+        const truncatedInput = value.slice(0, 6);
+        const convertNumber = convertToFixedLengthNumberString(
+          truncatedInput,
+          6
+        );
+        setBetNumberVal(convertNumber);
+      } else if (Number(value) > 1000000) {
+        setBetNumberVal(value.slice(0, 6));
       } else {
-        setBetNumberVal(value);
+        setBetNumberVal(value.slice(-6));
       }
     }
+    if (value === "") setBetNumberVal("0000000");
   });
 
   const loadMaxBet = async () => {
@@ -141,6 +158,7 @@ const PandoraTicket = ({ visible, onClose }) => {
     }
 
     setIsLoading(true);
+    const betNumber = Number(betNumberVal);
     let owner = await execContractQuery(
       defaultCaller,
       pandora_psp34_contract.CONTRACT_ABI,
@@ -196,7 +214,7 @@ const PandoraTicket = ({ visible, onClose }) => {
         0,
         "pandoraPoolTraits::play",
         sessionId,
-        betNumberVal,
+        betNumber,
         {
           u64: ticketId,
         }
@@ -286,8 +304,13 @@ const PandoraTicket = ({ visible, onClose }) => {
                     h={"72px"}
                     onClick={() => setTicketId(0)}
                     paddingX={"8px"}
+                    display={ticketId ? "block" : "none"}
                   >
-                    <MdOutlineClear size={"54px"} color="#C62828" />
+                    <MdOutlineClear
+                      size={"54px"}
+                      color="#C62828"
+                      style={{ marginRight: "8px" }}
+                    />
                   </Button>
                 </Box>
               </Box>
@@ -306,6 +329,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                   value={betNumberVal}
                   topRightIcon={true}
                   bottomLeftIcon={true}
+                  // maxLength={6}
                 />
               </Box>
               <Text

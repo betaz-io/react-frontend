@@ -45,7 +45,6 @@ const PandoraNumber = () => {
       setWinNumber(sessionInfo?.toHuman().Ok?.randomNumber);
   };
 
-  console.log({ winNumber });
   useEffect(() => {
     if (api && sessionId) getWinNumber();
   }, [api, sessionId]);

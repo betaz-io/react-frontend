@@ -38,6 +38,7 @@ import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
 import { useTicket } from "contexts/useSelectTicket";
 import { AddressCopier } from "components/addressCopier";
+import { convertToFixedLengthNumberString } from "utils";
 
 const NFTCardDetail = ({ item }) => {
   const isMobile = useCheckMobileScreen(480);
@@ -227,7 +228,7 @@ const NFTCardDetail = ({ item }) => {
                     color={"#1BE5B2"}
                     textDecoration={"underline"}
                   >
-                    {item?.betNumber}
+                    {convertToFixedLengthNumberString(item?.betNumber, 6)}
                   </Text>
                 </Box>
               )}

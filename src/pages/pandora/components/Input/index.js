@@ -28,6 +28,7 @@ function PandoraInput(props) {
     bottomRightIcon,
     onChange,
     onClick,
+    maxLength,
     ...rest
   } = props;
 
@@ -97,6 +98,7 @@ function PandoraInput(props) {
             onChange={onChange}
             value={value}
             placeholder="----------"
+            maxLength={maxLength}
             // type="Number"
           />
         </Flex>
