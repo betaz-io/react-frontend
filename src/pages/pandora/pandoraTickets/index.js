@@ -115,8 +115,8 @@ const PandoraTicket = ({ visible, onClose }) => {
         setBetNumberVal(value.slice(-6));
       }
     }
-    if (value === "") setBetNumberVal("000000");
-    if (Number(value) >= Number(maxBet) || value.length > 6) {
+    if (value == "") setBetNumberVal("000000");
+    if (Number(value) >= Number(maxBet)) {
       toast.error("Max Bet is " + Number(maxBet));
       setBetNumberVal(Number(maxBet));
     }
