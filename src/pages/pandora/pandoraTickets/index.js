@@ -88,7 +88,6 @@ const PandoraTicket = ({ visible, onClose }) => {
 
   const onChangeBetNumber = useCallback((e) => {
     const { value } = e.target;
-    console.log({ value, length:value.length });
     // const reg = /^\d{0,6}$/;
     // let betValue = 0;
     // if ((!isNaN(value) && reg.test(value)) || value === "") {
@@ -110,14 +109,18 @@ const PandoraTicket = ({ visible, onClose }) => {
           6
         );
         setBetNumberVal(convertNumber);
-      } else if (Number(value) > 1000000) {
+      } else if (Number(value) > Number(maxBet)) {
         setBetNumberVal(value.slice(0, 6));
       } else {
         setBetNumberVal(value.slice(-6));
       }
     }
-    if (value === "") setBetNumberVal("0000000");
-    if (Number(value) >= Number(maxBet)) setBetNumberVal(Number(maxBet));
+    if (value === "") setBetNumberVal("000000");
+    if (Number(value) >= Number(maxBet) || value.length > 6) {
+      toast.error("Max Bet is " + Number(maxBet));
+      setBetNumberVal(Number(maxBet));
+    }
+    console.log({ value, length: value.length });
   });
 
   const loadMaxBet = async () => {
@@ -331,6 +334,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                   value={betNumberVal}
                   topRightIcon={true}
                   bottomLeftIcon={true}
+                  // maxLength={6}
                 />
               </Box>
               <Text
