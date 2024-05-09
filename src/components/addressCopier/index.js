@@ -20,6 +20,7 @@ export const AddressCopier = ({
   number = 7,
   fontWeight,
   justifyContent,
+  style
 }) => {
   const handleCopy = (label, text) => {
     toast.success(`${label} copied!`);
@@ -108,6 +109,7 @@ export const AddressCopier = ({
         _hover={{ color: "text.2" }}
         sx={{ fontWeight: fontWeight || "bold", color: "#F7F7F8" }}
         justifyContent={justifyContent}
+        style={style}
       >
         <Text mr="4px">{truncated ? addressShortener(address) : address}</Text>
         <BiCopyAlt w="24px" h="21px" />
@@ -186,6 +188,7 @@ export const AddressCopierMobile = ({
         _hover={{ color: "text.2" }}
         sx={{ fontWeight: fontWeight || "bold" }}
         className="linear-text"
+
       >
         <Text mr="4px">{truncated ? addressShortener(address) : address}</Text>
         <BiCopyAlt w="24px" h="21px" />

@@ -10,7 +10,9 @@ export const formatTableValue = (value, key) => {
   switch (key) {
     case "playerWin":
       return isAddressValid(value) ? (
-        <AddressCopier address={value} justifyContent="center" />
+        <AddressCopier address={value} justifyContent="center" style={{
+          margin: "auto",
+        }} />
       ) : (
         <Text textAlign="center">{value}</Text>
       );

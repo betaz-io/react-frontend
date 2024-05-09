@@ -216,7 +216,7 @@ const PandoraMode = () => {
             gap={"18px"}
             flexWrap={"wrap"}
             alignItems={"center"}
-            borderRadius={"8px"}
+            borderRadius={"12px"}
             border={"2px solid #00D5C4"}
             minW={"300px"}
             position={"relative"}
@@ -271,7 +271,7 @@ const PandoraMode = () => {
             gap={"18px"}
             flexWrap={"wrap"}
             alignItems={"center"}
-            borderRadius={"8px"}
+            borderRadius={"12px"}
             border={"2px solid #00D5C4"}
             minW={"300px"}
             position={"relative"}
@@ -329,7 +329,7 @@ const PandoraMode = () => {
             gap={"18px"}
             flexWrap={"wrap"}
             alignItems={"center"}
-            borderRadius={"8px"}
+            borderRadius={"12px"}
             border={"2px solid #00D5C4"}
             minW={"300px"}
             position={"relative"}
