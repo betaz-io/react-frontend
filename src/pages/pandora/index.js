@@ -53,8 +53,12 @@ import { fetchTotalPlayer } from "store/slices/pandoraNftSlice";
 import PandoraRewardHistoryModal from "./pandoraRewardHistory";
 import PandoraTicketsModal from "./yourTicket";
 import { fetchPandoraPoolAmount } from "store/slices/pandoraNftSlice";
+import useWebSocket from "react-use-websocket";
+import { fetchPandoraSession } from "store/slices/pandoraNftSlice";
+import { usePandoraBetHistory } from "hooks/usePandoraBetHistory";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
+const wssUrl = process.env.REACT_APP_WSS_PANDORA_API || "ws://localhost:3011";
 
 const PandoraMode = () => {
   const dispatch = useDispatch();
@@ -62,9 +66,8 @@ const PandoraMode = () => {
   const [holdAmountPlayer, setHoleAmountPlayer] = useState(0);
 
   const { currentAccount, poolBalance } = useSelector((s) => s.substrate);
-  const { sessionId, holdAmount, totalPlayers, pandoraPoolAmount } = useSelector(
-    (s) => s.pandoraNft
-  );
+  const { sessionId, holdAmount, totalPlayers, pandoraPoolAmount } =
+    useSelector((s) => s.pandoraNft);
 
   useEffect(() => {
     if (sessionId) dispatch(fetchTotalPlayer(sessionId));
@@ -75,7 +78,31 @@ const PandoraMode = () => {
       dispatch(fetchPandoraHoldAmountByPlayer(currentAccount));
       dispatch(fetchPandoraPoolAmount());
     }
-  }, [currentAccount, api]);
+  }, [currentAccount, api, sessionId]);
+
+  const { refetch: refetchPandoraHistoryData } = usePandoraBetHistory();
+
+  const {} = useWebSocket(wssUrl, {
+    onOpen: () => console.log(`connected websocket ${wssUrl}`),
+    onMessage: (event) => {
+      const message = JSON.parse(event?.data);
+      console.log({ message });
+      if (message?.event == "Job Competed") {
+        console.log("start refetch");
+        if (api) {
+          dispatch(fetchPandoraSession());
+          refetchPandoraHistoryData();
+          toast.success(`Wellcome session ${sessionId}`)
+        }
+      }
+    },
+    onClose: () => console.log(`disconnected websocket ${wssUrl}`),
+    onError: (error) => {
+      console.log(`Error from websocket ${wssUrl}`);
+      console.log(error);
+    },
+    shouldReconnect: (closeEvent) => true,
+  });
 
   const {
     modalPandoraWithdrawVisible,
