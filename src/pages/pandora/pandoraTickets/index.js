@@ -88,6 +88,7 @@ const PandoraTicket = ({ visible, onClose }) => {
 
   const onChangeBetNumber = useCallback((e) => {
     const { value } = e.target;
+    console.log({ value, length:value.length });
     // const reg = /^\d{0,6}$/;
     // let betValue = 0;
     // if ((!isNaN(value) && reg.test(value)) || value === "") {
@@ -330,7 +331,6 @@ const PandoraTicket = ({ visible, onClose }) => {
                   value={betNumberVal}
                   topRightIcon={true}
                   bottomLeftIcon={true}
-                  // maxLength={6}
                 />
               </Box>
               <Text
