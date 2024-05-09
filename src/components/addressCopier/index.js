@@ -53,6 +53,7 @@ export const AddressCopier = ({
                 flexDirection: "row",
                 fontWeight: fontWeight || "bold",
               }}
+              style={style}
             >
               <Flex alignItems="center">
                 <Text mr="4px">{truncateStr(azeroID, number)} </Text>
