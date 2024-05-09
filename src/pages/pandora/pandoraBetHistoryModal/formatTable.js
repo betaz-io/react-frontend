@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Link, Text } from "@chakra-ui/react";
 import { AddressCopierMobile } from "components/addressCopier";
 import { AddressCopier } from "components/addressCopier";
 import { AppIcon, AzeroIcon } from "components/icons";
@@ -10,9 +10,13 @@ export const formatTableValue = (value, key) => {
   switch (key) {
     case "playerWin":
       return isAddressValid(value) ? (
-        <AddressCopier address={value} justifyContent="center" style={{
-          margin: "auto",
-        }} />
+        <AddressCopier
+          address={value}
+          justifyContent="center"
+          style={{
+            margin: "auto",
+          }}
+        />
       ) : (
         <Text textAlign="center">{value}</Text>
       );
@@ -38,7 +42,28 @@ export const formatTableValue = (value, key) => {
         </Box>
       );
     case "betNumberWin":
-      const betNumber = convertToFixedLengthNumberString(value, 6);
+      const betNumber = convertToFixedLengthNumberString(
+        value?.betNumberWin,
+        6
+      );
+      if (value?.txHash)
+        return (
+          <Box mx={"auto"} w={"max-content"}>
+            <Link
+              color={"white"}
+              target="_blank"
+              href={`https://sepolia.etherscan.io/tx/${value?.txHash}`}
+              textAlign="center"
+              sx={{
+                _hover: {
+                  color: "#1beca7",
+                },
+              }}
+            >
+              {betNumber}
+            </Link>
+          </Box>
+        );
       return <Text textAlign="center">{betNumber}</Text>;
     default:
       return <Text textAlign="center">{value}</Text>;

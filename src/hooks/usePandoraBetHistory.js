@@ -20,6 +20,7 @@ async function fetchPandoraBetHistory(currentPage) {
       clientAPI("post", "/getPandoraBetHistory", options),
       clientAPITotalPages("post", "/getPandoraBetHistory", options),
     ]);
+
     const totalpages = Math.ceil(total / 10);
     return { data, totalpages };
   } catch (error) {

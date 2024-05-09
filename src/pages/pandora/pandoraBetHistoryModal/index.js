@@ -82,6 +82,8 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
     currentPage,
   } = usePandoraBetHistory();
 
+  console.log({pandoraHistoryData})
+
   const [rowActive, setRowActive] = useState(0);
 
   useEffect(() => {
