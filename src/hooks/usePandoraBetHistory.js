@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { clientAPI } from "api/client";
 import { clientAPITotalPages } from "api/client";
 
-const queryKeys = { myTicketList: "pandoraBetHistory" };
+const queryKeys = { pandoraBetHistory: "pandoraBetHistory" };
 
 async function fetchPandoraBetHistory(currentPage) {
   try {
