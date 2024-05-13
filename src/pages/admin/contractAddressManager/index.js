@@ -148,6 +148,8 @@ const ContractAddressManager = () => {
   const handleChangeAddress = async (index, setFn, array) => {
     const address = array[index]?.contractAddress;
     const txfn = array[index]?.txFn;
+    const contract = tabsData[currentTab]?.contract;
+    console.log({txfn, index, currentTab})
     if (!isValidAddressPolkadotAddress(address)) {
       toast.error("Invalid address");
       return;
@@ -156,8 +158,8 @@ const ContractAddressManager = () => {
     let owner = (
       await execContractQuery(
         currentAccount?.address,
-        betaz_core_contract.CONTRACT_ABI,
-        betaz_core_contract.CONTRACT_ADDRESS,
+        contract.CONTRACT_ABI,
+        contract.CONTRACT_ADDRESS,
         0,
         "ownable::owner"
       )
@@ -170,8 +172,8 @@ const ContractAddressManager = () => {
       setLoading(index, true, setFn);
       await execContractTx(
         currentAccount,
-        betaz_core_contract.CONTRACT_ABI,
-        betaz_core_contract.CONTRACT_ADDRESS,
+        contract.CONTRACT_ABI,
+        contract.CONTRACT_ADDRESS,
         0,
         txfn,
         address
@@ -191,6 +193,7 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setCoreAddress,
+      contract: betaz_core_contract
     },
     {
       label: "Core random contract Address manger",
@@ -200,6 +203,7 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setCoreRandomAddress,
+      contract: bet_random_contract
     },
     {
       label: "DAO contract Address manger",
@@ -218,6 +222,7 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setSaleAddress,
+      contract: sale_pool_contract
     },
     {
       label: "Staking contract Address manger",
@@ -227,6 +232,7 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setStakingAddress,
+      contract: staking_pool_contract
     },
     {
       label: "Pandora contract Address manger",
@@ -236,6 +242,7 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setPandoraAddress,
+      contract: pandora_pool_contract
     },
   ];
 
