@@ -42,6 +42,9 @@ const tabData = [
   {
     label: "Multi player",
   },
+  {
+    label: "Contract address management",
+  },
 ];
 
 const AdminPage = () => {
