@@ -34,42 +34,49 @@ const ContractAddressManager = () => {
       name: "Bet token address",
       contractAddress: betaz_token_contract.CONTRACT_ADDRESS,
       txFn: "betA0CoreTrait::setBetTokenAddress",
+      queryFn: "betA0CoreTrait::betTokenAddress",
       isLoading: false,
     },
     {
       name: "Bet random address",
       contractAddress: bet_random_contract.CONTRACT_ADDRESS,
       txFn: "betA0CoreTrait::setOracleRandomnessAddress",
+      queryFn: "betA0CoreTrait::getOracleRandomnessAddress",
       isLoading: false,
     },
     {
       name: "Dao address",
       contractAddress: betaz_dao_contract.CONTRACT_ADDRESS,
       txFn: "betA0CoreTrait::setDaoAddress",
+      queryFn: "betA0CoreTrait::getDaoAddress",
       isLoading: false,
     },
     {
       name: "Bet adress",
       contractAddress: "5GH7VSHJQBCBnAwkq9F88ukF7agUZhHxEDR6dRu9KgVD5P8t",
       txFn: "betA0CoreTrait::setBetazAddress",
+      queryFn: "betA0CoreTrait::getBetazAddress",
       isLoading: false,
     },
     {
       name: "Treasury contract address",
       contractAddress: treasury_pool_contract.CONTRACT_ADDRESS,
       txFn: "betA0CoreTrait::setTreasuryAddress",
+      queryFn: "betA0CoreTrait::getTreasuryAddress",
       isLoading: false,
     },
     {
       name: "Staking contract address",
       contractAddress: staking_pool_contract.CONTRACT_ADDRESS,
       txFn: "betA0CoreTrait::setStakingAddress",
+      queryFn: "betA0CoreTrait::getStakingAddress",
       isLoading: false,
     },
     {
       name: "Pandora contract address",
       contractAddress: pandora_pool_contract.CONTRACT_ADDRESS,
       txFn: "betA0CoreTrait::setPandoraAddress",
+      queryFn: "betA0CoreTrait::getPandoraAddress",
       isLoading: false,
     },
   ];
@@ -79,6 +86,7 @@ const ContractAddressManager = () => {
       name: "Randomness Oracle Contract Address",
       contractAddress: "5CSQdMyKCxtoeVsBC8xbufeapux3YDV74eYXcHV4UKUu1NeF",
       txFn: "setRandomnessOracleContractAddress",
+      queryFn: "getRandomnessOracleContractAddress",
       isLoading: false,
     },
   ];
@@ -88,6 +96,7 @@ const ContractAddressManager = () => {
       name: "Core contract address",
       contractAddress: betaz_core_contract.CONTRACT_ADDRESS,
       txFn: "daoTrait::setCoreAddress",
+      queryFn: "daoTrait::getCoreAddress",
       isLoading: false,
     },
   ];
@@ -97,6 +106,7 @@ const ContractAddressManager = () => {
       name: "Betaz token contract address",
       contractAddress: betaz_token_contract.CONTRACT_ADDRESS,
       txFn: "salePoolTrait::setBetazTokenAddress",
+      queryFn: "salePoolTrait::getBetazTokenAddress",
       isLoading: false,
     },
   ];
@@ -106,6 +116,7 @@ const ContractAddressManager = () => {
       name: "Betaz token contract address",
       contractAddress: betaz_token_contract.CONTRACT_ADDRESS,
       txFn: "stakingPoolTrait::setBetazTokenAddress",
+      queryFn: "stakingPoolTrait::getBetazTokenAddress",
       isLoading: false,
     },
   ];
@@ -115,6 +126,7 @@ const ContractAddressManager = () => {
       name: "Pandora Psp34 contract address",
       contractAddress: pandora_psp34_contract.CONTRACT_ADDRESS,
       txFn: "pandoraPoolTraits::setPsp34ContractAddress",
+      queryFn: "pandoraPoolTraits::getPsp34ContractAddress",
       isLoading: false,
     },
   ];
@@ -145,11 +157,35 @@ const ContractAddressManager = () => {
     });
   });
 
+  const handleGetAddress = async (index, setFn, array) => {
+    const queryFn = array[index]?.queryFn;
+    const contract = tabsData[currentTab]?.contract;
+
+    setLoading(index, true, setFn);
+    let result = await execContractQuery(
+      currentAccount?.address,
+      contract.CONTRACT_ABI,
+      contract.CONTRACT_ADDRESS,
+      0,
+      queryFn
+    );
+    if (result)
+      setFn((prevState) => {
+        const newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          contractAddress: result?.toHuman().Ok,
+        };
+        return newState;
+      });
+    setLoading(index, false, setFn);
+  };
+
   const handleChangeAddress = async (index, setFn, array) => {
     const address = array[index]?.contractAddress;
     const txfn = array[index]?.txFn;
     const contract = tabsData[currentTab]?.contract;
-    console.log({txfn, index, currentTab})
+    console.log({ txfn, index, currentTab });
     if (!isValidAddressPolkadotAddress(address)) {
       toast.error("Invalid address");
       return;
@@ -193,7 +229,8 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setCoreAddress,
-      contract: betaz_core_contract
+      handleGet: (index, setFn, array) => handleGetAddress(index, setFn, array),
+      contract: betaz_core_contract,
     },
     {
       label: "Core random contract Address manger",
@@ -203,7 +240,8 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setCoreRandomAddress,
-      contract: bet_random_contract
+      handleGet: (index, setFn, array) => handleGetAddress(index, setFn, array),
+      contract: bet_random_contract,
     },
     {
       label: "DAO contract Address manger",
@@ -213,6 +251,8 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setdaoAddress,
+      handleGet: (index, setFn, array) => handleGetAddress(index, setFn, array),
+      contract: betaz_dao_contract,
     },
     {
       label: "Sale contract Address manger",
@@ -222,7 +262,8 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setSaleAddress,
-      contract: sale_pool_contract
+      handleGet: (index, setFn, array) => handleGetAddress(index, setFn, array),
+      contract: sale_pool_contract,
     },
     {
       label: "Staking contract Address manger",
@@ -232,7 +273,8 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setStakingAddress,
-      contract: staking_pool_contract
+      handleGet: (index, setFn, array) => handleGetAddress(index, setFn, array),
+      contract: staking_pool_contract,
     },
     {
       label: "Pandora contract Address manger",
@@ -242,7 +284,8 @@ const ContractAddressManager = () => {
       handleChange: (index, setFn, array) =>
         handleChangeAddress(index, setFn, array),
       setFn: setPandoraAddress,
-      contract: pandora_pool_contract
+      handleGet: (index, setFn, array) => handleGetAddress(index, setFn, array),
+      contract: pandora_pool_contract,
     },
   ];
 
@@ -303,7 +346,20 @@ const ContractAddressManager = () => {
                 </Box>
                 <Box>
                   <CommonButton
-                    text="Change"
+                    text="Get"
+                    isLoading={tabsData[currentTab].dataObj[index]?.isLoading}
+                    onClick={() =>
+                      tabsData[currentTab].handleGet(
+                        index,
+                        tabsData[currentTab].setFn,
+                        tabsData[currentTab].dataObj
+                      )
+                    }
+                  />
+                </Box>
+                <Box>
+                  <CommonButton
+                    text="Set"
                     isLoading={tabsData[currentTab].dataObj[index]?.isLoading}
                     onClick={() =>
                       tabsData[currentTab].handleChange(
