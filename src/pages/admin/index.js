@@ -45,6 +45,9 @@ const tabData = [
   {
     label: "Contract address management",
   },
+  {
+    label: "Contract roles management",
+  },
 ];
 
 const AdminPage = () => {

@@ -10,6 +10,7 @@ import ClaimRewardManager from "./claimRewardManager/ClaimRewardManager";
 import PandoraPoolManager from "./pandoraPoolManager/PandoraPoolManager";
 import MultiPlayers from "./multiplayers/MultiPlayers";
 import ContractAddressManager from "./contractAddressManager";
+import ContractRolesManager from "./contractRolesMangager";
 
 export const tabItems = (key) => {
   switch (key) {
@@ -37,6 +38,8 @@ export const tabItems = (key) => {
       return <MultiPlayers />;
     case 11:
       return <ContractAddressManager />;
+    case 12:
+      return <ContractRolesManager />;
     default:
       return <MinToken />;
   }
