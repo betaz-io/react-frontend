@@ -1,4 +1,4 @@
-import { Box, Link, Text } from "@chakra-ui/react";
+import { Box, Link, Text, Tooltip } from "@chakra-ui/react";
 import { AddressCopierMobile } from "components/addressCopier";
 import { AddressCopier } from "components/addressCopier";
 import { AppIcon, AzeroIcon } from "components/icons";
@@ -49,19 +49,21 @@ export const formatTableValue = (value, key) => {
       if (value?.txHash)
         return (
           <Box mx={"auto"} w={"max-content"}>
-            <Link
-              color={"white"}
-              target="_blank"
-              href={`https://sepolia.etherscan.io/tx/${value?.txHash}`}
-              textAlign="center"
-              sx={{
-                _hover: {
-                  color: "#1beca7",
-                },
-              }}
-            >
-              {betNumber}
-            </Link>
+            <Tooltip label="Go to etherscan">
+              <Link
+                color={"white"}
+                target="_blank"
+                href={`https://sepolia.etherscan.io/tx/${value?.txHash}`}
+                textAlign="center"
+                sx={{
+                  _hover: {
+                    color: "#1beca7",
+                  },
+                }}
+              >
+                {betNumber}
+              </Link>
+            </Tooltip>
           </Box>
         );
       return <Text textAlign="center">{betNumber}</Text>;
