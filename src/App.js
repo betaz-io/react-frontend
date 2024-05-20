@@ -3,9 +3,10 @@ import DefaultLayout from "./layouts";
 import HomePage from "./pages/home";
 import Predict from "./pages/predict";
 import NotFoundPage from "pages/404/404";
+import PandoraMode from "pages/pandora";
 import PrivateRouter from "components/PrivateRoute/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { toast } from "react-hot-toast";
 import { ApiPromise, WsProvider } from "@polkadot/api";
 import jsonrpc from "@polkadot/types/interfaces/jsonrpc";
@@ -22,8 +23,8 @@ import sale_pool_contract from "utils/contracts/sale_pool";
 import { setSalePoolContract } from "utils/contracts/sale_pool_calls";
 import pandora_pool_contract from "utils/contracts/pandora_pool";
 import { setPandoraPoolContract } from "utils/contracts/pandora_pool_calls";
-import dia_contract from "utils/contracts/dia_contract";
-import { setDiaContract } from "utils/contracts/dia_contract_calls";
+import bet_random_contract from "utils/contracts/bet_random_contract";
+import { setBetRandomContract } from "utils/contracts/bet_random_contract_calls";
 import { delay } from "utils";
 import {
   fetchUserBalance,
@@ -34,8 +35,17 @@ import {
 } from "store/slices/substrateSlice";
 import { web3Enable } from "@polkadot/extension-dapp";
 import { Flex, Spinner } from "@chakra-ui/react";
+import { BrowserRouter } from "react-router-dom";
+import { fetchPandoraSession } from "store/slices/pandoraNftSlice";
 
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
+
+// const HomePage = lazy(() => import("./pages/home"));
+// const Predict = lazy(() => import("./pages/predict"));
+// const NotFoundPage = lazy(() => import("./pages/404/404.js"));
+// const PrivateRouter = lazy(() =>
+//   import("./components/PrivateRoute/PrivateRoute.js")
+// );
 
 const App = () => {
   const dispatch = useDispatch();
@@ -74,7 +84,7 @@ const App = () => {
 
     setPandoraPoolContract(wsApi, pandora_pool_contract);
 
-    setDiaContract(wsApi, dia_contract);
+    setBetRandomContract(wsApi, bet_random_contract);
 
     // await wsApi.rpc.chain.subscribeNewHeads((lastHeader) => {
     //   // eslint-disable-next-line no-unused-vars
@@ -108,18 +118,24 @@ const App = () => {
       dispatch(fetchRollNumbers());
       dispatch(fetchRates());
       dispatch(fetchBuyStatus());
+      dispatch(fetchPandoraSession())
     }
   }, [api, currentAccount?.address]);
 
   return (
-    <DefaultLayout>
-      <Routes>
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/app" element={<Predict />} />
-        <Route path="/admin" element={<PrivateRouter />} />
-      </Routes>
-    </DefaultLayout>
+    <BrowserRouter>
+      <DefaultLayout>
+        {/* <Suspense fallback={<div>Loading...</div>}> */}
+        <Routes>
+          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/app" element={<Predict />} />
+          <Route path="/admin" element={<PrivateRouter />} />
+          <Route path="/pandora" element={<PandoraMode />} />
+        </Routes>
+        {/* </Suspense> */}
+      </DefaultLayout>
+    </BrowserRouter>
   );
 };
 

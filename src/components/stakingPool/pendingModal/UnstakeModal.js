@@ -19,6 +19,7 @@ import {
   Flex,
   Button,
   SimpleGrid,
+  CircularProgress,
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
 import { BiTime } from "react-icons/bi";
@@ -59,6 +60,8 @@ import StakeStakingPool from "components/stakingPool/StakeStakingPool";
 import UnstakeStakingPool from "components/stakingPool/UnstakeStakingPool";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import ReactPaginate from "react-paginate";
+import { useQuery } from "react-query";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 // import StakingPool from "../StakingPool";
 
 const tabData = [
@@ -70,6 +73,9 @@ const tabData = [
   },
   {
     label: "Cancel unstake requests",
+  },
+  {
+    label: "History requests",
   },
 ];
 
@@ -87,29 +93,40 @@ const UnstakeModal = ({ isOpen, onClose }) => {
 
   // useInterval(() => dispatch(fetchPendingUnstake(currentAccount)), 3000);
 
+  const dataQuery = useQuery(
+    ["query-player-staking", currentAccount],
+    async () => {
+      if (currentAccount)
+        await new Promise(async (resolve) => {
+          await dispatch(fetchPendingUnstake(currentAccount));
+          resolve();
+        });
+    }
+  );
+
   useEffect(() => {
-    dispatch(fetchPendingUnstake(currentAccount));
+    dataQuery.refetch();
   }, [currentTab, currentAccount]);
 
   const nextPage = useCallback(() => {
     if (currentPage < totalPages) dispatch(incrementCurrentPage());
     else toast("Only " + totalPages + " pages can be displayed");
-    dispatch(fetchPendingUnstake(currentAccount));
+    dataQuery.refetch();
   });
 
   const previousPage = useCallback(() => {
     if (currentPage > 1) dispatch(decrementCurrentPage());
-    dispatch(fetchPendingUnstake(currentAccount));
+    dataQuery.refetch();
   });
 
   const handlePageChange = (selectedPage) => {
     dispatch(setCurrentPage(selectedPage.selected + 1));
-    dispatch(fetchPendingUnstake(currentAccount));
+    dataQuery.refetch();
   };
 
   const goToPage = useCallback((page) => {
     dispatch(setCurrentPage(page));
-    dispatch(fetchPendingUnstake(currentAccount));
+    dataQuery.refetch();
   });
 
   const tableData = {
@@ -125,7 +142,7 @@ const UnstakeModal = ({ isOpen, onClose }) => {
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Count down",
+        label: "Time",
         key: "time",
         icon: <BiTime size="24px" style={{ marginRight: "8px" }} />,
       },
@@ -319,14 +336,7 @@ const UnstakeModal = ({ isOpen, onClose }) => {
                     border: "2px solid rgba(255, 255, 255, 0.4)",
                   }}
                 >
-                  <Text>
-                    {currentTab === 0
-                      ? tabData[0].label
-                      : currentTab === 1
-                      ? tabData[1].label
-                      : tabData[2].label}{" "}
-                    not found!
-                  </Text>
+                  <Text>{tabData[currentTab].label} not found!</Text>
                 </Box>
               ) : (
                 tableData?.data?.map((e, rowIndex) => {
@@ -425,12 +435,7 @@ const UnstakeModal = ({ isOpen, onClose }) => {
                           }}
                         >
                           <Text textAlign="center">
-                            {currentTab === 0
-                              ? tabData[0].label
-                              : currentTab === 1
-                              ? tabData[1].label
-                              : tabData[2].label}{" "}
-                            not found!
+                            {tabData[currentTab].label} not found!
                           </Text>
                         </Box>
                       </Td>
@@ -493,8 +498,9 @@ const UnstakeModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
             />
           </Box>
         </ModalFooter>

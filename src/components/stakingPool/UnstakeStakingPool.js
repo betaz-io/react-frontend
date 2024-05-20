@@ -23,14 +23,12 @@ import {
   delay,
 } from "utils";
 import CommonButton from "components/button/commonButton";
-import { execContractQuery, execContractTx } from "utils/contracts";
+import { execContractQuery, execContractTx, execContractTxAndUpdateHistoryStaking } from "utils/contracts";
 import staking_pool_contract from "utils/contracts/staking_pool";
 import { useModal } from "contexts/useModal";
 import staking_pool_calls from "utils/contracts/staking_pool_calls";
 import { clientAPI } from "api/client";
-import {
-  fetchPendingUnstake,
-} from "store/slices/stakingSlide";
+import { fetchPendingUnstake } from "store/slices/stakingSlide";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -91,7 +89,9 @@ const StakingPool = () => {
 
       const toastUnstake = toast.loading("Request unstake ...");
       let unstakeAmount = parseFloat(unstakeValue);
-      const result = await execContractTx(
+      const result = await execContractTxAndUpdateHistoryStaking(
+        "Request unstake",
+        unstakeAmount,
         currentAccount,
         staking_pool_contract.CONTRACT_ABI,
         staking_pool_contract.CONTRACT_ADDRESS,
@@ -107,7 +107,7 @@ const StakingPool = () => {
         await clientAPI("post", "/updatePendingUnstake", {
           caller: currentAccount?.address,
         });
-        dispatch(fetchPendingUnstake(currentAccount))
+        dispatch(fetchPendingUnstake(currentAccount));
       } else toast.dismiss(toastUnstake);
     } catch (error) {
       // toast.dismiss(toastUnstake);
@@ -116,6 +116,7 @@ const StakingPool = () => {
     }
 
     // await delay(2000);
+    setUnstakeValue(0);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
     setIsLoading(false);

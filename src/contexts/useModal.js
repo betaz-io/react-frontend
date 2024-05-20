@@ -12,6 +12,22 @@ export const ModalProvider = ({ children }) => {
     useState(false);
   const [modalClaimRewardHistoryVisible, setModalClaimRewardHistoryVisible] =
     useState(false);
+  const [modalPandoraWithdrawVisible, setModalPandoraWithdrawVisible] =
+    useState(false);
+  const [modalPandoraBetHistoryVisible, setModalPandoraBetHistoryVisible] =
+    useState(false);
+  const [modalPandoraSelectTicketVisible, setModalPandoraSelectTicketVisible] =
+    useState(false);
+  const [
+    modalPandoraYourBetHistoryVisible,
+    setModalPandoraYourBetHistoryVisible,
+  ] = useState(false);
+  const [
+    modalPandoraRewardHistoryVisible,
+    setModalPandoraRewardHistoryVisible,
+  ] = useState(false);
+  const [modalPandoraYourTicketVisible, setModalPandoraYourTicketVisible] =
+    useState(false);
 
   return (
     <ModalContext.Provider
@@ -28,6 +44,18 @@ export const ModalProvider = ({ children }) => {
         setModalUpdatewhitelistVisible,
         modalClaimRewardHistoryVisible,
         setModalClaimRewardHistoryVisible,
+        modalPandoraWithdrawVisible,
+        setModalPandoraWithdrawVisible,
+        modalPandoraBetHistoryVisible,
+        setModalPandoraBetHistoryVisible,
+        modalPandoraSelectTicketVisible,
+        setModalPandoraSelectTicketVisible,
+        modalPandoraYourBetHistoryVisible,
+        setModalPandoraYourBetHistoryVisible,
+        modalPandoraRewardHistoryVisible,
+        setModalPandoraRewardHistoryVisible,
+        modalPandoraYourTicketVisible,
+        setModalPandoraYourTicketVisible,
       }}
     >
       {children}

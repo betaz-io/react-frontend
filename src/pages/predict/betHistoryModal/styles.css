@@ -1,9 +1,4 @@
-.history-modal-content-container {
-  /* height: calc(100vh - 120px); */
-  height: max-content;
-  background-color: #122126 !important;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-}
+
 .linear-text {
   background: linear-gradient(180deg, #1bbff4 0%, #1beca7 100%);
   -webkit-background-clip: text;
@@ -129,6 +124,14 @@ tr td:first-child {
   min-width: 40px !important;
   color: white;
   border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.pagination li.disabled a{
+  display: none;
 }
 
 .pagination li.active a{

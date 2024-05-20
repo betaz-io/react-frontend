@@ -14,7 +14,14 @@ import { BiCopyAlt } from "react-icons/bi";
 import { truncateStr } from "utils";
 import { addressShortener, resolveDomain } from "utils";
 
-export const AddressCopier = ({ address, truncated = true, fontWeight }) => {
+export const AddressCopier = ({
+  address,
+  truncated = true,
+  number = 7,
+  fontWeight,
+  justifyContent,
+  style
+}) => {
   const handleCopy = (label, text) => {
     toast.success(`${label} copied!`);
     navigator.clipboard.writeText(text);
@@ -46,20 +53,44 @@ export const AddressCopier = ({ address, truncated = true, fontWeight }) => {
                 flexDirection: "row",
                 fontWeight: fontWeight || "bold",
               }}
+              style={style}
             >
               <Flex alignItems="center">
-                <Text mr="4px">{truncateStr(azeroID, 7)} </Text>
+                <Text mr="4px">{truncateStr(azeroID, number)} </Text>
                 <BiCopyAlt w="24px" h="21px" color="white" />
               </Flex>
             </MenuButton>
-            <MenuList>
+            <MenuList
+              sx={{
+                background: "#122126",
+                border: "2px solid rgba(255, 255, 255, 0.70)",
+                boxShadow: "0px 4px 4px 0px rgba(64, 64, 64, 0.20)",
+              }}
+              borderRadius={{ base: "12px" }}
+            >
               <MenuItem
                 fontSize={"16px"}
+                sx={{
+                  background: "#122126",
+                  color: "#F7F7F8",
+                  _hover: {
+                    background: "#F7F7F8",
+                    color: "#122126",
+                  },
+                }}
                 onClick={() => handleCopy("Azero ID", azeroID)}
               >
                 Copy ID
               </MenuItem>
               <MenuItem
+                sx={{
+                  background: "#122126",
+                  color: "#F7F7F8",
+                  _hover: {
+                    background: "#F7F7F8",
+                    color: "#122126",
+                  },
+                }}
                 fontSize={"16px"}
                 onClick={() => handleCopy("Address", address)}
               >
@@ -78,6 +109,8 @@ export const AddressCopier = ({ address, truncated = true, fontWeight }) => {
         onClick={() => handleCopy("Address", address)}
         _hover={{ color: "text.2" }}
         sx={{ fontWeight: fontWeight || "bold", color: "#F7F7F8" }}
+        justifyContent={justifyContent}
+        style={style}
       >
         <Text mr="4px">{truncated ? addressShortener(address) : address}</Text>
         <BiCopyAlt w="24px" h="21px" />
@@ -156,6 +189,7 @@ export const AddressCopierMobile = ({
         _hover={{ color: "text.2" }}
         sx={{ fontWeight: fontWeight || "bold" }}
         className="linear-text"
+
       >
         <Text mr="4px">{truncated ? addressShortener(address) : address}</Text>
         <BiCopyAlt w="24px" h="21px" />

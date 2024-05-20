@@ -23,10 +23,16 @@ import {
   delay,
 } from "utils";
 import CommonButton from "components/button/commonButton";
-import { execContractQuery, execContractTx } from "utils/contracts";
+import {
+  execContractQuery,
+  execContractTx,
+  execContractTxAndUpdateHistoryStaking,
+} from "utils/contracts";
 import staking_pool_contract from "utils/contracts/staking_pool";
 import betaz_token_contract from "utils/contracts/betaz_token";
 import { useModal } from "contexts/useModal";
+import { clientAPI } from "api/client";
+import { fetchPendingUnstake } from "store/slices/stakingSlide";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -113,7 +119,9 @@ const StakingPool = () => {
       if (allowance && currentAccount?.address) {
         const toastStake = toast.loading("Staking ...");
         let stakeAmount = parseFloat(stakeValue);
-        const result = await execContractTx(
+        const result = await execContractTxAndUpdateHistoryStaking(
+          "Stake",
+          stakeAmount,
           currentAccount,
           staking_pool_contract.CONTRACT_ABI,
           staking_pool_contract.CONTRACT_ADDRESS,
@@ -122,8 +130,10 @@ const StakingPool = () => {
           convertToBalance(stakeAmount)
         );
         if (result) {
-          await delay(3000)
+          await delay(3000);
           toast.dismiss(toastStake);
+
+          dispatch(fetchPendingUnstake(currentAccount));
         } else toast.dismiss(toastStake);
       }
     } catch (error) {
@@ -132,6 +142,7 @@ const StakingPool = () => {
       console.log(error);
     }
     // await delay(2000);
+    setStakeValue(0);
     dispatch(fetchUserBalance({ currentAccount }));
     dispatch(fetchBalance());
     setIsLoading(false);
@@ -166,10 +177,7 @@ const StakingPool = () => {
                   </Flex>
                 </Flex>
                 {/* Stake */}
-                <SimpleGrid
-                  spacing="24px"
-                  mt="24px"
-                >
+                <SimpleGrid spacing="24px" mt="24px">
                   <Flex flexDirection="column" gap="24px">
                     <Box className="deposit-box-amount-box">
                       <Text>Your Betaz token Balance</Text>

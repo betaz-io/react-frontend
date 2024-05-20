@@ -1,5 +1,7 @@
 import { Box, Image, Text } from "@chakra-ui/react";
 import AppLogo from "assets/img/app-logo.png";
+import playersIcon from "assets/img/playersIcon.png";
+import azIcon from "assets/img/alephzeroIcon.png";
 import TokenLogo from "assets/img/token-logo.png";
 import IconBGEclipse from "assets/img/ellipse.png";
 import IconSmallRec from "assets/img/icon-small-rectangle.png";
@@ -9,7 +11,44 @@ import AzeroLogo from "assets/img/azero.png";
 export const AppIcon = ({ size = "24px", padding = "0px", rest }) => {
   return (
     <Box sx={{ ...rest, padding }}>
-      <Image aspectRatio={1} h={size} w={size} alt="logo-app" src={AppLogo} />
+      <Image
+        aspectRatio={1}
+        h={size}
+        w={size}
+        alt="logo-app"
+        src={AppLogo}
+        loading="lazy"
+      />
+    </Box>
+  );
+};
+
+export const AzIcon = ({ size = "24px", padding = "0px", rest }) => {
+  return (
+    <Box sx={{ ...rest, padding }}>
+      <Image
+        aspectRatio={1}
+        h={size}
+        w={size}
+        alt="logo-az"
+        src={azIcon}
+        loading="lazy"
+      />
+    </Box>
+  );
+};
+
+export const PlayersIcon = ({ size = "24px", padding = "0px", rest }) => {
+  return (
+    <Box sx={{ ...rest, padding }}>
+      <Image
+        aspectRatio={1}
+        // h={size}
+        // w={size}
+        alt="logo-players"
+        src={playersIcon}
+        loading="lazy"
+      />
     </Box>
   );
 };
@@ -17,7 +56,14 @@ export const AppIcon = ({ size = "24px", padding = "0px", rest }) => {
 export const AzeroIcon = ({ size = "24px", padding = "0px", rest }) => {
   return (
     <Box sx={{ ...rest, padding }}>
-      <Image aspectRatio={1} h={size} w={size} alt="logo-app" src={AzeroLogo} />
+      <Image
+        aspectRatio={1}
+        h={size}
+        w={size}
+        alt="logo-app"
+        src={AzeroLogo}
+        loading="lazy"
+      />
     </Box>
   );
 };
@@ -31,6 +77,7 @@ export const TokenIcon = ({ size = "24px", padding = "0px", rest }) => {
         w={size}
         alt="logo-token"
         src={TokenLogo}
+        loading="lazy"
       />
     </Box>
   );
@@ -54,7 +101,12 @@ export const EclipseIcon = ({ sx, text }) => {
       >
         {text || ""}
       </Text>
-      <Image aspectRatio={1} alt="bg-eclipse" src={IconBGEclipse} />
+      <Image
+        aspectRatio={1}
+        alt="bg-eclipse"
+        src={IconBGEclipse}
+        loading="lazy"
+      />
     </Box>
   );
 };
@@ -62,7 +114,12 @@ export const EclipseIcon = ({ sx, text }) => {
 export const SmallRecIcon = ({ sx }) => {
   return (
     <Box sx={sx}>
-      <Image aspectRatio={1} alt="icon-small-rectangle" src={IconSmallRec} />
+      <Image
+        aspectRatio={1}
+        alt="icon-small-rectangle"
+        src={IconSmallRec}
+        loading="lazy"
+      />
     </Box>
   );
 };
@@ -76,6 +133,7 @@ export const BigRecIcon = ({ sx, size }) => {
         w={size}
         alt="icon-big-rectangle"
         src={IconBigRec}
+        loading="lazy"
       />
     </Box>
   );

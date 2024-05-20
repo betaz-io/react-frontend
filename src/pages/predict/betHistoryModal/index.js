@@ -18,6 +18,7 @@ import {
   Th,
   Thead,
   Tr,
+  CircularProgress,
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
 import { BiLayer } from "react-icons/bi";
@@ -41,6 +42,9 @@ import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import { clientAPITotalPages } from "api/client";
 import ReactPaginate from "react-paginate";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { useQuery } from "react-query";
+import useWebSocket from "react-use-websocket";
+import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
 
 const tabData = [
   {
@@ -56,12 +60,35 @@ const tabData = [
 
 let currentPage = 1;
 
+const wssUrl = process.env.REACT_APP_WSS_API || "ws://localhost:3010";
+
 const BetHistoryModal = ({ isOpen, onClose }) => {
   const { currentAccount } = useSelector((s) => s.substrate);
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(1);
   const [uiPage, setUIPage] = useState(1);
   const [data, setdata] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+
+  const {} = useWebSocket(wssUrl, {
+    onOpen: () => console.log(`connected websocket ${wssUrl}`),
+    onMessage: (event) => {
+      const message = JSON.parse(event?.data);
+      console.log({ message });
+      if (
+        message?.event == "added WinEvent" ||
+        message?.event == "added LoseEvent"
+      ) {
+        console.log("start refetch");
+        getData();
+      }
+    },
+    onClose: () => console.log(`disconnected websocket ${wssUrl}`),
+    onError: (error) => {
+      console.log(`Error from websocket ${wssUrl}`);
+      console.log(error);
+    },
+    shouldReconnect: (closeEvent) => true,
+  });
 
   const getData = async () => {
     if (currentTab === 0) {
@@ -69,7 +96,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         setdata([]);
         return;
       }
-      let [data, total] = await Promise.all([
+      let [newData, total] = await Promise.all([
         clientAPI("post", "/getEventsByPlayer", {
           player: currentAccount?.address,
           limit: 10,
@@ -82,10 +109,13 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         }),
       ]);
       // console.log({mybets: data});
-      setdata(data);
-      setTotalPages(Math.ceil(total / 10));
+      if (newData !== data);
+      {
+        setdata(newData);
+        setTotalPages(Math.ceil(total / 10));
+      }
     } else if (currentTab === 1) {
-      let [data, total] = await Promise.all([
+      let [newData, total] = await Promise.all([
         clientAPI("post", "/getEvents", {
           limit: 10,
           offset: 10 * (currentPage - 1),
@@ -96,10 +126,13 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         }),
       ]);
       // console.log({ all: data });
-      setdata(data);
-      setTotalPages(Math.ceil(total / 10));
+      if (newData !== data);
+      {
+        setdata(newData);
+        setTotalPages(Math.ceil(total / 10));
+      }
     } else if (currentTab === 2) {
-      let [data, total] = await Promise.all([
+      let [newData, total] = await Promise.all([
         clientAPI("post", "/getRareWins", {
           limit: 10,
           offset: 10 * (currentPage - 1),
@@ -110,16 +143,31 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
         }),
       ]);
       // console.log({rarewins: data});
-      setTotalPages(Math.ceil(total / 10));
-      setdata(data);
+      if (newData !== data);
+      {
+        setdata(newData);
+        setTotalPages(Math.ceil(total / 10));
+      }
     }
   };
-  useInterval(() => getData(), 5000);
+
+  const dataQuery = useQuery(
+    "query-player-event",
+    async () => {
+      await new Promise(async (resolve) => {
+        await getData();
+        resolve();
+      });
+    },
+    { refetchOnWindowFocus: false }
+  );
+
+  // useInterval(() => getData(), 4000);
 
   useEffect(() => {
     currentPage = 1;
     setUIPage(currentPage);
-    getData();
+    dataQuery.refetch();
   }, [currentTab]);
 
   const nextPage = useCallback(() => {
@@ -203,7 +251,7 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
 
   const handlePageChange = (selectedPage) => {
     currentPage = selectedPage.selected + 1;
-    getData();
+    dataQuery.refetch();
   };
 
   const isMobile = useCheckMobileScreen(480);
@@ -250,7 +298,18 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
               );
             })}
           </Box>
-          {isMobile ? (
+          {dataQuery.isLoading || dataQuery.isFetching ? (
+            <Box mt="24px" w="100%" minH="800px">
+              <CircularProgress
+                position="absolute"
+                top="50%"
+                left="50%"
+                transform="translateX(-50%)"
+                isIndeterminate
+                color="#1beca6"
+              />
+            </Box>
+          ) : isMobile ? (
             <Flex direction="column" maxH="600px" overflowY="auto" mt="12px">
               {historyTableData.data.length > 0 ? (
                 historyTableData.data.map((e, rowIndex) => {
@@ -437,8 +496,9 @@ const BetHistoryModal = ({ isOpen, onClose }) => {
               activeClassName={"active"}
               breakClassName={"ellipsis"}
               breakLabel={"..."}
-              previousLabel={"<"}
-              nextLabel={">"}
+              previousLabel={<MdOutlineArrowBackIosNew />}
+              nextLabel={<MdOutlineArrowForwardIos />}
+              renderOnZeroPageCount={null}
             />
           </Box>
         </ModalFooter>

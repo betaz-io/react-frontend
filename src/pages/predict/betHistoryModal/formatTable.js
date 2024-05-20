@@ -57,9 +57,7 @@ export const formatTableValue = (value, key) => {
             justifyContent: "center",
           }}
         >
-          <Text textAlign="center">
-            {value == 0 ? 0 : (parseFloat(value).toFixed(4) * 1000) / 1000}
-          </Text>
+          <Text textAlign="center">{formatNumDynDecimal(value)}</Text>
           <AzeroIcon
             size={{ base: "11px", sm: "11px" }}
             padding={{

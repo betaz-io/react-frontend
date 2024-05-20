@@ -38,21 +38,6 @@ export const addressShortener = (addr = "", digits = 5) => {
   return `${addr.substring(0, digits)}...${addr.slice(-digits)}`;
 };
 
-export const formatNumDynDecimal = (num = 0, dec = 4) => {
-  const number = parseInt(num * 10 ** dec) / 10 ** dec;
-  const numStr = number.toString();
-  const dotIdx = numStr.indexOf(".");
-
-  if (dotIdx === -1) {
-    return numeral(numStr).format("0,0");
-  }
-
-  const intPart = numeral(numStr.slice(0, dotIdx)).format("0,0");
-  const decPart = numStr.slice(dotIdx + 1, numStr.length);
-
-  return intPart + `${dotIdx === -1 ? "" : `.${decPart}`}`;
-};
-
 export const formatQueryResultToNumber = (result, chainDecimals = 12) => {
   const ret = result?.toHuman()?.Ok?.replaceAll(",", "");
 
@@ -251,9 +236,23 @@ export const numberWithCommas = (x) => {
 export const formatPoolBalance = (result, decimal = 12, dec = 4) => {
   const ret = result?.toHuman()?.Ok?.replaceAll(",", "");
   let x = ret / 10 ** decimal;
-  return (x.toFixed(dec) * 10 ** dec) / 10 ** dec;
+  return formatNumDynDecimal(x);
 };
 
+export const formatNumDynDecimal = (num = 0, dec = 4) => {
+  const number = parseInt(num * 10 ** dec) / 10 ** dec;
+  const numStr = number.toString();
+  const dotIdx = numStr.indexOf(".");
+
+  if (dotIdx === -1) {
+    return numeral(numStr).format("0,0");
+  }
+
+  const intPart = numeral(numStr.slice(0, dotIdx)).format("0,0");
+  const decPart = numStr.slice(dotIdx + 1, numStr.length);
+
+  return intPart + `${dotIdx === -1 ? "" : `.${decPart}`}`;
+};
 // AZERO ID
 export const resolveDomain = async (address) => {
   const chain = {
@@ -288,4 +287,78 @@ export const getDomainToAddress = async (domain) => {
   } catch (error) {
     console.log("resolveDomain error", error);
   }
+};
+
+export const getNextDayTime = (nextDay = 6) => {
+  let currentDate = new Date();
+
+  while (currentDate.getDay() !== nextDay) {
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  currentDate.setHours(0, 0, 0, 0);
+  return currentDate.getTime();
+};
+
+export const getNextHourTime = (hours = 4) => {
+  let currentDate = new Date();
+  let start = currentDate.getHours();
+  let startHour = currentDate.getHours();
+
+  if (start > 0 && start < 4) {
+    startHour = 0;
+  } else if (start > 4 && start < 8) {
+    startHour = 4;
+  } else if (start > 8 && start < 12) {
+    startHour = 8;
+  } else if (start > 12 && start < 16) {
+    startHour = 12;
+  } else if (start > 16 && start < 20) {
+    startHour = 16;
+  } else if (start > 20 && start < 24) {
+    startHour = 20;
+  }
+
+  currentDate.setHours(startHour + hours);
+  currentDate.setMinutes(0);
+  currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0);
+
+  return currentDate.getTime();
+};
+
+export const getStartAndEndOfWeek = () => {
+  let currentDate = new Date();
+
+  currentDate.setDate(currentDate.getDate() - currentDate.getDay());
+
+  let startOfWeek = currentDate.getDate();
+  let startOfMonth = currentDate.getMonth() + 1;
+  let startOfYear = currentDate.getFullYear();
+  let formattedStartOfWeek = `${startOfWeek < 10 ? "0" : ""}${startOfWeek}/${
+    startOfMonth < 10 ? "0" : ""
+  }${startOfMonth}/${startOfYear}`;
+
+  currentDate.setDate(currentDate.getDate() + 6);
+
+  let endOfWeek = currentDate.getDate();
+  let endOfMonth = currentDate.getMonth() + 1;
+  let endOfYear = currentDate.getFullYear();
+  let formattedEndOfWeek = `${endOfWeek < 10 ? "0" : ""}${endOfWeek}/${
+    endOfMonth < 10 ? "0" : ""
+  }${endOfMonth}/${endOfYear}`;
+
+  return {
+    startOfWeek: formattedStartOfWeek,
+    endOfWeek: formattedEndOfWeek,
+  };
+};
+
+export const convertToFixedLengthNumberString = (number, length) => {
+  let numberString = String(number);
+  
+  const zerosToAdd = Math.max(0, length - numberString.length);
+  
+  const fixedLengthNumberString = "0".repeat(zerosToAdd) + numberString;
+  
+  return fixedLengthNumberString;
 };

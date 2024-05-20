@@ -52,6 +52,7 @@ import "./styles.css";
 import SliderTeam from "./sliderTeam/SliderTeam";
 import { formatNumDynDecimal } from "utils";
 import { delay } from "utils";
+import { useQuery } from "react-query";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -66,9 +67,17 @@ const HomePage = () => {
 
   /*************** Count down time ********************/
   let endTimeNumber = convertTimeStampToNumber(buyStatus?.endTime);
+
+  const dataQuery = useQuery(["query-buy-status"], async () => {
+    await new Promise(async (resolve) => {
+      await dispatch(fetchBuyStatus());
+      resolve();
+    });
+  });
+
   useInterval(() => {
-    dispatch(fetchBuyStatus());
-  }, 5000);
+    dataQuery.refetch();
+  }, 7000);
 
   /*************** End Count down time ********************/
 
@@ -160,7 +169,10 @@ const HomePage = () => {
       receiver = azeroIdAddress;
     else receiver = address;
 
-    if (!isValidAddressPolkadotAddress(receiver) || receiver !== currentAccount.address) {
+    if (
+      !isValidAddressPolkadotAddress(receiver) ||
+      receiver !== currentAccount.address
+    ) {
       toast.error("Invalid address");
       return;
     }
@@ -178,6 +190,7 @@ const HomePage = () => {
         const result = await sale_pool.faucet(currentAccount, 100);
         if (result) {
           toast.success(`fauset BetAZ success`);
+          setAddress("");
           getMaxbuy();
         }
       } catch (err) {
@@ -420,6 +433,7 @@ const HomePage = () => {
                 height={{ sm: "770px" }}
                 alt="Tokenomic-cup"
                 src={TokenomicCup}
+                loading="lazy"
               />
             </Flex>
           </SimpleGrid>

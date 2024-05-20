@@ -183,16 +183,13 @@ export const fetchUserBalance = createAsyncThunk(
     let reward = 0;
     let total_stake = totalStake?.toHuman()?.Ok?.replaceAll(",", "") / 10 ** 12;
     if (total_stake > 0) {
-      reward =
-        ((
-          new BN(stakingBalance?.toHuman()?.Ok?.replaceAll(",", ""))
-            .mul(new BN(stakeAmount?.toHuman()?.Ok?.replaceAll(",", "")))
-            .div(new BN(totalStake?.toHuman()?.Ok?.replaceAll(",", "")))
-            .toString() /
+      reward = formatNumDynDecimal(
+        new BN(stakingBalance?.toHuman()?.Ok?.replaceAll(",", ""))
+          .mul(new BN(stakeAmount?.toHuman()?.Ok?.replaceAll(",", "")))
+          .div(new BN(totalStake?.toHuman()?.Ok?.replaceAll(",", "")))
+          .toString() /
           10 ** 12
-        ).toFixed(4) *
-          10000) /
-        10000;
+      );
     }
 
     return { betaz, azero, stake, reward };

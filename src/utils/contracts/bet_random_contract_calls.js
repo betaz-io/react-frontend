@@ -10,7 +10,7 @@ import { delay } from "utils";
 
 let contract;
 
-export const setDiaContract = (api, data) => {
+export const setBetRandomContract = (api, data) => {
   contract = new ContractPromise(
     api,
     data?.CONTRACT_ABI,
