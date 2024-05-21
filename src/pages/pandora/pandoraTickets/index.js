@@ -234,9 +234,9 @@ const PandoraTicket = ({ visible, onClose }) => {
         await clientAPI("post", "/updateNFTQueue", {
           ticketId: ticketId,
         });
-        await delay(3000);
-        refetchPandoraHistoryData();
-        refetchMyTicketList();
+        await delay(5000);
+        await refetchMyTicketList();
+        await refetchPandoraHistoryData();
         dispatch(fetchTotalPlayer(sessionId));
         toast.dismiss(fetchNft);
         setIsLoading(false);
