@@ -45,10 +45,11 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
-  MdOutlineClear
+  MdOutlineClear,
 } from "react-icons/md";
 import { useTicket } from "contexts/useSelectTicket";
 import { useMyTicketList } from "hooks/useMyTicketList";
+import { GrPowerReset } from "react-icons/gr";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -134,11 +135,24 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
               <Box
                 w="100%"
                 className="pandora-modal-container"
-                display="flex"
-                flexDirection="column"
                 gap="24px"
                 paddingX={"0px"}
               >
+                <Box
+                  px={"48px"}
+                  py={"12px"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"end"}
+                >
+                  <CommonButton
+                    text={<GrPowerReset size={"24px"} />}
+                    isLoading={isRefetchingMyTicketList}
+                    isDisabled={isRefetchingMyTicketList}
+                    onClick={() => refetchMyTicketList()}
+                    className="btn-refetch"
+                  ></CommonButton>
+                </Box>
                 <Flex justifyContent="space-between" alignItems={"center"}>
                   <MdOutlineArrowBackIosNew
                     size={"84px"}
