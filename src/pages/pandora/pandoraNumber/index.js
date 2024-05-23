@@ -57,27 +57,25 @@ const PandoraNumber = () => {
           bgImage={TopPandoraNumber}
           bgRepeat="no-repeat"
           bgPosition="center"
-          h={{ base: "65px", sm: "65px" }}
-          w={{ base: "280px", sm: "437px" }}
+          h={{ base: "35px", sm: "65px" }}
+          w={{ base: "210px", sm: "437px" }}
           mx={{ base: "auto" }}
           mb={{ base: "20px" }}
           position="relative"
         >
           <Image
             position="absolute"
-            w="240px"
-            sx={{
-              top: "-26px",
-              left: "13px",
-            }}
+            w="120px"
+            top={{base:"-12px", sm:"-26px"}}
+            left={{base: "52px", sm: "13px"}}
             src={EffectIcon}
             className="pandora-effect-icon"
             loading="lazy"
           />
           {sectionPresent.sessionId >= 1 && (
             <Text
-              mt={{ base: "20px" }}
-              fontSize={{ base: "32px" }}
+              mt={{ base: "12px", sm: "20px" }}
+              fontSize={{ base: "16px", sm: "32px" }}
               fontStyle={{ base: "normal" }}
               fontWeight={{ base: "700" }}
               textTransform={"uppercase"}
@@ -90,16 +88,18 @@ const PandoraNumber = () => {
           className="lucky-number-container"
           bgImage={PandoraNumberBg}
           bgRepeat="no-repeat"
-          bgSize={{ base: "cover", sm: "unset" }}
+          bgSize={{ base: "100% auto", sm: "unset" }}
           bgPosition="center"
-          height={{ base: "500px" }}
+          h={{ base: "37.5vh", sm: "500px" }}
+          w={{ base: "100%", sm: "unset" }}
+          mx={{ base: "auto", sm: "unset" }}
           position="relative"
         >
           <Box position="absolute" top="-20px">
             {sectionPresent.sessionId >= 1 && (
               <Text
                 className="lucky-number-text"
-                fontSize={{ base: "20px", sm: "24px" }}
+                fontSize={{ base: "12px", sm: "24px" }}
               >
                 {sectionPresent.startDate} - {sectionPresent.endDate}
               </Text>
@@ -110,8 +110,8 @@ const PandoraNumber = () => {
             bgImage={PandoraNumberSmallBackground}
             bgRepeat="no-repeat"
             bgPosition="center"
-            h={{ base: "280px", sm: "295px" }}
-            w={{ base: "280px", sm: "295px" }}
+            h={{ base: "189px", sm: "295px" }}
+            w={{ base: "189px", sm: "295px" }}
             mb={"50px"}
           >
             <Box
@@ -119,17 +119,15 @@ const PandoraNumber = () => {
               bgImage={PandoraNumberBox}
               bgRepeat="no-repeat"
               bgPosition="center"
-              minW={{ base: "240px" }}
-              w={{ base: "240px", sm: "240px" }}
+              minW={{ base: "120px", sm: "240px" }}
+              w={{ base: "120px", sm: "240px" }}
               position="relative"
             >
               <Image
                 position="absolute"
                 w="200px"
-                sx={{
-                  top: "-10px",
-                  left: "-80px",
-                }}
+                top={{base:"34px", sm:"-10px"}}
+                left={{base: "-52px", sm: "-80px"}}
                 src={EffectIcon}
                 className="pandora-effect-icon"
                 loading="lazy"
@@ -137,10 +135,8 @@ const PandoraNumber = () => {
               <Image
                 position="absolute"
                 w="200px"
-                sx={{
-                  bottom: "30px",
-                  right: "-85px",
-                }}
+                bottom={{base:"34px", sm:"30px"}}
+                right={{base: "-52px", sm: "-85px"}}
                 src={EffectIcon}
                 className="pandora-effect-icon"
                 loading="lazy"
@@ -152,7 +148,7 @@ const PandoraNumber = () => {
                   bgRepeat="no-repeat"
                   bgPosition="center"
                   minW={{ base: "max-content" }}
-                  w={{ base: "240px", sm: "240px" }}
+                  w={{ base: "200px", sm: "240px" }}
                   position={"relative"}
                 >
                   <Text
@@ -160,7 +156,7 @@ const PandoraNumber = () => {
                     left={"50%"}
                     transform={"translateX(-50%)"}
                     mt={{ base: "24px" }}
-                    fontSize={{ base: "28px" }}
+                    fontSize={{ base: "18px", sm: "28px" }}
                     fontStyle={{ base: "normal" }}
                     fontWeight={{ base: "700" }}
                     position={"absolute"}
@@ -172,7 +168,7 @@ const PandoraNumber = () => {
                   </Text>
                   <Text
                     className="pandora-number-text"
-                    fontSize={{ base: "32px", sm: "32px" }}
+                    fontSize={{ base: "20px", sm: "32px" }}
                   >
                     {winNumber === 0
                       ? "--"

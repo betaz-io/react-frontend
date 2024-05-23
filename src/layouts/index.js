@@ -2,8 +2,10 @@ import { Box } from "@chakra-ui/react";
 import Navbar from "components/Navbar";
 import BackgroundImage from "assets/img/background.png";
 import PandoraModeBackgroundImage from "assets/img/PandoraModeBackgoundImage.png";
+import PandoraModeBgMobileImage from "assets/img/PandoraModeBgMobile.png";
 import { useLocation } from "react-router-dom";
 import BETAZFooter from "components/Footer";
+import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 
 const AppLayout = ({ children }) => {
   return (
@@ -30,15 +32,16 @@ const AppLayout = ({ children }) => {
 };
 
 const PandoraModeLayout = ({ children }) => {
+  const isMobile = useCheckMobileScreen(480);
   return (
     <Box
       background="#0F3435"
       sx={{
-        paddingTop: "32px",
+        paddingTop: isMobile ? "0px": "32px",
         minHeight: "100vh",
       }}
-      bgImage={PandoraModeBackgroundImage}
-      bgSize="cover"
+      bgImage={isMobile ? PandoraModeBgMobileImage : PandoraModeBackgroundImage}
+      bgSize={isMobile ? "contain" : "cover"}
     >
       <Navbar />
       <Box

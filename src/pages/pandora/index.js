@@ -92,7 +92,7 @@ const PandoraMode = () => {
         if (api) {
           dispatch(fetchPandoraSession());
           refetchPandoraHistoryData();
-          toast.success(`Wellcome session ${sessionId}`)
+          toast.success(`Wellcome session ${sessionId}`);
         }
       }
     },
@@ -118,14 +118,30 @@ const PandoraMode = () => {
     modalPandoraYourTicketVisible,
     setModalPandoraYourTicketVisible,
   } = useModal();
+
+  const isMobile = useCheckMobileScreen(480);
   return (
     <>
       <SectionContainer>
-        <Box w="100%" h="auto" mt="48px" position="relative">
-          <SimpleGrid columns={{ md: 1, lg: 2 }}>
+        <Box
+          w="100%"
+          h="auto"
+          mt={{ base: "0px", sm: "48px" }}
+          position="relative"
+        >
+          <SimpleGrid
+            columns={{ md: 1, lg: 2 }}
+            spacingY={{ base: "24px", sm: "unset" }}
+          >
             <PandoraNumber />
-            <Box className="section-pandora-right" position="relative">
+            <Box
+              className="section-pandora-right"
+              position="relative"
+              minH={isMobile && "650px"}
+            >
               <PandoraTicket />
+
+              {/* modal */}
               <PandoraWithdrawModal
                 visible={modalPandoraWithdrawVisible}
                 onClose={() => {
@@ -150,63 +166,67 @@ const PandoraMode = () => {
                 isOpen={modalPandoraYourTicketVisible}
                 onClose={() => setModalPandoraYourTicketVisible(false)}
               />
-              <Box
-                className="lucky-number-circle-image"
-                bgImage={PandoraBGCoin}
-                bgRepeat="no-repeat"
-                bgPosition="center"
-                w={{ base: "280px", sm: "480px" }}
-                mx={{ base: "auto" }}
-                mt={{ base: "23%" }}
-                position="relative"
-              >
-                <Image
-                  position="absolute"
-                  w="240px"
-                  sx={{
-                    top: "-6px",
-                    left: "92px",
-                  }}
-                  src={EffectIcon}
-                  className="pandora-effect-icon"
-                  transform={"rotate(-45deg)"}
-                  filter={"blur(3px) brightness(150%)"}
-                  loading="lazy"
-                />
-                <Image
-                  position="absolute"
-                  w="200px"
-                  sx={{
-                    top: "150px",
-                    left: "140px",
-                  }}
-                  src={EffectIcon}
-                  className="pandora-effect-icon"
-                  transform={"rotate(-45deg)"}
-                  filter={"blur(3px) brightness(150%)"}
-                  loading="lazy"
-                />
-                <Image
-                  position="absolute"
-                  w="200px"
-                  sx={{
-                    top: "155px",
-                    left: "284px",
-                  }}
-                  src={EffectIcon}
-                  className="pandora-effect-icon"
-                  transform={"rotate(-45deg)"}
-                  filter={"blur(3px) brightness(150%)"}
-                  loading="lazy"
-                />
-              </Box>
+
+              {/* bg img */}
+              {!isMobile && (
+                <Box
+                  className="lucky-number-circle-image"
+                  bgImage={PandoraBGCoin}
+                  bgRepeat="no-repeat"
+                  bgPosition="center"
+                  w={{ base: "280px", sm: "480px" }}
+                  mx={{ base: "auto" }}
+                  mt={{ base: "23%" }}
+                  position="relative"
+                >
+                  <Image
+                    position="absolute"
+                    w="240px"
+                    sx={{
+                      top: "-6px",
+                      left: "92px",
+                    }}
+                    src={EffectIcon}
+                    className="pandora-effect-icon"
+                    transform={"rotate(-45deg)"}
+                    filter={"blur(3px) brightness(150%)"}
+                    loading="lazy"
+                  />
+                  <Image
+                    position="absolute"
+                    w="200px"
+                    sx={{
+                      top: "150px",
+                      left: "140px",
+                    }}
+                    src={EffectIcon}
+                    className="pandora-effect-icon"
+                    transform={"rotate(-45deg)"}
+                    filter={"blur(3px) brightness(150%)"}
+                    loading="lazy"
+                  />
+                  <Image
+                    position="absolute"
+                    w="200px"
+                    sx={{
+                      top: "155px",
+                      left: "284px",
+                    }}
+                    src={EffectIcon}
+                    className="pandora-effect-icon"
+                    transform={"rotate(-45deg)"}
+                    filter={"blur(3px) brightness(150%)"}
+                    loading="lazy"
+                  />
+                </Box>
+              )}
             </Box>
           </SimpleGrid>
         </Box>
       </SectionContainer>
       <SectionContainer
         sx={{
-          marginTop: "132px",
+          marginTop: isMobile ? "48px" : "132px",
         }}
       >
         <Flex justifyContent={"center"} gap={"24px"} flexWrap={"wrap"}>
