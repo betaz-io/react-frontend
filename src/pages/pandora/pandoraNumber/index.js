@@ -65,7 +65,7 @@ const PandoraNumber = () => {
         >
           <Image
             position="absolute"
-            w="120px"
+            w={{base:"120px", sm:"240px"}}
             top={{base:"-12px", sm:"-26px"}}
             left={{base: "52px", sm: "13px"}}
             src={EffectIcon}
