@@ -257,70 +257,77 @@ const PandoraTicket = ({ visible, onClose }) => {
   };
 
   return (
-    <>
-      <Box position="absolute" top="0" right="0" zIndex={2}>
-        <Box className="pandora-ticket-wrapper">
+    <Box
+      position="absolute"
+      top="0"
+      right="0"
+      zIndex={2}
+      w={"100%"}
+      overflow={"hidden"}
+    >
+      <Box className="pandora-ticket-wrapper" w={{ base: "100%", sm: "unset" }}>
+        <Box
+          w="100%"
+          h="100%"
+          className="pandora-modal-ticket-overlay"
+          zIndex="0"
+        ></Box>
+        <Box
+          className="deposit-modal-container"
+          w={{ base: "100%", md: "600px" }}
+          mx={{ base: "auto", md: "unset" }}
+          // w={{ base: "100%", md: "50%" }}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          position="relative"
+          padding={{ base: "12px" }}
+        >
           <Box
             w="100%"
-            h="100%"
-            className="pandora-modal-ticket-overlay"
-            zIndex="0"
-          ></Box>
-          <Box
-            className="deposit-modal-container"
-            w={{ base: "100%", md: "600px" }}
-            // w={{ base: "100%", md: "50%" }}
+            className="pandora-modal-container"
             display="flex"
-            alignItems="center"
-            justifyContent="center"
-            position="relative"
-            padding={{ base: "12px" }}
+            flexDirection="column"
+            gap="24px"
           >
-            <Box
-              w="100%"
-              className="pandora-modal-container"
-              display="flex"
-              flexDirection="column"
-              gap="24px"
-            >
-              <PandoraInput
-                textXl={"SELECT TICKETS"}
-                topRightIcon={true}
-                bottomLeftIcon={true}
-                textXlColor={"#FFA000"}
-                onClick={handleOpenModalSelectTicket}
-              />
-              <Box>
-                <Text
-                  color={"#FFA000"}
-                  fontWeight={"500"}
-                  fontSize={"24px"}
-                  mb="6px"
-                >
-                  YOUR TICKET SELECTED
-                </Text>
-                <Box display={"flex"} gap={"12px"}>
-                  <PandoraInput
-                    textXl={ticketId ? ticketId : "----------"}
-                    textXlColor={"white"}
-                    onClick={handleOpenModalSelectTicket}
-                  />
-                  <Button
-                    h={"72px"}
-                    onClick={() => setTicketId(0)}
-                    paddingX={"8px"}
-                    display={ticketId ? "block" : "none"}
-                  >
-                    <MdOutlineClear
-                      size={"54px"}
-                      color="#C62828"
-                      style={{ marginRight: "8px" }}
-                    />
-                  </Button>
-                </Box>
-              </Box>
+            <PandoraInput
+              textXl={"SELECT TICKETS"}
+              topRightIcon={true}
+              bottomLeftIcon={true}
+              textXlColor={"#FFA000"}
+              onClick={handleOpenModalSelectTicket}
+            />
+            <Box>
+              <Text
+                color={"#FFA000"}
+                fontWeight={"500"}
+                fontSize={{ base: "20px", sm: "24px" }}
+                mb="6px"
+              >
+                YOUR TICKET SELECTED
+              </Text>
               <Box display={"flex"} gap={"12px"}>
-                {/* <Text
+                <PandoraInput
+                  textXl={ticketId ? ticketId : "----------"}
+                  textXlColor={"white"}
+                  onClick={handleOpenModalSelectTicket}
+                />
+                <Button
+                  h={isMobile ? "48px" : "72px"}
+                  onClick={() => setTicketId(0)}
+                  paddingX={"8px"}
+                  display={ticketId ? "block" : "none"}
+                >
+                  <MdOutlineClear
+                    size={isMobile ?"32px":"54px"}
+                    color="#C62828"
+                    style={{ marginRight: "8px" }}
+                  />
+                </Button>
+              </Box>
+            </Box>
+            <Box display={"flex"} gap={"12px"}>
+              {/* <Text
                   color={"#FFA000"}
                   fontWeight={"500"}
                   fontSize={"24px"}
@@ -328,66 +335,65 @@ const PandoraTicket = ({ visible, onClose }) => {
                 >
                   YOUR NUMBER
                 </Text> */}
-                <PandoraInput
-                  text={"YOUR NUMBER"}
-                  onChange={onChangeBetNumber}
-                  value={betNumberVal}
-                  topRightIcon={true}
-                  bottomLeftIcon={true}
-                  // maxLength={6}
-                />
-              </Box>
-              <Text
-                color="#1BE8AD"
-                fontSize="40px"
-                fontStyle="normal"
-                fontWeight="500"
-                textAlign="center"
-              >
-                Session #{sessionId} finisher in:
-              </Text>
-
-              <Box minW={{ base: "90%" }} mx="auto">
-                <PandoraCountDownSelectTicket date={getNextHourTime(4)} />
-              </Box>
-              <Flex gap="24px">
-                <Button
-                  fontWeight="600"
-                  fontStyle="normal"
-                  fontSize={{ base: "16px" }}
-                  w="100%"
-                  onClick={() => setModalPandoraYourBetHistoryVisible(true)}
-                >
-                  YOUR BET
-                </Button>
-                <Button
-                  fontWeight="600"
-                  fontStyle="normal"
-                  fontSize={{ base: "16px" }}
-                  w="100%"
-                  onClick={() => setModalPandoraWithdrawVisible(true)}
-                >
-                  WITHDRAW WINNING AMOUNT
-                </Button>
-              </Flex>
-              <CommonButton
-                text="BET NOW"
-                onClick={onPlay}
-                sx={{
-                  fontWeight: "600",
-                  fontStyle: "normal",
-                  fontsize: { base: "18px" },
-                  background:
-                    "linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important",
-                }}
-                isLoading={isLoading}
-                isDisabled={isLoading}
+              <PandoraInput
+                text={"YOUR NUMBER"}
+                onChange={onChangeBetNumber}
+                value={betNumberVal}
+                topRightIcon={true}
+                bottomLeftIcon={true}
+                // maxLength={6}
               />
             </Box>
+            <Text
+              color="#1BE8AD"
+              fontSize={{ base: "24px", sm: "40px" }}
+              fontStyle="normal"
+              fontWeight="500"
+              textAlign="center"
+            >
+              Session #{sessionId} finisher in:
+            </Text>
+
+            <Box minW={{ base: "90%" }} mx="auto">
+              <PandoraCountDownSelectTicket date={getNextHourTime(4)} />
+            </Box>
+            <Flex gap="24px" flexDirection={{ base: "column", sm: "row" }}>
+              <Button
+                fontWeight="600"
+                fontStyle="normal"
+                fontSize={{ base: "16px" }}
+                w="100%"
+                onClick={() => setModalPandoraYourBetHistoryVisible(true)}
+              >
+                YOUR BET
+              </Button>
+              <Button
+                fontWeight="600"
+                fontStyle="normal"
+                fontSize={{ base: "16px" }}
+                w="100%"
+                onClick={() => setModalPandoraWithdrawVisible(true)}
+              >
+                WITHDRAW WINNING AMOUNT
+              </Button>
+            </Flex>
+            <CommonButton
+              text="BET NOW"
+              onClick={onPlay}
+              sx={{
+                fontWeight: "600",
+                fontStyle: "normal",
+                fontsize: { base: "18px" },
+                background:
+                  "linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important",
+              }}
+              isLoading={isLoading}
+              isDisabled={isLoading}
+            />
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 export default PandoraTicket;

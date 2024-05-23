@@ -45,11 +45,11 @@ export const formatTableValue = (value, key) => {
 
 export const formatTableValueMobile = (value, key) => {
   switch (key) {
-    case "playerWin":
+    case "withdrawer":
       return <AddressCopierMobile address={value} />;
-    case "chainlinkRequestId":
+    case "receiver":
       return <AddressCopierMobile address={value} />;
-    case "rewardAmount":
+      case "amount":
       return (
         <Box
           sx={{
@@ -68,6 +68,14 @@ export const formatTableValueMobile = (value, key) => {
           />
         </Box>
       );
+    case "time":
+      const date = new Date(value);
+
+      // console.log({date, value})
+      const formatted_date = `${date.getDate()}/${
+        date.getMonth() + 1
+      }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      return <Text textAlign="center">{formatted_date}</Text>;
     default:
       return (
         <Text textAlign="center" className="linear-text">

@@ -37,7 +37,10 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import { usePandoraBetHistory } from "hooks/usePandoraBetHistory";
 import { usePandoraRewardHistory } from "hooks/usePandoraRewardHistory";
-import { MdOutlineArrowBackIosNew, MdOutlineArrowForwardIos } from "react-icons/md";
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 // let currentPage = 1;
 
 const PandoraRewardHistoryModal = ({ isOpen, onClose }) => {

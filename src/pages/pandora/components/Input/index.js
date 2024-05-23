@@ -86,7 +86,7 @@ function PandoraInput(props) {
         loading="lazy"
       />
       {textXl ? (
-        <Text className="pandora-modal-text-title" color={textXlColor}>
+        <Text className="pandora-modal-text-title" fontSize={{base: '20px', sm: "36px"}} color={textXlColor}>
           {textXl}
         </Text>
       ) : (

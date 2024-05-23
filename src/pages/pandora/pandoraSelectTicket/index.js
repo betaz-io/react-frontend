@@ -58,7 +58,6 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
   const { setModalPandoraSelectTicketVisible } = useModal();
   const { currentAccount } = useSelector((s) => s.substrate);
   const [uiPage, setUIPage] = useState(1);
-  const isMobile = useCheckMobileScreen(992);
   const { ticketId, setTicketId } = useTicket();
   const [isLoading, setLoading] = useState(false);
 
@@ -83,6 +82,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
     refetchMyTicketList();
   });
 
+  const isMobile = useCheckMobileScreen(480);
   return (
     <>
       <Modal isOpen={visible} onClose={onClose} isCentered>
@@ -97,11 +97,16 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
           borderRadius={{ base: "12px" }}
           // containerProps={{ justifyContent: 'flex-end', paddingRight: '60px', paddingTop: "120px" }}
         >
-          <ModalBody padding="0px">
+          <ModalBody
+            padding="0px"
+            marginLeft={isMobile && "16px"}
+            marginRight={isMobile && "16px"}
+          >
             <Text
               className="pandora-modal-select-ticket-text-title"
               mb={"16px"}
               textAlign={"center"}
+              fontSize={isMobile && "36px"}
             >
               SELECT TICKETS
             </Text>
@@ -131,14 +136,48 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                   loading="lazy"
                 />
               </Box>
+
+              {/* button pev & next */}
+              <Box
+                background={"#00D5C4"}
+                borderRadius={"12px"}
+                py={"12px"}
+                position={"absolute"}
+                top={"50%"}
+                left={"-8px"}
+                transform={"translateY(-50%)"}
+              >
+                <MdOutlineArrowBackIosNew
+                  size={"36px"}
+                  color="white"
+                  onClick={previousPage}
+                />
+              </Box>
+              <Box
+                background={"#00D5C4"}
+                borderRadius={"12px"}
+                py={"12px"}
+                position={"absolute"}
+                top={"50%"}
+                right={"-8px"}
+                transform={"translateY(-50%)"}
+              >
+                <MdOutlineArrowForwardIos
+                  size={"36px"}
+                  color="white"
+                  onClick={previousPage}
+                />
+              </Box>
+
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
               <Box
                 w="100%"
                 className="pandora-modal-container"
                 gap="24px"
                 paddingX={"0px"}
+                maxH={"80vh"}
               >
-                <Box
+                {/* <Box
                   px={"48px"}
                   py={"12px"}
                   display={"flex"}
@@ -152,122 +191,136 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                     onClick={() => refetchMyTicketList()}
                     className="btn-refetch"
                   ></CommonButton>
-                </Box>
-                <Flex justifyContent="space-between" alignItems={"center"}>
-                  <MdOutlineArrowBackIosNew
-                    size={"84px"}
-                    color="#1BECA6"
-                    onClick={previousPage}
-                    cursor={"pointer"}
-                  />
-                  {isRefetchingMyTicketList ? (
-                    <Flex justifyContent={"center"} gap={"12px"}>
-                      <CircularProgress isIndeterminate color="#1beca6" />
+                </Box> */}
+                <Flex
+                  justifyContent="space-between"
+                  alignItems={"center"}
+                  overflow={"hidden"}
+                  maxW={"100%"}
+                  px={isMobile? "24px": "16px"}
+                >
+                  {!isMobile && (
+                    <MdOutlineArrowBackIosNew
+                      size={"84px"}
+                      color="#1BECA6"
+                      onClick={previousPage}
+                      cursor={"pointer"}
+                    />
+                  )}
+                  <Flex w={"100%"} flexWrap={"wrap"} gap={"12px"} justifyContent={"center"}>
+                    {isRefetchingMyTicketList ? (
+                      <Flex justifyContent={"center"} gap={"12px"}>
+                        <CircularProgress isIndeterminate color="#1beca6" />
+                        <Text
+                          className="pandora-modal-text-title"
+                          color="#FFA000"
+                        >
+                          Loading ..........
+                        </Text>
+                      </Flex>
+                    ) : nftsData?.length ? (
+                      nftsData?.map((item) => (
+                        <Box
+                          display={"flex"}
+                          justifyContent={"space-between"}
+                          flexWrap={"wrap"}
+                        >
+                          <Box
+                            className="PandoraTicketCard"
+                            border={"2px solid #00D5C4"}
+                            padding={"6px"}
+                            borderRadius={"6px"}
+                            background={
+                              item?.nftId === ticketId
+                                ? "radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)"
+                                : "radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
+                            }
+                            maxW={isMobile ? "120px" : "176px"}
+                            
+                            position={"relative"}
+                            cursor={"pointer"}
+                            onClick={() => {
+                              if (item?.nftId !== ticketId)
+                                setTicketId(item?.nftId);
+                            }}
+                            onDoubleClick={onClose}
+                          >
+                            <Image
+                              src={EffectIcon}
+                              alt=""
+                              position="absolute"
+                              top="140px"
+                              right="-86px"
+                              w="200px"
+                              transform={"rotate(-90deg)"}
+                              zIndex={4}
+                              opacity={item?.nftId === ticketId ? 1 : 0}
+                              loading="lazy"
+                            />
+                            <Image
+                              src={EffectIcon}
+                              alt=""
+                              position="absolute"
+                              top="-26px"
+                              left="-60px"
+                              w="200px"
+                              zIndex={4}
+                              opacity={item?.nftId === ticketId ? 1 : 0}
+                              loading="lazy"
+                            />
+                            <Box
+                              w={"100%"}
+                              borderRadius={"6px"}
+                              overflow={"hidden"}
+                              position={"relative"}
+                            >
+                              <Image
+                                src={PandoraItemBG}
+                                alt="pandora-item-bg"
+                                loading="lazy"
+                              />
+                              <Image
+                                src={PandoraItem}
+                                alt="pandora-item-bg"
+                                position={"absolute"}
+                                top={"50%"}
+                                left={"50%"}
+                                transform={"translate(-50%, -50%)"}
+                                w={"90%"}
+                                loading="lazy"
+                              />
+                            </Box>
+                            <Box>
+                              <Text
+                                textTransform={"uppercase"}
+                                fontWeight={"700"}
+                                color={"black"}
+                                fontStyle="italic"
+                                fontSize={isMobile && "12px"}
+                              >
+                                Pandora secret box #{item?.nftId}
+                              </Text>
+                            </Box>
+                          </Box>
+                        </Box>
+                      ))
+                    ) : (
                       <Text
                         className="pandora-modal-text-title"
                         color="#FFA000"
                       >
-                        Loading ..........
+                        You don't own any tickets
                       </Text>
-                    </Flex>
-                  ) : nftsData?.length ? (
-                    nftsData?.map((item) => (
-                      <Box
-                        display={"flex"}
-                        justifyContent={"space-between"}
-                        flexWrap={"wrap"}
-                      >
-                        <Box
-                          className="PandoraTicketCard"
-                          border={"2px solid #00D5C4"}
-                          padding={"6px"}
-                          borderRadius={"6px"}
-                          background={
-                            item?.nftId === ticketId
-                              ? "radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)"
-                              : "radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
-                          }
-                          //   background="radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
-                          //   background="radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)"
-                          w={"176px"}
-                          position={"relative"}
-                          cursor={"pointer"}
-                          onClick={() => {
-                            if (item?.nftId !== ticketId)
-                              setTicketId(item?.nftId);
-                          }}
-                          onDoubleClick={onClose}
-                        >
-                          <Image
-                            src={EffectIcon}
-                            alt=""
-                            position="absolute"
-                            top="140px"
-                            right="-86px"
-                            w="200px"
-                            transform={"rotate(-90deg)"}
-                            zIndex={4}
-                            opacity={item?.nftId === ticketId ? 1 : 0}
-                            loading="lazy"
-                          />
-                          <Image
-                            src={EffectIcon}
-                            alt=""
-                            position="absolute"
-                            top="-26px"
-                            left="-60px"
-                            w="200px"
-                            zIndex={4}
-                            opacity={item?.nftId === ticketId ? 1 : 0}
-                            loading="lazy"
-                          />
-                          <Box
-                            w={"100%"}
-                            borderRadius={"6px"}
-                            overflow={"hidden"}
-                            position={"relative"}
-                          >
-                            <Image
-                              src={PandoraItemBG}
-                              alt="pandora-item-bg"
-                              loading="lazy"
-                            />
-                            <Image
-                              src={PandoraItem}
-                              alt="pandora-item-bg"
-                              position={"absolute"}
-                              top={"50%"}
-                              left={"50%"}
-                              transform={"translate(-50%, -50%)"}
-                              w={"90%"}
-                              loading="lazy"
-                            />
-                          </Box>
-                          <Box>
-                            <Text
-                              textTransform={"uppercase"}
-                              fontWeight={"700"}
-                              color={"black"}
-                              fontStyle="italic"
-                            >
-                              Pandora secret box #{item?.nftId}
-                            </Text>
-                          </Box>
-                        </Box>
-                      </Box>
-                    ))
-                  ) : (
-                    <Text className="pandora-modal-text-title" color="#FFA000">
-                      You don't own any tickets
-                    </Text>
+                    )}
+                  </Flex>
+                  {!isMobile && (
+                    <MdOutlineArrowForwardIos
+                      size={"84px"}
+                      color="#1BECA6"
+                      onClick={nextPage}
+                      cursor={"pointer"}
+                    />
                   )}
-
-                  <MdOutlineArrowForwardIos
-                    size={"84px"}
-                    color="#1BECA6"
-                    onClick={nextPage}
-                    cursor={"pointer"}
-                  />
                 </Flex>
               </Box>
             </Box>
