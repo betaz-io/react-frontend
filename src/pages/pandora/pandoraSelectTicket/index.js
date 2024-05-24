@@ -50,6 +50,7 @@ import {
 import { useTicket } from "contexts/useSelectTicket";
 import { useMyTicketList } from "hooks/useMyTicketList";
 import { GrPowerReset } from "react-icons/gr";
+import { IoCloseSharp } from "react-icons/io5";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -123,22 +124,25 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
               <Box
                 className="pandora-btn-close"
                 position="absolute"
-                top="-1px"
+                top="0px"
                 right="0px"
                 zIndex={3}
                 onClick={() => setModalPandoraSelectTicketVisible(false)}
+                color={"white"}
+                background={"#00D5C4"}
+                borderBottomLeftRadius={"8px"}
+                borderTopRightRadius={"8px"}
+                sx={{
+                  _hover: {
+                    background: "#FC0000"
+                  }
+                }}
               >
-                <Image
-                  src={PandoraCloseButton}
-                  alt=""
-                  verticalAlign="middle"
-                  maxW="100%"
-                  loading="lazy"
-                />
+                <IoCloseSharp  size={"36px"}/>
               </Box>
 
               {/* button pev & next */}
-              <Box
+              {isMobile && <Box
                 background={"#00D5C4"}
                 borderRadius={"12px"}
                 py={"12px"}
@@ -152,8 +156,8 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                   color="white"
                   onClick={previousPage}
                 />
-              </Box>
-              <Box
+              </Box>}
+              {isMobile && <Box
                 background={"#00D5C4"}
                 borderRadius={"12px"}
                 py={"12px"}
@@ -167,7 +171,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                   color="white"
                   onClick={previousPage}
                 />
-              </Box>
+              </Box>}
 
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
               <Box

@@ -35,6 +35,7 @@ import { useModal } from "contexts/useModal";
 import { delay } from "utils";
 import { useWallet } from "contexts/useWallet";
 import { usePandoraRewardHistory } from "hooks/usePandoraRewardHistory";
+import { IoCloseSharp } from "react-icons/io5";
 
 const defaultCaller = process.env.REACT_APP_DEFAULT_CALLER_ADDRESS;
 
@@ -149,14 +150,17 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
                 right="0px"
                 zIndex={3}
                 onClick={() => setModalPandoraWithdrawVisible(false)}
+                color={"white"}
+                background={"#00D5C4"}
+                borderBottomLeftRadius={"8px"}
+                borderTopRightRadius={"8px"}
+                sx={{
+                  _hover: {
+                    background: "#FC0000"
+                  }
+                }}
               >
-                <Image
-                  src={PandoraCloseButton}
-                  alt="Pandora-close-btn"
-                  verticalAlign="middle"
-                  maxW="100%"
-                  loading="lazy"
-                />
+                <IoCloseSharp  size={"36px"}/>
               </Box>
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
               <Box

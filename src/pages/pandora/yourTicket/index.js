@@ -44,6 +44,7 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
+import { IoCloseSharp } from "react-icons/io5";
 
 const tabData = [
   {
@@ -183,22 +184,33 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         {/* <ModalCloseButton color="#FFF" /> */}
         <ModalBody>
           {/* <Box w="100%" h="100%" className="pandora-modal-overlay"></Box> */}
-          <Box
-            className="pandora-btn-close"
-            position="absolute"
-            top="116px"
-            right="8px"
-            zIndex={3}
-            onClick={onClose}
+          <Flex
+            w={"max-content"}
+            justifyContent={"end"}
+            position={"absolute"}
+            right={"0px"}
+            top={"100px"}
+            zIndex={1}
           >
-            <Image
-              src={PandoraCloseButton}
-              alt="Pandora-close-btn"
-              verticalAlign="middle"
-              maxW="100%"
-              loading="lazy"
-            />
-          </Box>
+            <Box
+            position={"absolute"}
+            right={"0px"}
+              className="pandora-btn-close"
+              w={"max-content"}
+              onClick={onClose}
+              color={"white"}
+              background={"#00D5C4"}
+              borderBottomLeftRadius={"8px"}
+              borderTopRightRadius={"8px"}
+              sx={{
+                _hover: {
+                  background: "#FC0000",
+                },
+              }}
+            >
+              <IoCloseSharp size={"36px"} />
+            </Box>
+          </Flex>
 
           <Box
             className="pandora-btn-close"
@@ -232,17 +244,18 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
                 </Text>
               </Flex>
             ) : pandoraTicketsData?.length ? (
-              <SimpleGrid
-                columns={{ base: 1, md: 3, lg: 4, xl: 6 }}
-                spacing="10px"
-                spacingY={"32px"}
+              <Flex
+                gap="24px"
+                flexWrap={"wrap"}
+                w={"100%"}
+                maxH={{base:"75vh"}}
                 overflowY={"auto"}
-                maxH={"550px"}
+                justifyContent={"start !important"}
               >
                 {pandoraTicketsData?.map((item) => (
                   <PandoraTicketsCard item={item} />
                 ))}
-              </SimpleGrid>
+              </Flex>
             ) : (
               <Text className="pandora-modal-text-title" color="#FFA000">
                 You don't own any tickets

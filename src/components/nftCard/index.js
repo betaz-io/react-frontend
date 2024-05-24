@@ -52,7 +52,7 @@ const PandoraTicketsCard = ({ item }) => {
         background={
           "radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
         }
-        w={"176px"}
+        maxW={"176px"}
         position={"relative"}
         cursor={"pointer"}
         sx={{
@@ -61,7 +61,7 @@ const PandoraTicketsCard = ({ item }) => {
               "radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)",
           },
         }}
-        mx={"auto"}
+        // mx={"auto"}
         onClick={() => onOpen()}
       >
         <Box
