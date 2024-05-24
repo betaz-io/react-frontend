@@ -130,14 +130,15 @@ const PandoraMode = () => {
           position="relative"
         >
           <SimpleGrid
-            columns={{ md: 1, lg: 2 }}
-            spacingY={{ base: "24px", sm: "unset" }}
+            columns={{ md: 1, xl: 2 }}
+            spacingY={{ base: "24px" }}
           >
             <PandoraNumber />
             <Box
               className="section-pandora-right"
               position="relative"
               minH={isMobile && "650px"}
+              w={"100%"}
             >
               <PandoraTicket />
 

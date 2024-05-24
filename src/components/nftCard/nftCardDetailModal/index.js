@@ -39,6 +39,7 @@ import { useTicket } from "contexts/useSelectTicket";
 import NFTCardDetail from "./NFTDetail";
 import PandoraCloseButton from "assets/img/PandoraCloseButton.svg";
 import PandoraListCoin from "assets/img/PandoraListCoin.png";
+import { IoCloseSharp } from "react-icons/io5";
 
 const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
   const isMobile = useCheckMobileScreen(480);
@@ -164,14 +165,17 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
             right="0px"
             zIndex={3}
             onClick={onClose}
+            color={"white"}
+            background={"#00D5C4"}
+            borderBottomLeftRadius={"8px"}
+            borderTopRightRadius={"8px"}
+            sx={{
+              _hover: {
+                background: "#FC0000",
+              },
+            }}
           >
-            <Image
-              src={PandoraCloseButton}
-              alt="Pandora-close-btn"
-              verticalAlign="middle"
-              maxW="100%"
-              loading="lazy"
-            />
+            <IoCloseSharp size={"36px"} />
           </Box>
           <Box
             padding={"24px"}

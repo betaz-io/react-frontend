@@ -196,9 +196,17 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
                         marginTop: "12px",
                         background: "#122126",
                         p: "12px 24px 24px 24px",
-                        border: "2px solid rgba(255, 255, 255, 0.4)",
+                        border: "2px solid #1BECA6",
+                        backgroundColor: "transparent",
+                        position: "relative"
                       }}
                     >
+                      <Box
+                        w="100%"
+                        h="100%"
+                        className="pandora-modal-ticket-overlay"
+                        zIndex="-1"
+                      ></Box>
                       {keyValues.map((keyvalue, index) => {
                         return (
                           <SimpleGrid columns={2}>

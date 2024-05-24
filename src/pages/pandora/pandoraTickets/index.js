@@ -260,12 +260,15 @@ const PandoraTicket = ({ visible, onClose }) => {
     <Box
       position="absolute"
       top="0"
-      right="0"
+      left={isMobile ? "0px" : "50%"}
+      transform={!isMobile && "translateX(-50%)"}
       zIndex={2}
       w={"100%"}
       overflow={"hidden"}
+      display={"flex"}
+      justifyContent={{ base: "center", xl: "end" }}
     >
-      <Box className="pandora-ticket-wrapper" w={{ base: "100%", sm: "unset" }}>
+      <Box className="pandora-ticket-wrapper" w={{ base: "100%", sm: "80%", xl: "90%" }}>
         <Box
           w="100%"
           h="100%"
@@ -274,7 +277,7 @@ const PandoraTicket = ({ visible, onClose }) => {
         ></Box>
         <Box
           className="deposit-modal-container"
-          w={{ base: "100%", md: "600px" }}
+          w={{ base: "100%" }}
           mx={{ base: "auto", md: "unset" }}
           // w={{ base: "100%", md: "50%" }}
           display="flex"
@@ -319,7 +322,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                   display={ticketId ? "block" : "none"}
                 >
                   <MdOutlineClear
-                    size={isMobile ?"32px":"54px"}
+                    size={isMobile ? "32px" : "54px"}
                     color="#C62828"
                     style={{ marginRight: "8px" }}
                   />
@@ -346,7 +349,7 @@ const PandoraTicket = ({ visible, onClose }) => {
             </Box>
             <Text
               color="#1BE8AD"
-              fontSize={{ base: "24px", sm: "40px" }}
+              fontSize={{ base: "24px", sm: "36px" }}
               fontStyle="normal"
               fontWeight="500"
               textAlign="center"
@@ -374,7 +377,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                 w="100%"
                 onClick={() => setModalPandoraWithdrawVisible(true)}
               >
-                WITHDRAW WINNING AMOUNT
+                WITHDRAW REWARD
               </Button>
             </Flex>
             <CommonButton
