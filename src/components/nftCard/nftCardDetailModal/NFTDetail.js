@@ -53,38 +53,48 @@ const NFTCardDetail = ({ item }) => {
   return (
     <>
       <Grid templateColumns="repeat(12, 1fr)" gap={"24px"}>
-        <GridItem colSpan={4}>
+        <GridItem colSpan={{ base: 12, sm: 4 }}>
           <Box
             className="PandoraTicketCard"
             border={"2px solid #00D5C4"}
             padding={"12px"}
             borderRadius={"6px"}
-            background="radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)"
+            background={
+              isMobile
+                ? "radial-gradient(207.35% 80.77% at 6.4% 21.96%, #FFF 0%, #FFA000 100%)"
+                : "radial-gradient(83.96% 38.98% at 50% 60.01%, #FFF 0%, #FFA000 100%)"
+            }
             w={"100%"}
             position={"relative"}
             cursor={"pointer"}
+            display={"flex"}
+            flexDirection={{ base: "row", sm: "column" }}
           >
-            <Image
-              src={EffectIcon}
-              alt=""
-              position="absolute"
-              top="300px"
-              right="-100px"
-              w="200px"
-              transform={"rotate(-90deg)"}
-              zIndex={4}
-              loading="lazy"
-            />
-            <Image
-              src={EffectIcon}
-              alt=""
-              position="absolute"
-              top="-30px"
-              left="-60px"
-              w="200px"
-              zIndex={4}
-              loading="lazy"
-            />
+            {!isMobile && (
+              <Image
+                src={EffectIcon}
+                alt=""
+                position="absolute"
+                top="300px"
+                right="-100px"
+                w="200px"
+                transform={"rotate(-90deg)"}
+                zIndex={4}
+                loading="lazy"
+              />
+            )}
+            {!isMobile && (
+              <Image
+                src={EffectIcon}
+                alt=""
+                position="absolute"
+                top="-30px"
+                left="-60px"
+                w="200px"
+                zIndex={4}
+                loading="lazy"
+              />
+            )}
             <Box
               w={"100%"}
               borderRadius={"6px"}
@@ -107,20 +117,21 @@ const NFTCardDetail = ({ item }) => {
               <Text
                 textTransform={"uppercase"}
                 fontWeight={"500"}
-                color={"black"}
-                fontSize={"3xl"}
-                mt={"24px"}
+                color={{ base: "black" }}
+                fontSize={{ base: "2xl", sm: "3xl" }}
+                mt={{ base: "0px", sm: "24px" }}
+                ml={{ base: "12px", sm: "0px" }}
               >
                 Pandora secret box #{item?.nftId}
               </Text>
             </Box>
           </Box>
         </GridItem>
-        <GridItem colSpan={8}>
+        <GridItem colSpan={{ base: 12, sm: 8 }}>
           <Box w={"100%"}>
             <Box
               color={"white"}
-              fontSize={"28px"}
+              fontSize={{ base: "20px", sm: "28px" }}
               fontWeight={"500"}
               textStyle={""}
               gap={"8px"}
@@ -146,7 +157,7 @@ const NFTCardDetail = ({ item }) => {
               w={"100%"}
             >
               <Box
-                minW={"240px"}
+                minW={{ base: "160px", sm: "240px" }}
                 padding={"12px"}
                 borderRadius={"12px"}
                 position={"relative"}
@@ -175,7 +186,7 @@ const NFTCardDetail = ({ item }) => {
 
               {item?.sessionId && (
                 <Box
-                  minW={"240px"}
+                  minW={{ base: "160px", sm: "240px" }}
                   padding={"12px"}
                   borderRadius={"12px"}
                   position={"relative"}
@@ -205,7 +216,7 @@ const NFTCardDetail = ({ item }) => {
 
               {item?.betNumber && (
                 <Box
-                  minW={"240px"}
+                  minW={{ base: "160px", sm: "240px" }}
                   padding={"12px"}
                   borderRadius={"12px"}
                   position={"relative"}
@@ -235,7 +246,7 @@ const NFTCardDetail = ({ item }) => {
 
               {item?.time && (
                 <Box
-                  minW={"240px"}
+                  minW={{ base: "160px", sm: "240px" }}
                   padding={"12px"}
                   borderRadius={"12px"}
                   position={"relative"}

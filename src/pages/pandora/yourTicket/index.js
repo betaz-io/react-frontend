@@ -34,6 +34,7 @@ import useWebSocket from "react-use-websocket";
 import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import PandoraDetailBg from "assets/img/PandoraDetailBg.png";
+import PandoraDetailBgMobile from "assets/img/PandoraDetailBgMobile.png";
 import { usePandoraTickets } from "hooks/usePandoraTickets";
 import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
@@ -95,7 +96,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         position="relative"
       >
         <Image
-          src={PandoraDetailBg}
+          src={isMobile ? PandoraDetailBgMobile : PandoraDetailBg}
           alt=""
           position={"absolute"}
           zIndex={"-1"}
@@ -143,6 +144,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           className="pandora-modal-select-ticket-text-title"
           mb={"16px"}
           textAlign={"center"}
+          fontSize={isMobile && "11vw"}
         >
           YOUR TICKETS
         </Text>
@@ -150,6 +152,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           className="history-modal-content-title"
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
+          padding={isMobile && "4px"}
         >
           <Box
             // className="history-modal-tabs"
@@ -165,7 +168,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
                   key={`tab-${index}`}
                   onClick={() => setCurrentTab(index)}
                   cursor={"pointer"}
-                  minW={"200px"}
+                  minW={{ base: "100px", sm: "200px" }}
                   borderRight={lastIndex && "4px solid #FFA000"}
                 >
                   <Text
@@ -189,12 +192,12 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
             justifyContent={"end"}
             position={"absolute"}
             right={"0px"}
-            top={"100px"}
+            top={{ base: "85px", sm: "100px" }}
             zIndex={1}
           >
             <Box
-            position={"absolute"}
-            right={"0px"}
+              position={"absolute"}
+              right={"0px"}
               className="pandora-btn-close"
               w={"max-content"}
               onClick={onClose}
@@ -208,32 +211,35 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
                 },
               }}
             >
-              <IoCloseSharp size={"36px"} />
+              <IoCloseSharp size={isMobile ? "24px" : "36px"} />
             </Box>
           </Flex>
 
-          <Box
-            className="pandora-btn-close"
-            position="absolute"
-            top="70px"
-            left="82%"
-            zIndex={3}
-            onClick={onClose}
-          >
-            <Text
-              className="pandora-modal-select-ticket-text-title"
-              mb={"16px"}
-              textAlign={"center"}
-              fontSize={"24px"}
+          {!isMobile && (
+            <Box
+              className="pandora-btn-close"
+              position="absolute"
+              top="70px"
+              left="82%"
+              zIndex={3}
+              onClick={onClose}
             >
-              TOTAL: {pandoraTicketsData?.length}
-            </Text>
-          </Box>
+              <Text
+                className="pandora-modal-select-ticket-text-title"
+                mb={"16px"}
+                textAlign={"center"}
+                fontSize={"24px"}
+              >
+                TOTAL: {pandoraTicketsData?.length}
+              </Text>
+            </Box>
+          )}
           <Box
             w="100%"
             className="pandora-modal-container"
             gap="24px"
-            paddingX={"20px"}
+            paddingX={isMobile ? "0px" : "20px"}
+            paddingY={isMobile && "0px"}
             border={"none"}
           >
             {isLoadingTicketsData || isRefetchingTicketsData ? (
@@ -248,7 +254,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
                 gap="24px"
                 flexWrap={"wrap"}
                 w={"100%"}
-                maxH={{base:"75vh"}}
+                maxH={{ base: "54vh", sm: "75vh" }}
                 overflowY={"auto"}
                 justifyContent={"start !important"}
               >
