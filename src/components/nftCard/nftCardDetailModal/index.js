@@ -71,6 +71,7 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
         position="relative"
         border={"none"}
         borderRadius={"12px"}
+        overflowX={isMobile && "hidden"}
       >
         <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
         <Box
@@ -87,19 +88,21 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           zIndex={-2}
           opacity={0.3}
         ></Box>
-        <Box
-          className="lucky-number-circle-image"
-          bgImage={PandoraListCoin}
-          bgRepeat="no-repeat"
-          bgPosition="center"
-          maxW={{ base: "280px", sm: "760px" }}
-          w={{ base: "280px", sm: "760px" }}
-          position="absolute"
-          backdropBlur={"10px"}
-          right={"-40px"}
-          top={"210px"}
-          zIndex={2}
-        ></Box>
+        {!isMobile && (
+          <Box
+            className="lucky-number-circle-image"
+            bgImage={PandoraListCoin}
+            bgRepeat="no-repeat"
+            bgPosition="center"
+            maxW={{ base: "280px", sm: "760px" }}
+            w={{ base: "280px", sm: "760px" }}
+            position="absolute"
+            backdropBlur={"10px"}
+            right={"-40px"}
+            top={"210px"}
+            zIndex={2}
+          ></Box>
+        )}
         {/* <Image
           position="absolute"
           w="240px"
@@ -141,7 +144,7 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
                 <Box
                   key={`tab-${index}`}
                   onClick={() => setCurrentTab(index)}
-                  minW={{ base: "240px" }}
+                  minW={{ base: "72px", sm: "240px" }}
                   cursor={"pointer"}
                 >
                   <Text

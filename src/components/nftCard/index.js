@@ -52,7 +52,7 @@ const PandoraTicketsCard = ({ item }) => {
         background={
           "radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
         }
-        maxW={"176px"}
+        maxW={isMobile ? "136px" : "176px"}
         position={"relative"}
         cursor={"pointer"}
         sx={{
@@ -70,7 +70,7 @@ const PandoraTicketsCard = ({ item }) => {
           overflow={"hidden"}
           position={"relative"}
         >
-          <Image src={PandoraItemBG} alt="Pandora-item-bg" loading="lazy"/>
+          <Image src={PandoraItemBG} alt="Pandora-item-bg" loading="lazy" />
           <Image
             src={PandoraItem}
             alt=""
