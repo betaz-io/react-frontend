@@ -69,9 +69,11 @@ const NFTCardDetailModal = ({ item, onClose, isOpen }) => {
           sm: "calc(100vw - 120px) !important",
         }}
         position="relative"
-        border={"none"}
+        border={"none !important"}
         borderRadius={"12px"}
         overflowX={isMobile && "hidden"}
+        mx={"auto"}
+        maxWidth="90%"
       >
         <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
         <Box

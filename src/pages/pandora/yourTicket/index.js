@@ -35,6 +35,7 @@ import EffectIcon from "assets/img/LightIcon1.png";
 import PandoraBGCoin from "assets/img/PandoraBGCoin.png";
 import PandoraDetailBg from "assets/img/PandoraDetailBg.png";
 import PandoraDetailBgMobile from "assets/img/PandoraDetailBgMobile.png";
+import PandoraDetailBgTablet from "assets/img/PandoraDetailBgTablet.png";
 import { usePandoraTickets } from "hooks/usePandoraTickets";
 import PandoraItem from "assets/img/PandoraItem.png";
 import PandoraItemBG from "assets/img/PandoraItemBG.png";
@@ -83,6 +84,8 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
   };
 
   const isMobile = useCheckMobileScreen(480);
+  const IsMdScreen = useCheckMobileScreen(768);
+  const IsXlScreen = useCheckMobileScreen(1280);
   return (
     <Modal onClose={onClose} size="lg" isOpen={isOpen}>
       <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
@@ -90,19 +93,12 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         // className="pandora-history-modal-content-container"
         backgroundColor={"transparent !important"}
         maxW={{
-          base: "calc(100vw) !important",
+          base: "calc(100vw - 24px) !important",
           sm: "calc(100vw - 200px) !important",
         }}
         position="relative"
+        mx={"auto"}
       >
-        <Image
-          src={isMobile ? PandoraDetailBgMobile : PandoraDetailBg}
-          position={"absolute"}
-          zIndex={"-1"}
-          w={"100%"}
-          top={"64px"}
-          alt="images"
-        ></Image>
         <Box
           className="lucky-number-circle-image"
           bgImage={PandoraBGCoin}
@@ -117,30 +113,21 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           zIndex={-2}
           opacity={0.3}
         ></Box>
-        <Image
-          position="absolute"
-          w="240px"
-          sx={{
-            bottom: "0px",
-            left: "-112px",
-          }}
-          src={EffectIcon}
-          className="pandora-effect-icon"
-          transform={"rotate(-90deg)"}
-          loading="lazy"
-          alt="images"
-        />
-        {/* <Image
-          position="absolute"
-          w="240px"
-          sx={{
-            top: "-36px",
-            right: "0px",
-          }}
-          src={EffectIcon}
-          className="pandora-effect-icon"
-          loading="lazy"
-        /> */}
+        {isMobile && (
+          <Image
+            position="absolute"
+            w="240px"
+            sx={{
+              bottom: "0px",
+              left: "-112px",
+            }}
+            src={EffectIcon}
+            className="pandora-effect-icon"
+            transform={"rotate(-90deg)"}
+            loading="lazy"
+            alt="images"
+          />
+        )}
         <Text
           className="pandora-modal-select-ticket-text-title"
           mb={"16px"}
@@ -149,63 +136,105 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         >
           YOUR TICKETS
         </Text>
-        <ModalHeader
+        {/* <ModalHeader
           className="history-modal-content-title"
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
           padding={isMobile && "4px"}
+          maxW={"max-content"}
+          mx={"auto"}
         >
-          <Box
-            // className="history-modal-tabs"
-            display={"flex"}
-            margin={"0 auto"}
-            w={"max-content"}
-          >
-            {tabData.map((e, index) => {
-              const isActive = currentTab === index;
-              const lastIndex = tabData.length - 1 - index;
-              return (
-                <Box
-                  key={`tab-${index}`}
-                  onClick={() => setCurrentTab(index)}
-                  cursor={"pointer"}
-                  minW={{ base: "100px", sm: "200px" }}
-                  borderRight={lastIndex && "4px solid #FFA000"}
-                >
-                  <Text
-                    fontSize={{ base: "16px", sm: "20px" }}
-                    fontWeight={{ base: "500", sm: "700" }}
-                    color={"#0076CE"}
-                    className={`${isActive && "linear-text"}`}
-                  >
-                    {e?.label}
-                  </Text>
-                </Box>
-              );
-            })}
-          </Box>
-        </ModalHeader>
+        </ModalHeader> */}
         {/* <ModalCloseButton color="#FFF" /> */}
-        <ModalBody>
+        <ModalBody padding={"0px"}>
           {/* <Box w="100%" h="100%" className="pandora-modal-overlay"></Box> */}
-          <Flex
-            w={"max-content"}
-            justifyContent={"end"}
-            position={"absolute"}
-            right={"0px"}
-            top={{ base: "85px", sm: "100px" }}
-            zIndex={1}
-          >
+          <Box position="relative" h="max-content" overflow={"hidden"}>
+            {!IsXlScreen && (
+              <Box
+                className="pandora-btn-close"
+                position="absolute"
+                top="0%"
+                left="82%"
+                zIndex={3}
+                onClick={onClose}
+                display={{ base: "none", sm: "block" }}
+              >
+                <Text
+                  className="pandora-modal-select-ticket-text-title"
+                  mb={"16px"}
+                  textAlign={"center"}
+                  fontSize={"24px"}
+                >
+                  TOTAL: {pandoraTicketsData?.length}
+                </Text>
+              </Box>
+            )}
             <Box
+              className="history-modal-content-title"
+              fontWeight={{ base: "500", sm: "700" }}
+              fontSize={{ base: "20px", sm: "32px" }}
+              padding={isMobile && "4px"}
+              w={"100%"}
+              maxW={"max-content"}
               position={"absolute"}
-              right={"0px"}
+              top={"2%"}
+              left={"50%"}
+              transform={"translateX(-50%)"}
+            >
+              <Box
+                // className="history-modal-tabs"
+                display={"flex"}
+                margin={"0 auto"}
+                w={"max-content"}
+              >
+                {tabData.map((e, index) => {
+                  const isActive = currentTab === index;
+                  const lastIndex = tabData.length - 1 - index;
+                  return (
+                    <Box
+                      key={`tab-${index}`}
+                      onClick={() => setCurrentTab(index)}
+                      cursor={"pointer"}
+                      minW={{ base: "100px", md: "160px" }}
+                      borderRight={lastIndex && "4px solid #FFA000"}
+                    >
+                      <Text
+                        fontSize={{ base: "16px", sm: "20px" }}
+                        fontWeight={{ base: "500", sm: "700" }}
+                        color={"#0076CE"}
+                        className={`${isActive && "linear-text"}`}
+                      >
+                        {e?.label}
+                      </Text>
+                    </Box>
+                  );
+                })}
+              </Box>
+            </Box>
+            <Image
+              src={
+                isMobile
+                  ? PandoraDetailBgMobile
+                  : IsXlScreen
+                  ? PandoraDetailBgTablet
+                  : PandoraDetailBg
+              }
+              alt="images"
+              w="100%"
+              verticalAlign="middle"
+            />
+            <Box
+              position="absolute"
+              right={{ base: "0.5%", sm: "0.1%", xl: "0.2%" }}
+              top={{ base: "4.3%", sm: "3.4%", xl: "6.15%" }}
               className="pandora-btn-close"
-              w={"max-content"}
+              w="max-content"
               onClick={onClose}
-              color={"white"}
-              background={"#00D5C4"}
-              borderBottomLeftRadius={"8px"}
-              borderTopRightRadius={"8px"}
+              color="white"
+              background="#00D5C4"
+              borderBottomLeftRadius={{ base: "8px", sm: "10px" }}
+              borderTopRightRadius={{ base: "8px", sm: "10px" }}
+              zIndex={"99999999"}
               sx={{
                 _hover: {
                   background: "#FC0000",
@@ -214,63 +243,72 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
             >
               <IoCloseSharp size={isMobile ? "24px" : "36px"} />
             </Box>
-          </Flex>
 
-          {!isMobile && (
             <Box
-              className="pandora-btn-close"
-              position="absolute"
-              top="70px"
-              left="82%"
-              zIndex={3}
-              onClick={onClose}
+              w={{ base: "94%", sm: "94%" }}
+              className="pandora-modal-container"
+              paddingX={{ base: "12px", sm: "24px" }}
+              paddingY={isMobile && "12px"}
+              border={"none"}
+              position={"absolute"}
+              top={"10%"}
+              h={{base:"75%", sm: "80%"}}
+              left={"50%"}
+              transform={"translateX(-50%)"}
+              overflowY={"auto"}
             >
-              <Text
-                className="pandora-modal-select-ticket-text-title"
-                mb={"16px"}
-                textAlign={"center"}
-                fontSize={"24px"}
-              >
-                TOTAL: {pandoraTicketsData?.length}
-              </Text>
-            </Box>
-          )}
-          <Box
-            w="100%"
-            className="pandora-modal-container"
-            gap="24px"
-            paddingX={isMobile ? "0px" : "20px"}
-            paddingY={isMobile && "0px"}
-            border={"none"}
-          >
-            {isLoadingTicketsData || isRefetchingTicketsData ? (
-              <Flex justifyContent={"center"} gap={"12px"}>
-                <CircularProgress isIndeterminate color="#1beca6" />
+              {isLoadingTicketsData || isRefetchingTicketsData ? (
+                <Flex justifyContent={"center"} gap={"12px"}>
+                  <CircularProgress isIndeterminate color="#1beca6" />
+                  <Text className="pandora-modal-text-title" color="#FFA000">
+                    Loading ..........
+                  </Text>
+                </Flex>
+              ) : pandoraTicketsData?.length ? (
+                <Flex
+                  gap={{ base: "12px", sm: "24px" }}
+                  flexWrap={"wrap"}
+                  w={"100%"}
+                  maxH={"100%"}
+                  justifyContent={"start !important"}
+                >
+                  {pandoraTicketsData?.map((item) => (
+                    <PandoraTicketsCard item={item} />
+                  ))}
+                </Flex>
+              ) : (
                 <Text className="pandora-modal-text-title" color="#FFA000">
-                  Loading ..........
+                  You don't own any tickets
                 </Text>
-              </Flex>
-            ) : pandoraTicketsData?.length ? (
-              <Flex
-                gap="24px"
-                flexWrap={"wrap"}
-                w={"100%"}
-                maxH={{ base: "54vh", sm: "75vh" }}
-                overflowY={"auto"}
-                justifyContent={"start !important"}
-              >
-                {pandoraTicketsData?.map((item) => (
-                  <PandoraTicketsCard item={item} />
-                ))}
-              </Flex>
-            ) : (
-              <Text className="pandora-modal-text-title" color="#FFA000">
-                You don't own any tickets
-              </Text>
-            )}
+              )}
+            </Box>
+
+            <Box
+              display="flex"
+              gap="8px"
+              position={"absolute"}
+              bottom={"3%"}
+              left={"50%"}
+              transform={"translateX(-50%)"}
+            >
+              <ReactPaginate
+                pageCount={totalPages}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={1}
+                onPageChange={handlePageChange}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+                breakClassName={"ellipsis"}
+                breakLabel={"..."}
+                previousLabel={<MdOutlineArrowBackIosNew />}
+                nextLabel={<MdOutlineArrowForwardIos />}
+                renderOnZeroPageCount={null}
+                initialPage={currentPage - 1}
+              />
+            </Box>
           </Box>
         </ModalBody>
-        <ModalFooter
+        {/* <ModalFooter
           className="history-table-footer-container"
           position={"relative"}
         >
@@ -290,7 +328,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
               initialPage={currentPage - 1}
             />
           </Box>
-        </ModalFooter>
+        </ModalFooter> */}
       </ModalContent>
     </Modal>
   );
