@@ -97,11 +97,11 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
       >
         <Image
           src={isMobile ? PandoraDetailBgMobile : PandoraDetailBg}
-          alt=""
           position={"absolute"}
           zIndex={"-1"}
           w={"100%"}
           top={"64px"}
+          alt="images"
         ></Image>
         <Box
           className="lucky-number-circle-image"
@@ -128,6 +128,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
           className="pandora-effect-icon"
           transform={"rotate(-90deg)"}
           loading="lazy"
+          alt="images"
         />
         {/* <Image
           position="absolute"

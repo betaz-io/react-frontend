@@ -48,17 +48,17 @@ function PandoraInput(props) {
       <Image
         opacity={topLeftIcon ? 1 : 0}
         src={EffectIcon}
-        alt=""
         position="absolute"
         top="-36px"
         left="0"
         w="240px"
         loading="lazy"
+        alt="images"
       />
       <Image
         opacity={topRightIcon ? 1 : 0}
         src={EffectIcon}
-        alt=""
+        alt="images"
         position="absolute"
         top="-36px"
         right="0px"
@@ -68,7 +68,7 @@ function PandoraInput(props) {
       <Image
         opacity={bottomLeftIcon ? 1 : 0}
         src={EffectIcon}
-        alt=""
+        alt="images"
         position="absolute"
         bottom="-36px"
         left="0px"
@@ -78,7 +78,7 @@ function PandoraInput(props) {
       <Image
         opacity={bottomRightIcon ? 1 : 0}
         src={EffectIcon}
-        alt=""
+        alt="images"
         position="absolute"
         bottom="-36px"
         right="0px"
