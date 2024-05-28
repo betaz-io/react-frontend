@@ -152,6 +152,7 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
           className="pandora-effect-icon"
           transform={"rotate(-90deg)"}
           loading="lazy"
+          alt="images"
         />
         <Image
           position="absolute"
@@ -163,6 +164,7 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
           src={EffectIcon}
           className="pandora-effect-icon"
           loading="lazy"
+          alt="images"
         />
         <ModalHeader
           className="history-modal-content-title linear-text"

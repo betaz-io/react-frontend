@@ -251,7 +251,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                           >
                             <Image
                               src={EffectIcon}
-                              alt=""
+                              alt="images"
                               position="absolute"
                               top="140px"
                               right="-86px"
@@ -263,7 +263,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             />
                             <Image
                               src={EffectIcon}
-                              alt=""
+                              alt="images"
                               position="absolute"
                               top="-26px"
                               left="-60px"

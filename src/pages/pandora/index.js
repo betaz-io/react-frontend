@@ -192,6 +192,7 @@ const PandoraMode = () => {
                     transform={"rotate(-45deg)"}
                     filter={"blur(3px) brightness(150%)"}
                     loading="lazy"
+                    alt="images"
                   />
                   <Image
                     position="absolute"
@@ -218,6 +219,7 @@ const PandoraMode = () => {
                     transform={"rotate(-45deg)"}
                     filter={"blur(3px) brightness(150%)"}
                     loading="lazy"
+                    alt="images"
                   />
                 </Box>
               )}
