@@ -157,7 +157,7 @@ const NFTCardDetail = ({ item }) => {
               w={"100%"}
             >
               <Box
-                minW={{ base: "160px", sm: "240px" }}
+                minW={{ base: "136px", sm: "240px" }}
                 padding={"12px"}
                 borderRadius={"12px"}
                 position={"relative"}
@@ -186,7 +186,7 @@ const NFTCardDetail = ({ item }) => {
 
               {item?.sessionId && (
                 <Box
-                  minW={{ base: "160px", sm: "240px" }}
+                  minW={{ base: "136px", sm: "240px" }}
                   padding={"12px"}
                   borderRadius={"12px"}
                   position={"relative"}
@@ -216,7 +216,7 @@ const NFTCardDetail = ({ item }) => {
 
               {item?.betNumber && (
                 <Box
-                  minW={{ base: "160px", sm: "240px" }}
+                  minW={{ base: "136px", sm: "240px" }}
                   padding={"12px"}
                   borderRadius={"12px"}
                   position={"relative"}
@@ -246,7 +246,7 @@ const NFTCardDetail = ({ item }) => {
 
               {item?.time && (
                 <Box
-                  minW={{ base: "160px", sm: "240px" }}
+                  minW={{ base: "136px", sm: "240px" }}
                   padding={"12px"}
                   borderRadius={"12px"}
                   position={"relative"}
