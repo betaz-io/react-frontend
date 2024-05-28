@@ -99,7 +99,7 @@ function PandoraInput(props) {
             value={value}
             placeholder="----------"
             maxLength={maxLength}
-            // type="Number"
+            type={type}
           />
         </Flex>
       )}

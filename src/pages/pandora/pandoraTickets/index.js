@@ -344,7 +344,8 @@ const PandoraTicket = ({ visible, onClose }) => {
                 value={betNumberVal}
                 topRightIcon={true}
                 bottomLeftIcon={true}
-                // maxLength={6}
+                type="number"
+                maxLength={7}
               />
             </Box>
             <Text
