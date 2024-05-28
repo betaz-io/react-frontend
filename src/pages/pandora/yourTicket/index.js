@@ -94,7 +94,7 @@ const PandoraTicketsModal = ({ isOpen, onClose, item }) => {
         backgroundColor={"transparent !important"}
         maxW={{
           base: "calc(100vw - 24px) !important",
-          sm: "calc(100vw - 200px) !important",
+          md: "calc(100vw - 200px) !important",
         }}
         position="relative"
         mx={"auto"}
