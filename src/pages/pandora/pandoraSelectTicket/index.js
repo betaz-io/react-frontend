@@ -5,6 +5,7 @@ import {
   Flex,
   Image,
   Input,
+  Link,
   Modal,
   ModalBody,
   ModalContent,
@@ -134,44 +135,48 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                 borderTopRightRadius={"8px"}
                 sx={{
                   _hover: {
-                    background: "#FC0000"
-                  }
+                    background: "#FC0000",
+                  },
                 }}
               >
-                <IoCloseSharp  size={"36px"}/>
+                <IoCloseSharp size={"36px"} />
               </Box>
 
               {/* button pev & next */}
-              {isMobile && <Box
-                background={"#00D5C4"}
-                borderRadius={"12px"}
-                py={"12px"}
-                position={"absolute"}
-                top={"50%"}
-                left={"-8px"}
-                transform={"translateY(-50%)"}
-              >
-                <MdOutlineArrowBackIosNew
-                  size={"36px"}
-                  color="white"
-                  onClick={previousPage}
-                />
-              </Box>}
-              {isMobile && <Box
-                background={"#00D5C4"}
-                borderRadius={"12px"}
-                py={"12px"}
-                position={"absolute"}
-                top={"50%"}
-                right={"-8px"}
-                transform={"translateY(-50%)"}
-              >
-                <MdOutlineArrowForwardIos
-                  size={"36px"}
-                  color="white"
-                  onClick={previousPage}
-                />
-              </Box>}
+              {isMobile && (
+                <Box
+                  background={"#00D5C4"}
+                  borderRadius={"12px"}
+                  py={"12px"}
+                  position={"absolute"}
+                  top={"50%"}
+                  left={"-8px"}
+                  transform={"translateY(-50%)"}
+                >
+                  <MdOutlineArrowBackIosNew
+                    size={"36px"}
+                    color="white"
+                    onClick={previousPage}
+                  />
+                </Box>
+              )}
+              {isMobile && (
+                <Box
+                  background={"#00D5C4"}
+                  borderRadius={"12px"}
+                  py={"12px"}
+                  position={"absolute"}
+                  top={"50%"}
+                  right={"-8px"}
+                  transform={"translateY(-50%)"}
+                >
+                  <MdOutlineArrowForwardIos
+                    size={"36px"}
+                    color="white"
+                    onClick={previousPage}
+                  />
+                </Box>
+              )}
 
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
               <Box
@@ -201,7 +206,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                   alignItems={"center"}
                   overflow={"hidden"}
                   maxW={"100%"}
-                  px={isMobile? "24px": "16px"}
+                  px={isMobile ? "24px" : "16px"}
                 >
                   {!isMobile && (
                     <MdOutlineArrowBackIosNew
@@ -211,7 +216,12 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                       cursor={"pointer"}
                     />
                   )}
-                  <Flex w={"100%"} flexWrap={"wrap"} gap={"12px"} justifyContent={"center"}>
+                  <Flex
+                    w={"100%"}
+                    flexWrap={"wrap"}
+                    gap={"12px"}
+                    justifyContent={"center"}
+                  >
                     {isRefetchingMyTicketList ? (
                       <Flex justifyContent={"center"} gap={"12px"}>
                         <CircularProgress isIndeterminate color="#1beca6" />
@@ -240,7 +250,6 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                                 : "radial-gradient(83.96% 38.98% at 50% 50.01%, #0D1B14 0%, #FFF 100%)"
                             }
                             maxW={isMobile ? "120px" : "176px"}
-                            
                             position={"relative"}
                             cursor={"pointer"}
                             onClick={() => {
@@ -313,7 +322,14 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                         className="pandora-modal-text-title"
                         color="#FFA000"
                       >
-                        You don't own any tickets
+                        You don't have any tickets.{" "}
+                        <Link
+                          color={"#1BECA6"}
+                          target="_blank"
+                          href="https://a0-test.artzero.io/collection/5GSQJWgt4jTkBqZZfvF6ARCoxYZ9XygmYNLLautZLaBqx8kc?is_for_sale=true"
+                        >
+                          Get yours now!
+                        </Link>
                       </Text>
                     )}
                   </Flex>

@@ -6,6 +6,7 @@ import "./navbar-landing-page.css";
 import { Link, useLocation } from "react-router-dom";
 import { SectionContainer } from "components/container";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
+import SwitchModeButton from "components/button/switchModeButton";
 
 const Navbar = () => {
   const isMobile = useCheckMobileScreen(480);
@@ -41,6 +42,7 @@ const Navbar = () => {
             flexWrap="wrap"
             gap="14px"
           >
+            <SwitchModeButton />
             <NetWorkButton />
             <WalletButton />
           </Box>
@@ -80,6 +82,7 @@ const Navbar = () => {
               fixed={props.fixed}
               scrolled={scrolled}
             /> */}
+          <SwitchModeButton />
           <NetWorkButton />
           <WalletButton />
         </Box>

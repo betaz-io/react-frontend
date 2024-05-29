@@ -81,7 +81,7 @@ const PandoraNumber = () => {
               fontWeight={{ base: "700" }}
               textTransform={"uppercase"}
             >
-              Results of session #{sectionPresent.sessionId}
+              Session #{sectionPresent.sessionId} Results
             </Text>
           )}
         </Box>

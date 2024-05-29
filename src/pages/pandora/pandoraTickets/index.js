@@ -306,8 +306,9 @@ const PandoraTicket = ({ visible, onClose }) => {
                 fontWeight={"500"}
                 fontSize={{ base: "20px", sm: "24px" }}
                 mb="6px"
+                textTransform={"uppercase"}
               >
-                YOUR TICKET SELECTED
+                Select Your Ticket
               </Text>
               <Box display={"flex"} gap={"12px"}>
                 <PandoraInput
@@ -361,6 +362,19 @@ const PandoraTicket = ({ visible, onClose }) => {
             <Box minW={{ base: "90%" }} mx="auto">
               <PandoraCountDownSelectTicket date={getNextHourTime(4)} />
             </Box>
+            <CommonButton
+              text="BET NOW"
+              onClick={onPlay}
+              sx={{
+                fontWeight: "600",
+                fontStyle: "normal",
+                fontsize: { base: "18px" },
+                background:
+                  "linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important",
+              }}
+              isLoading={isLoading}
+              isDisabled={isLoading}
+            />
             <Flex gap="24px" flexDirection={{ base: "column", sm: "row" }}>
               <Button
                 fontWeight="600"
@@ -381,19 +395,6 @@ const PandoraTicket = ({ visible, onClose }) => {
                 WITHDRAW REWARD
               </Button>
             </Flex>
-            <CommonButton
-              text="BET NOW"
-              onClick={onPlay}
-              sx={{
-                fontWeight: "600",
-                fontStyle: "normal",
-                fontsize: { base: "18px" },
-                background:
-                  "linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important",
-              }}
-              isLoading={isLoading}
-              isDisabled={isLoading}
-            />
           </Box>
         </Box>
       </Box>
