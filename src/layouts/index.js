@@ -6,6 +6,7 @@ import PandoraModeBgMobileImage from "assets/img/PandoraModeBgMobile.png";
 import { useLocation } from "react-router-dom";
 import BETAZFooter from "components/Footer";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
+import BuyNFT from "components/button/buyNFT";
 
 const AppLayout = ({ children }) => {
   return (
@@ -37,11 +38,12 @@ const PandoraModeLayout = ({ children }) => {
     <Box
       background="#0F3435"
       sx={{
-        paddingTop: isMobile ? "0px": "32px",
+        paddingTop: isMobile ? "0px" : "32px",
         minHeight: "100vh",
       }}
       bgImage={isMobile ? PandoraModeBgMobileImage : PandoraModeBackgroundImage}
       bgSize={isMobile ? "contain" : "cover"}
+      position={"relative"}
     >
       <Navbar />
       <Box
@@ -52,6 +54,7 @@ const PandoraModeLayout = ({ children }) => {
       >
         {children}
       </Box>
+      <BuyNFT />
     </Box>
   );
 };
