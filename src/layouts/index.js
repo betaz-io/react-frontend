@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import BETAZFooter from "components/Footer";
 import useCheckMobileScreen from "hooks/useCheckMobileScreen";
 import BuyNFT from "components/button/buyNFT";
+import SwitchModeButton from "components/button/switchModeButton";
 
 const AppLayout = ({ children }) => {
   return (
@@ -18,6 +19,7 @@ const AppLayout = ({ children }) => {
       }}
       bgImage={BackgroundImage}
       bgSize="cover"
+      position={"relative"}
     >
       <Navbar />
       <Box
@@ -28,6 +30,7 @@ const AppLayout = ({ children }) => {
       >
         {children}
       </Box>
+      <SwitchModeButton />
     </Box>
   );
 };
@@ -54,6 +57,7 @@ const PandoraModeLayout = ({ children }) => {
       >
         {children}
       </Box>
+      <SwitchModeButton />
       <BuyNFT />
     </Box>
   );
