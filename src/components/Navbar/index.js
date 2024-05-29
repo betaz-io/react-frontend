@@ -42,7 +42,6 @@ const Navbar = () => {
             flexWrap="wrap"
             gap="14px"
           >
-            <SwitchModeButton />
             <NetWorkButton />
             <WalletButton />
           </Box>
@@ -73,7 +72,7 @@ const Navbar = () => {
           alignItems="center"
           justifyContent="end"
           flexWrap="wrap"
-          gap="14px"
+          gap={{base: "0px", sm: "14px"}}
         >
           {/* <NavbarLinks
               onOpen={props.onOpen}
@@ -82,7 +81,6 @@ const Navbar = () => {
               fixed={props.fixed}
               scrolled={scrolled}
             /> */}
-          <SwitchModeButton />
           <NetWorkButton />
           <WalletButton />
         </Box>
