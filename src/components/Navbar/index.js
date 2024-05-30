@@ -40,9 +40,10 @@ const Navbar = () => {
             alignItems="center"
             justifyContent="end"
             flexWrap="wrap"
-            gap="14px"
+            gap={isMobile ? "0px" : "14px"}
           >
             <NetWorkButton />
+            <SwitchModeButton />
             <WalletButton />
           </Box>
         </Flex>
@@ -72,7 +73,7 @@ const Navbar = () => {
           alignItems="center"
           justifyContent="end"
           flexWrap="wrap"
-          gap={{base: "0px", sm: "14px"}}
+          gap={{ base: "0px", sm: "14px" }}
         >
           {/* <NavbarLinks
               onOpen={props.onOpen}
@@ -82,6 +83,7 @@ const Navbar = () => {
               scrolled={scrolled}
             /> */}
           <NetWorkButton />
+          <SwitchModeButton />
           <WalletButton />
         </Box>
       </Flex>

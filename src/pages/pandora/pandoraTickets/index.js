@@ -382,8 +382,9 @@ const PandoraTicket = ({ visible, onClose }) => {
                 fontSize={{ base: "16px" }}
                 w="100%"
                 onClick={() => setModalPandoraYourBetHistoryVisible(true)}
+                textTransform={"uppercase"}
               >
-                YOUR BET
+                Your Prediction
               </Button>
               <Button
                 fontWeight="600"
@@ -391,8 +392,9 @@ const PandoraTicket = ({ visible, onClose }) => {
                 fontSize={{ base: "16px" }}
                 w="100%"
                 onClick={() => setModalPandoraWithdrawVisible(true)}
+                textTransform={"uppercase"}
               >
-                WITHDRAW REWARD
+                Claim Reward
               </Button>
             </Flex>
           </Box>
