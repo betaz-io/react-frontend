@@ -30,7 +30,6 @@ const AppLayout = ({ children }) => {
       >
         {children}
       </Box>
-      <SwitchModeButton />
     </Box>
   );
 };
@@ -57,7 +56,6 @@ const PandoraModeLayout = ({ children }) => {
       >
         {children}
       </Box>
-      <SwitchModeButton />
       <BuyNFT />
     </Box>
   );

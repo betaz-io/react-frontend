@@ -21,3 +21,7 @@
 .navbar-logo {
   height: 24px;
 }
+
+.btn-switch:hover p{
+  color: #0D171B;
+}

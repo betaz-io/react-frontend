@@ -215,7 +215,7 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
           fontWeight={{ base: "500", sm: "700" }}
           fontSize={{ base: "20px", sm: "32px" }}
         >
-          Bet History
+          Prediction History
         </ModalHeader>
         <ModalCloseButton color="#FFF" />
         <ModalBody>
