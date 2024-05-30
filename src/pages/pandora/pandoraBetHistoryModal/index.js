@@ -111,7 +111,7 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
         icon: <BiLayer size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Bet number win",
+        label: "Number win",
         key: "bet-number-win",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },

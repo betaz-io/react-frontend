@@ -84,7 +84,7 @@ const PandoraYourBetHistoryModal = ({ isOpen, onClose }) => {
         icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Bet number",
+        label: "Prediction number",
         key: "bet-number",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },

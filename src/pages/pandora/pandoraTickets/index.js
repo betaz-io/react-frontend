@@ -363,7 +363,7 @@ const PandoraTicket = ({ visible, onClose }) => {
               <PandoraCountDownSelectTicket date={getNextHourTime(4)} />
             </Box>
             <CommonButton
-              text="BET NOW"
+              text="PREDICTION NOW"
               onClick={onPlay}
               sx={{
                 fontWeight: "600",
