@@ -268,7 +268,10 @@ const PandoraTicket = ({ visible, onClose }) => {
       display={"flex"}
       justifyContent={{ base: "center", xl: "end" }}
     >
-      <Box className="pandora-ticket-wrapper" w={{ base: "100%", sm: "80%", xl: "90%" }}>
+      <Box
+        className="pandora-ticket-wrapper"
+        w={{ base: "100%", sm: "80%", xl: "90%" }}
+      >
         <Box
           w="100%"
           h="100%"
@@ -372,6 +375,7 @@ const PandoraTicket = ({ visible, onClose }) => {
                 background:
                   "linear-gradient(90deg, #B88510 7.25%, #FFB817 40.04%, #FFC133 46.68%, #FFCE61 58.58%, #FFD77D 67.78%, #FFDA87 73.1%, #FFFBF2 94.29%) !important",
               }}
+              hover={{ bg: "#E2E8F0 !important" }}
               isLoading={isLoading}
               isDisabled={isLoading}
             />
