@@ -14,6 +14,7 @@ function CommonButton(props) {
     backgroundColor,
     color,
     sx,
+    hover,
     ...rest
   } = props;
 
@@ -32,6 +33,7 @@ function CommonButton(props) {
         isDisabled={isDisabled}
         isLoading={!isDisabled && isLoading ? true : false}
         w={{ base: "100%", sm: "unset" }}
+        _hover={hover}
         spinner={<ClipLoader color="#7ae7ff" size={14} loading />}
       >
         {text}
