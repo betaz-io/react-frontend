@@ -214,7 +214,7 @@ const NFTCardDetail = ({ item }) => {
                 </Box>
               )}
 
-              {item?.betNumber && (
+              {item?.betNumber >= 0 && (
                 <Box
                   minW={{ base: "136px", sm: "240px" }}
                   padding={"12px"}
