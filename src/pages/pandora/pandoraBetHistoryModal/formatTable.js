@@ -32,8 +32,8 @@ export const formatTableValue = (value, key) => {
           }}
         >
           <Text textAlign="center">{formatNumDynDecimal(value)}</Text>
-          <AppIcon
-            size={{ base: "14px", sm: "14px" }}
+          <AzeroIcon
+            size={{ base: "11px", sm: "11px" }}
             padding={{
               base: "0px 0px 0px 4px",
               sm: "0px 0px 0px 4px",
