@@ -34,7 +34,7 @@ const PandoraHistoryButton = ({ onClick }) => {
         }}
         fontSize={{ base: "16px", sm: "24px" }}
       >
-        Prediction History
+        Pandora History
       </Text>
     </Box>
   );

@@ -129,10 +129,7 @@ const PandoraMode = () => {
           mt={{ base: "0px", sm: "48px" }}
           position="relative"
         >
-          <SimpleGrid
-            columns={{ md: 1, xl: 2 }}
-            spacingY={{ base: "24px" }}
-          >
+          <SimpleGrid columns={{ md: 1, xl: 2 }} spacingY={{ base: "24px" }}>
             <PandoraNumber />
             <Box
               className="section-pandora-right"
@@ -268,7 +265,7 @@ const PandoraMode = () => {
                 fontSize={"18px"}
                 fontWeight={"600"}
               >
-                --
+                {/* -- */}
               </Text>
               <Box display={"flex"}>
                 <Text
@@ -323,7 +320,7 @@ const PandoraMode = () => {
                 fontSize={"18px"}
                 fontWeight={"600"}
               >
-                --
+                {/* -- */}
               </Text>
               <Box display={"flex"}>
                 <Text
@@ -374,14 +371,14 @@ const PandoraMode = () => {
                 fontSize={"18px"}
                 fontWeight={"600"}
               >
-                Hold Amount
+                Your reward
               </Text>
               <Text
                 color={"white !important"}
                 fontSize={"18px"}
                 fontWeight={"600"}
               >
-                --
+                {/* -- */}
               </Text>
               <Box display={"flex"}>
                 <Text

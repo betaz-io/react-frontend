@@ -29,6 +29,10 @@ function PandoraInput(props) {
     onChange,
     onClick,
     maxLength,
+    disabled,
+    opacity,
+    onClickMax,
+    showMax,
     ...rest
   } = props;
 
@@ -86,7 +90,11 @@ function PandoraInput(props) {
         loading="lazy"
       />
       {textXl ? (
-        <Text className="pandora-modal-text-title" fontSize={{base: '20px', sm: "36px"}} color={textXlColor}>
+        <Text
+          className="pandora-modal-text-title"
+          fontSize={{ base: "20px", sm: "36px" }}
+          color={textXlColor}
+        >
           {textXl}
         </Text>
       ) : (
@@ -94,13 +102,27 @@ function PandoraInput(props) {
           <Input
             className="pandora-text-input"
             focusBorderColor="transparent"
-            sx={{ border: "0px", textAlign: "center", fontWeight: "600", fontSize: "24px" }}
+            sx={{
+              border: "0px",
+              textAlign: "center",
+              fontWeight: "600",
+              fontSize: "24px",
+            }}
             onChange={onChange}
             value={value}
             placeholder="----------"
             maxLength={maxLength}
             type={type}
+            disabled={disabled}
+            opacity={opacity}
           />
+          {showMax && (
+            <Box px={"12px"} py="8px" onClick={onClickMax}>
+              <Text color={"#1beca7"} fontWeight={"600"}>
+                MAX
+              </Text>
+            </Box>
+          )}
         </Flex>
       )}
     </Box>

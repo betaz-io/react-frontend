@@ -48,6 +48,8 @@ import {
   MdOutlineArrowForwardIos,
   MdOutlineClear,
 } from "react-icons/md";
+import { MdClear } from "react-icons/md";
+import { IoMdCheckmark } from "react-icons/io";
 import { useTicket } from "contexts/useSelectTicket";
 import { useMyTicketList } from "hooks/useMyTicketList";
 import { GrPowerReset } from "react-icons/gr";
@@ -186,13 +188,35 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                 paddingX={"0px"}
                 maxH={"80vh"}
               >
-                {/* <Box
+                <Box
                   px={"48px"}
                   py={"12px"}
                   display={"flex"}
                   alignItems={"center"}
                   justifyContent={"end"}
+                  gap={"12px"}
                 >
+                  {ticketId > 0 && (
+                    <CommonButton
+                      text={<IoMdCheckmark size={"24px"} />}
+                      isLoading={isRefetchingMyTicketList}
+                      isDisabled={isRefetchingMyTicketList}
+                      onClick={() => {
+                        if (ticketId) onClose();
+                        else setTicketId(0);
+                      }}
+                      className="btn-refetch"
+                    ></CommonButton>
+                  )}
+                  {ticketId > 0 && (
+                    <CommonButton
+                      text={<MdClear size={"24px"} />}
+                      isLoading={isRefetchingMyTicketList}
+                      isDisabled={isRefetchingMyTicketList}
+                      onClick={() => setTicketId(0)}
+                      className="btn-refetch"
+                    ></CommonButton>
+                  )}
                   <CommonButton
                     text={<GrPowerReset size={"24px"} />}
                     isLoading={isRefetchingMyTicketList}
@@ -200,7 +224,7 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                     onClick={() => refetchMyTicketList()}
                     className="btn-refetch"
                   ></CommonButton>
-                </Box> */}
+                </Box>
                 <Flex
                   justifyContent="space-between"
                   alignItems={"center"}
@@ -255,8 +279,12 @@ const PandoraSelectTicketModal = ({ visible, onClose }) => {
                             onClick={() => {
                               if (item?.nftId !== ticketId)
                                 setTicketId(item?.nftId);
+                              else setTicketId(0);
                             }}
-                            onDoubleClick={onClose}
+                            onDoubleClick={() => {
+                              setTicketId(item?.nftId);
+                              onClose();
+                            }}
                           >
                             <Image
                               src={EffectIcon}

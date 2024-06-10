@@ -156,11 +156,11 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
                 borderTopRightRadius={"8px"}
                 sx={{
                   _hover: {
-                    background: "#FC0000"
-                  }
+                    background: "#FC0000",
+                  },
                 }}
               >
-                <IoCloseSharp  size={"36px"}/>
+                <IoCloseSharp size={"36px"} />
               </Box>
               <Box w="100%" h="100%" className="pandora-modal-overlay"></Box>
               <Box
@@ -173,21 +173,37 @@ const PandoraWithdrawModal = ({ visible, onClose }) => {
                 <Text className="pandora-modal-text-title" color="#FFA000">
                   WITHDRAW
                 </Text>
-                <PandoraInput
-                  text={"YOUR HOLD AMOUNT BALANCE"}
+                <Text
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: "20px",
+                    // color:"#1beca7"
+                  }}
+                >
+                  Hold Amount Balance:{" "}
+                  <Text as={"span"} color={"#1beca7"}>
+                    {holdAmount}
+                  </Text>
+                </Text>
+                {/* <PandoraInput
+                  text={"HOLD AMOUNT"}
                   topRightIcon={true}
                   value={holdAmount}
-                />
+                  disabled={true}
+                  opacity={"1 !important"}
+                /> */}
                 <PandoraInput
-                  text={"HOLD AMOUNT"}
+                  text={"ENTER AMOUNT"}
                   value={holdAmountVal}
                   bottomLeftIcon={true}
                   onChange={onChangeholdAmount}
+                  showMax={true}
+                  onClickMax={() => setHoldAmountVal(holdAmount)}
                 />
 
                 <CommonButton
                   onClick={() => withdraw()}
-                  text="WITHDRAW HOLD AMOUNT"
+                  text="WITHDRAW"
                   isLoading={isLoading}
                 />
 

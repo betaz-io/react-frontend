@@ -111,7 +111,7 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
         icon: <BiLayer size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Number win",
+        label: "Pandora number",
         key: "bet-number-win",
         icon: <GiTwoCoins size="24px" style={{ marginRight: "8px" }} />,
       },
@@ -135,7 +135,7 @@ const PandoraBetHistoryModal = ({ isOpen, onClose }) => {
         icon: <AiFillStar size="24px" style={{ marginRight: "8px" }} />,
       },
       {
-        label: "Ticket id win",
+        label: "Tickets win",
         key: "ticket-id-win",
         icon: <RiVipDiamondFill size="24px" style={{ marginRight: "8px" }} />,
       },
