@@ -118,7 +118,12 @@ export const NavbarLandingPage = () => {
           {isMobile ? null : (
             <Button
               // onClick={() => toast.success("Comming soon!")}
-              onClick={() => window.open("/app", "_blank")}
+              onClick={() => {
+                if(process.env.REACT_APP_ENV == "mainnet"){
+                  toast.success("Comming soon!");
+                } else
+                window.open("/app", "_blank");
+              }}
             >
               Launch App
             </Button>

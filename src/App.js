@@ -133,10 +133,10 @@ const App = () => {
           <Route
             path="/app"
             element={
-              process.env.REACT_APP_ENV == "testnet" ? (
-                <Predict />
-              ) : (
+              process.env.REACT_APP_ENV == "mainnet" ? (
                 <CommingPage />
+              ) : (
+                <Predict />
               )
             }
           />
@@ -144,10 +144,10 @@ const App = () => {
           <Route
             path="/pandora"
             element={
-              process.env.REACT_APP_ENV == "testnet" ? (
-                <PandoraMode />
-              ) : (
+              process.env.REACT_APP_ENV == "mainnet" ? (
                 <CommingPage />
+              ) : (
+                <PandoraMode />
               )
             }
           />
