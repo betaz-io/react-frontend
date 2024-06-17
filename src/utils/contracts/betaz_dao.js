@@ -1,9 +1,9 @@
 const contract = {
   testnet: {
-    CONTRACT_ADDRESS: "5CqTB98jyrv9pMFb4QaqAAtjrbEXN1SUS2TDgXuLXZHEsy3n",
+    CONTRACT_ADDRESS: "5FzaSLsZqzCC6op1LC9pyqQw9NtsJ3wXCC2SfLkBFadhzZRv",
     CONTRACT_ABI: {
       source: {
-        hash: "0x1f1fef30b506a4f017a1c5fd4b981091c82da5ad2edcaa2b6dd5e6e63b93a1cb",
+        hash: "0x6c5aee5f6a817f44c747f7e4f8839e9afe0eb1e817c2b015f0ac73b9e47d143f",
         language: "ink! 4.3.0",
         compiler: "rustc 1.75.0-nightly",
         build_info: {
@@ -201,6 +201,115 @@ const contract = {
           {
             args: [
               {
+                label: "value",
+                type: {
+                  displayName: ["admintrait_external", "WithdrawFeeInput1"],
+                  type: 19,
+                },
+              },
+              {
+                label: "receiver",
+                type: {
+                  displayName: ["admintrait_external", "WithdrawFeeInput2"],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [
+              " This function allows contract owner to withdraw contract balance to his account.",
+            ],
+            label: "AdminTrait::withdraw_fee",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 8,
+            },
+            selector: "0x07573e99",
+          },
+          {
+            args: [
+              {
+                label: "psp22_contract_address",
+                type: {
+                  displayName: ["admintrait_external", "TranferPsp22Input1"],
+                  type: 0,
+                },
+              },
+              {
+                label: "amount",
+                type: {
+                  displayName: ["admintrait_external", "TranferPsp22Input2"],
+                  type: 19,
+                },
+              },
+              {
+                label: "receiver",
+                type: {
+                  displayName: ["admintrait_external", "TranferPsp22Input3"],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [
+              " This function allow contract owner withdraw PSP22 to an account in case there is any token sent to contract by mistake",
+            ],
+            label: "AdminTrait::tranfer_psp22",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 8,
+            },
+            selector: "0xd9aad284",
+          },
+          {
+            args: [
+              {
+                label: "account",
+                type: {
+                  displayName: ["daotrait_external", "SetCoreAddressInput1"],
+                  type: 0,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "DAOTrait::set_core_address",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 8,
+            },
+            selector: "0x57f61ad9",
+          },
+          {
+            args: [
+              {
+                label: "state",
+                type: {
+                  displayName: ["daotrait_external", "ChangeStateInput1"],
+                  type: 3,
+                },
+              },
+            ],
+            default: false,
+            docs: [" Function changes state"],
+            label: "DAOTrait::change_state",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 8,
+            },
+            selector: "0xe0c65276",
+          },
+          {
+            args: [
+              {
                 label: "account",
                 type: {
                   displayName: ["daotrait_external", "WithdrawFeeInput1"],
@@ -227,27 +336,6 @@ const contract = {
             selector: "0xebb5ea6f",
           },
           {
-            args: [
-              {
-                label: "account",
-                type: {
-                  displayName: ["daotrait_external", "SetCoreAddressInput1"],
-                  type: 0,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "DAOTrait::set_core_address",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 8,
-            },
-            selector: "0x57f61ad9",
-          },
-          {
             args: [],
             default: false,
             docs: [" Get bet az token contract"],
@@ -261,38 +349,17 @@ const contract = {
             selector: "0x0ebad4c4",
           },
           {
-            args: [
-              {
-                label: "state",
-                type: {
-                  displayName: ["daotrait_external", "ChangeStateInput1"],
-                  type: 3,
-                },
-              },
-            ],
-            default: false,
-            docs: [" Function changes state"],
-            label: "DAOTrait::change_state",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 8,
-            },
-            selector: "0xe0c65276",
-          },
-          {
             args: [],
             default: false,
             docs: [],
-            label: "Ownable::owner",
-            mutates: false,
+            label: "Ownable::renounce_ownership",
+            mutates: true,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
               type: 21,
             },
-            selector: "0x4fa43c8c",
+            selector: "0x5e228753",
           },
           {
             args: [
@@ -300,7 +367,7 @@ const contract = {
                 label: "new_owner",
                 type: {
                   displayName: ["ownable_external", "TransferOwnershipInput1"],
-                  type: 22,
+                  type: 23,
                 },
               },
             ],
@@ -311,7 +378,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 23,
+              type: 21,
             },
             selector: "0x11f43efd",
           },
@@ -319,14 +386,14 @@ const contract = {
             args: [],
             default: false,
             docs: [],
-            label: "Ownable::renounce_ownership",
-            mutates: true,
+            label: "Ownable::owner",
+            mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 23,
+              type: 24,
             },
-            selector: "0x5e228753",
+            selector: "0x4fa43c8c",
           },
           {
             args: [],
@@ -367,6 +434,27 @@ const contract = {
               {
                 label: "role",
                 type: {
+                  displayName: ["accesscontrol_external", "GetRoleAdminInput1"],
+                  type: 4,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "AccessControl::get_role_admin",
+            mutates: false,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 30,
+            },
+            selector: "0x83da3bb2",
+          },
+          {
+            args: [
+              {
+                label: "role",
+                type: {
                   displayName: ["accesscontrol_external", "HasRoleInput1"],
                   type: 4,
                 },
@@ -375,7 +463,7 @@ const contract = {
                 label: "address",
                 type: {
                   displayName: ["accesscontrol_external", "HasRoleInput2"],
-                  type: 22,
+                  type: 23,
                 },
               },
             ],
@@ -395,34 +483,6 @@ const contract = {
               {
                 label: "role",
                 type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
-                  type: 4,
-                },
-              },
-              {
-                label: "account",
-                type: {
-                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
-                  type: 22,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "AccessControl::renounce_role",
-            mutates: true,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 30,
-            },
-            selector: "0xeaf1248a",
-          },
-          {
-            args: [
-              {
-                label: "role",
-                type: {
                   displayName: ["accesscontrol_external", "GrantRoleInput1"],
                   type: 4,
                 },
@@ -431,7 +491,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "GrantRoleInput2"],
-                  type: 22,
+                  type: 23,
                 },
               },
             ],
@@ -442,7 +502,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 30,
+              type: 31,
             },
             selector: "0x4ac062fd",
           },
@@ -459,7 +519,7 @@ const contract = {
                 label: "account",
                 type: {
                   displayName: ["accesscontrol_external", "RevokeRoleInput2"],
-                  type: 22,
+                  type: 23,
                 },
               },
             ],
@@ -470,7 +530,7 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 30,
+              type: 31,
             },
             selector: "0x6e4f0991",
           },
@@ -479,21 +539,52 @@ const contract = {
               {
                 label: "role",
                 type: {
-                  displayName: ["accesscontrol_external", "GetRoleAdminInput1"],
+                  displayName: ["accesscontrol_external", "RenounceRoleInput1"],
+                  type: 4,
+                },
+              },
+              {
+                label: "account",
+                type: {
+                  displayName: ["accesscontrol_external", "RenounceRoleInput2"],
+                  type: 23,
+                },
+              },
+            ],
+            default: false,
+            docs: [],
+            label: "AccessControl::renounce_role",
+            mutates: true,
+            payable: false,
+            returnType: {
+              displayName: ["ink", "MessageResult"],
+              type: 31,
+            },
+            selector: "0xeaf1248a",
+          },
+          {
+            args: [
+              {
+                label: "role",
+                type: {
+                  displayName: [
+                    "accesscontrolenumerable_external",
+                    "GetRoleMemberCountInput1",
+                  ],
                   type: 4,
                 },
               },
             ],
             default: false,
             docs: [],
-            label: "AccessControl::get_role_admin",
+            label: "AccessControlEnumerable::get_role_member_count",
             mutates: false,
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 32,
+              type: 30,
             },
-            selector: "0x83da3bb2",
+            selector: "0xf1b1a9d7",
           },
           {
             args: [
@@ -525,33 +616,9 @@ const contract = {
             payable: false,
             returnType: {
               displayName: ["ink", "MessageResult"],
-              type: 21,
+              type: 24,
             },
             selector: "0x163469e0",
-          },
-          {
-            args: [
-              {
-                label: "role",
-                type: {
-                  displayName: [
-                    "accesscontrolenumerable_external",
-                    "GetRoleMemberCountInput1",
-                  ],
-                  type: 4,
-                },
-              },
-            ],
-            default: false,
-            docs: [],
-            label: "AccessControlEnumerable::get_role_member_count",
-            mutates: false,
-            payable: false,
-            returnType: {
-              displayName: ["ink", "MessageResult"],
-              type: 32,
-            },
-            selector: "0xf1b1a9d7",
           },
         ],
       },
@@ -771,45 +838,6 @@ const contract = {
                     },
                   },
                   name: "data",
-                },
-                {
-                  layout: {
-                    struct: {
-                      fields: [
-                        {
-                          layout: {
-                            enum: {
-                              dispatchKey: "0x00000000",
-                              name: "Option",
-                              variants: {
-                                0: {
-                                  fields: [],
-                                  name: "None",
-                                },
-                                1: {
-                                  fields: [
-                                    {
-                                      layout: {
-                                        leaf: {
-                                          key: "0x00000000",
-                                          ty: 5,
-                                        },
-                                      },
-                                      name: "0",
-                                    },
-                                  ],
-                                  name: "Some",
-                                },
-                              },
-                            },
-                          },
-                          name: "_reserved",
-                        },
-                      ],
-                      name: "Data",
-                    },
-                  },
-                  name: "admin_data",
                 },
               ],
               name: "DAOContract",
@@ -1319,13 +1347,17 @@ const contract = {
                     name: "ChainlinkRequestIdIsExists",
                   },
                   {
+                    index: 73,
+                    name: "CannotUpdateSession",
+                  },
+                  {
                     fields: [
                       {
                         type: 12,
                         typeName: "OwnableError",
                       },
                     ],
-                    index: 73,
+                    index: 74,
                     name: "OwnableError",
                   },
                   {
@@ -1335,7 +1367,7 @@ const contract = {
                         typeName: "AccessControlError",
                       },
                     ],
-                    index: 74,
+                    index: 75,
                     name: "AccessControlError",
                   },
                   {
@@ -1345,7 +1377,7 @@ const contract = {
                         typeName: "PSP22Error",
                       },
                     ],
-                    index: 75,
+                    index: 76,
                     name: "PSP22Error",
                   },
                   {
@@ -1355,7 +1387,7 @@ const contract = {
                         typeName: "PSP34Error",
                       },
                     ],
-                    index: 76,
+                    index: 77,
                     name: "PSP34Error",
                   },
                   {
@@ -1365,12 +1397,16 @@ const contract = {
                         typeName: "PausableError",
                       },
                     ],
-                    index: 77,
+                    index: 78,
                     name: "PausableError",
                   },
                   {
-                    index: 78,
+                    index: 79,
                     name: "CheckedOperations",
+                  },
+                  {
+                    index: 80,
+                    name: "CannotRandomAmounts",
                   },
                 ],
               },
@@ -1733,77 +1769,6 @@ const contract = {
               variant: {
                 variants: [
                   {
-                    index: 0,
-                    name: "None",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 0,
-                      },
-                    ],
-                    index: 1,
-                    name: "Some",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 0,
-              },
-            ],
-            path: ["Option"],
-          },
-        },
-        {
-          id: 23,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 24,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 7,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 24,
-              },
-              {
-                name: "E",
-                type: 7,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 24,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
                     fields: [
                       {
                         type: 5,
@@ -1832,6 +1797,77 @@ const contract = {
               {
                 name: "E",
                 type: 12,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 23,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    index: 0,
+                    name: "None",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 0,
+                      },
+                    ],
+                    index: 1,
+                    name: "Some",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 0,
+              },
+            ],
+            path: ["Option"],
+          },
+        },
+        {
+          id: 24,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 23,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 7,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 23,
+              },
+              {
+                name: "E",
+                type: 7,
               },
             ],
             path: ["Result"],
@@ -2034,7 +2070,7 @@ const contract = {
                   {
                     fields: [
                       {
-                        type: 31,
+                        type: 4,
                       },
                     ],
                     index: 0,
@@ -2055,7 +2091,7 @@ const contract = {
             params: [
               {
                 name: "T",
-                type: 31,
+                type: 4,
               },
               {
                 name: "E",
@@ -2067,6 +2103,46 @@ const contract = {
         },
         {
           id: 31,
+          type: {
+            def: {
+              variant: {
+                variants: [
+                  {
+                    fields: [
+                      {
+                        type: 32,
+                      },
+                    ],
+                    index: 0,
+                    name: "Ok",
+                  },
+                  {
+                    fields: [
+                      {
+                        type: 7,
+                      },
+                    ],
+                    index: 1,
+                    name: "Err",
+                  },
+                ],
+              },
+            },
+            params: [
+              {
+                name: "T",
+                type: 32,
+              },
+              {
+                name: "E",
+                type: 7,
+              },
+            ],
+            path: ["Result"],
+          },
+        },
+        {
+          id: 32,
           type: {
             def: {
               variant: {
@@ -2100,46 +2176,6 @@ const contract = {
               {
                 name: "E",
                 type: 13,
-              },
-            ],
-            path: ["Result"],
-          },
-        },
-        {
-          id: 32,
-          type: {
-            def: {
-              variant: {
-                variants: [
-                  {
-                    fields: [
-                      {
-                        type: 4,
-                      },
-                    ],
-                    index: 0,
-                    name: "Ok",
-                  },
-                  {
-                    fields: [
-                      {
-                        type: 7,
-                      },
-                    ],
-                    index: 1,
-                    name: "Err",
-                  },
-                ],
-              },
-            },
-            params: [
-              {
-                name: "T",
-                type: 4,
-              },
-              {
-                name: "E",
-                type: 7,
               },
             ],
             path: ["Result"],
