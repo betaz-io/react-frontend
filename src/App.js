@@ -37,6 +37,7 @@ import { web3Enable } from "@polkadot/extension-dapp";
 import { Flex, Spinner } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { fetchPandoraSession } from "store/slices/pandoraNftSlice";
+import CommingPage from "pages/comming";
 
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 
@@ -118,7 +119,7 @@ const App = () => {
       dispatch(fetchRollNumbers());
       dispatch(fetchRates());
       dispatch(fetchBuyStatus());
-      dispatch(fetchPandoraSession())
+      dispatch(fetchPandoraSession());
     }
   }, [api, currentAccount?.address]);
 
@@ -129,9 +130,27 @@ const App = () => {
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/app" element={<Predict />} />
+          <Route
+            path="/app"
+            element={
+              process.env.REACT_APP_ENV == "testnet" ? (
+                <Predict />
+              ) : (
+                <CommingPage />
+              )
+            }
+          />
           <Route path="/admin" element={<PrivateRouter />} />
-          <Route path="/pandora" element={<PandoraMode />} />
+          <Route
+            path="/pandora"
+            element={
+              process.env.REACT_APP_ENV == "testnet" ? (
+                <PandoraMode />
+              ) : (
+                <CommingPage />
+              )
+            }
+          />
         </Routes>
         {/* </Suspense> */}
       </DefaultLayout>

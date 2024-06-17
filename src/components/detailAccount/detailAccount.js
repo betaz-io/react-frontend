@@ -30,7 +30,7 @@ const DetailAccountBox = ({ onClickSwitch }) => {
     modalClaimRewardHistoryVisible,
     setModalClaimRewardHistoryVisible,
     setModalPandoraRewardHistoryVisible,
-    setModalPandoraYourTicketVisible
+    setModalPandoraYourTicketVisible,
   } = useModal();
   const { currentAccount } = useSelector((s) => s.substrate);
   const onOpenUnstakeModal = () => setUnstakeModalVisible(true);
@@ -40,7 +40,7 @@ const DetailAccountBox = ({ onClickSwitch }) => {
     setModalClaimRewardHistoryVisible(false);
   const onOpenPandoraRewardHistoryModal = () =>
     setModalPandoraRewardHistoryVisible(true);
-    const onOpenPandoraYourTicketModal = () =>
+  const onOpenPandoraYourTicketModal = () =>
     setModalPandoraYourTicketVisible(true);
 
   const listInformation = [
@@ -117,79 +117,81 @@ const DetailAccountBox = ({ onClickSwitch }) => {
             </Box>
           );
         })}
-        <Flex direction="column">
-          {location?.pathname !== pandoraPath && (
+        {process.env.REACT_APP_ENV == "testnet" && (
+          <Flex direction="column">
+            {location?.pathname !== pandoraPath && (
+              <Button
+                className="landing-page-banner-button"
+                sx={{
+                  mb: "8px",
+                }}
+                onClick={() => {
+                  onOpenUnstakeModal(true);
+                }}
+              >
+                My Stakes
+              </Button>
+            )}
+            {location?.pathname !== pandoraPath && (
+              <Button
+                className="landing-page-banner-button"
+                sx={{
+                  mb: "8px",
+                }}
+                onClick={() => {
+                  onOpenClaimHistoryModal(true);
+                }}
+              >
+                Reward History
+              </Button>
+            )}
+            {location?.pathname === pandoraPath && (
+              <Button
+                className="landing-page-banner-button"
+                sx={{
+                  mb: "8px",
+                }}
+                onClick={() => {
+                  onOpenPandoraRewardHistoryModal(true);
+                }}
+              >
+                Reward History
+              </Button>
+            )}
+            {location?.pathname === pandoraPath && (
+              <Button
+                className="landing-page-banner-button"
+                sx={{
+                  mb: "8px",
+                }}
+                onClick={() => {
+                  onOpenPandoraYourTicketModal(true);
+                }}
+              >
+                Your Ticket
+              </Button>
+            )}
             <Button
               className="landing-page-banner-button"
               sx={{
                 mb: "8px",
               }}
               onClick={() => {
-                onOpenUnstakeModal(true);
+                onClickSwitch();
               }}
             >
-              My Stakes
+              Switch Account
             </Button>
-          )}
-          {location?.pathname !== pandoraPath && (
             <Button
               className="landing-page-banner-button"
-              sx={{
-                mb: "8px",
-              }}
               onClick={() => {
-                onOpenClaimHistoryModal(true);
+                logoutAccountHandler();
               }}
             >
-              Reward History
+              Log Out
             </Button>
-          )}
-          {location?.pathname === pandoraPath && (
-            <Button
-              className="landing-page-banner-button"
-              sx={{
-                mb: "8px",
-              }}
-              onClick={() => {
-                onOpenPandoraRewardHistoryModal(true);
-              }}
-            >
-              Reward History
-            </Button>
-          )}
-          {location?.pathname === pandoraPath && (
-            <Button
-              className="landing-page-banner-button"
-              sx={{
-                mb: "8px",
-              }}
-              onClick={() => {
-                onOpenPandoraYourTicketModal(true);
-              }}
-            >
-              Your Ticket
-            </Button>
-          )}
-          <Button
-            className="landing-page-banner-button"
-            sx={{
-              mb: "8px",
-            }}
-            onClick={() => {
-              onClickSwitch();
-            }}
-          >
-            Switch Account
-          </Button>
-          <Button
-            className="landing-page-banner-button"
-            onClick={() => {
-              logoutAccountHandler();
-            }}
-          >
-            Log Out
-          </Button>
-        </Flex>
+          </Flex>
+        )}
       </Box>
       <UnstakeModal
         isOpen={unstakeModalVisible}

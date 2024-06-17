@@ -305,7 +305,14 @@ const HomePage = () => {
               color="#F7F7F8"
               boxShadow="4px 4px 6px 0px rgba(255, 255, 255, 0.20) inset"
               _hover={{ color: "#000", bg: "#E2E8F0" }}
-              onClick={() => window.open("/app", "_blank")}
+              onClick={() => {
+                if (
+                  process.env.REACT_APP_DEVELOPMENT_ENV == "development" &&
+                  process.env.REACT_APP_ENV == "testnet"
+                )
+                  window.open("/app", "_blank");
+                else window.open("https://testnet.betaz.io/", "_blank");
+              }}
             >
               Testnet Demo
             </Button>
