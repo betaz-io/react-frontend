@@ -38,6 +38,7 @@ import { Flex, Spinner } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { fetchPandoraSession } from "store/slices/pandoraNftSlice";
 import CommingPage from "pages/comming";
+import FaucetPage from "pages/faucets";
 
 const providerUrl = process.env.REACT_APP_PROVIDER_URL;
 
@@ -130,6 +131,7 @@ const App = () => {
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/faucets" element={<FaucetPage />} />
           <Route
             path="/app"
             element={

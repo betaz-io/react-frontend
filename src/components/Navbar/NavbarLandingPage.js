@@ -34,7 +34,7 @@ const tabs = [
   },
   {
     label: "BETAZ faucet",
-    // label: "Public Sale",
+    url: "/faucets",
     key: "section-deposit",
   },
   {
@@ -47,6 +47,7 @@ const tabs = [
   },
   {
     label: "Docs",
+    url: "https://betaz.gitbook.io/",
     key: "section-docs",
   },
   // {
@@ -85,8 +86,8 @@ export const NavbarLandingPage = () => {
                   sx={{ px: "16px", py: "8px" }}
                   cursor="pointer"
                   onClick={() => {
-                    e.label.toLocaleLowerCase() === "docs"
-                      ? window.open("https://betaz.gitbook.io/", "_blank")
+                    e.url
+                      ? window.open(e.url, "_blank")
                       : document
                           .getElementById(e.key)
                           .scrollIntoView({ behavior: "smooth" });
@@ -119,10 +120,9 @@ export const NavbarLandingPage = () => {
             <Button
               // onClick={() => toast.success("Comming soon!")}
               onClick={() => {
-                if(process.env.REACT_APP_ENV == "mainnet"){
+                if (process.env.REACT_APP_ENV == "mainnet") {
                   toast.success("Comming soon!");
-                } else
-                window.open("/app", "_blank");
+                } else window.open("/app", "_blank");
               }}
             >
               Launch App

@@ -117,7 +117,7 @@ const DetailAccountBox = ({ onClickSwitch }) => {
             </Box>
           );
         })}
-        {process.env.REACT_APP_ENV == "testnet" && (
+        {process.env.REACT_APP_ENV == "testnet" ? (
           <Flex direction="column">
             {location?.pathname !== pandoraPath && (
               <Button
@@ -190,8 +190,28 @@ const DetailAccountBox = ({ onClickSwitch }) => {
             >
               Log Out
             </Button>
-          </Flex>
-        )}
+          </Flex> 
+        ): <Flex direction="column">
+        <Button
+          className="landing-page-banner-button"
+          sx={{
+            mb: "8px",
+          }}
+          onClick={() => {
+            onClickSwitch();
+          }}
+        >
+          Switch Account
+        </Button>
+        <Button
+          className="landing-page-banner-button"
+          onClick={() => {
+            logoutAccountHandler();
+          }}
+        >
+          Log Out
+        </Button>
+      </Flex>}
       </Box>
       <UnstakeModal
         isOpen={unstakeModalVisible}

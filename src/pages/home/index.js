@@ -560,61 +560,6 @@ const HomePage = () => {
           </SimpleGrid>
         </SectionContainer> */}
         <SectionContainer
-          // aspectRatio={1.8}
-          bgImage={DepositBG}
-          bgRepeat="no-repeat"
-          bgPosition="center"
-          bgSize="cover"
-          pt={{ base: "24px", sm: "48px" }}
-          id="section-deposit"
-          pb="48px"
-        >
-          <Heading className="heading" fontSize={{ base: "24px", sm: "48px" }}>
-            BETAZ faucet
-          </Heading>
-          <Flex direction="column" justify="center" mt="24px">
-            <Box className="deposit-box-container">
-              <Text
-                className="deposit-box-title"
-                fontSize={{ base: "20px", sm: "24px" }}
-              >
-                Faucet
-              </Text>
-              <Box className="deposit-box-amount-box">
-                <Text>Address</Text>
-                <Flex className="deposit-box-amount-input">
-                  <Input
-                    focusBorderColor="transparent"
-                    sx={{ border: "0px" }}
-                    value={address}
-                    onChange={onChangeAddress}
-                    type="text"
-                  />
-                </Flex>
-              </Box>
-              <Flex direction="column" alignItems="center" mt="24px">
-                <BuyTokenButton
-                  onClick={() => faucet()}
-                  text="Make it rain!"
-                  isLoading={isLoading}
-                  date={endTimeNumber}
-                  max={maxbuyAmount}
-                  status={buyStatus?.status}
-                />
-                <Text mt="24px" fontSize={{ base: "14px", sm: "16px" }}>
-                  By Clicking your agree with our
-                </Text>
-                <Text
-                  className="linear-text-color-01 term-aggreement-text"
-                  fontSize={{ base: "14px", sm: "20px" }}
-                >
-                  Terms and Conditions, Privacy Policy
-                </Text>
-              </Flex>
-            </Box>
-          </Flex>
-        </SectionContainer>
-        <SectionContainer
           py={{ base: "24px", sm: "48px" }}
           // aspectRatio={1}
           bgImage={RoadmapBG}
